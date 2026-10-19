@@ -4,12 +4,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avelis</title>
+
+    <title>Avelis | Home</title>
+
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Times New Roman", serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #2f241c;
+            background-color: #d7bf92;
+        }
+
+        header {
+            background-color: #8f8064;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: Castellar, Georgia, serif;
+            font-size: 40px;
+            color: #f5ead4;
+        }
+
+        .page-layout {
+            display: flex;
+            min-height: 80vh;
+        }
+
+        nav {
+            width: 180px;
+            flex-shrink: 0;
+            background-color: #e2c99d;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            margin-bottom: 12px;
+        }
+
+        nav a {
+            color: #3e2d20;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            flex: 1;
+            min-width: 0;
+            padding: 30px;
+        }
+
+        h2 {
+            font-family: Castellar, Georgia, serif;
+            color: #3e2d20;
+        }
+
+        .home-image {
+            width: 100%;
+            max-width: 900px;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 30px auto;
+            border: 2px solid #8b633d;
+        }
+
+        .home-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .intro-section {
+            margin-bottom: 35px;
+        }
+
+        .about-section {
+            margin-bottom: 35px;
+        }
+
+        blockquote {
+            margin: 35px 0 0 0;
+            padding: 20px;
+            background-color: #e6d3ae;
+            font-style: italic;
+            text-align: center;
+            border-left: 4px solid #8b633d;
+        }
+
+        blockquote cite {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #8f8064;
+            color: #f5ead4;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Welcome to Avelis</h1>
+    <header>
+        <h1>Avelis</h1>
+    </header>
+
+    <div class="page-layout">
+
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="#">World Map</a></li>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="lore.html">Lore Archive</a></li>
+                <li><a href="#">Books and Stories</a></li>
+            </ul>
+        </nav>
+
+        <main>
+
+            <div class="home-content">
+
+                <img
+                    src="Images/temporary-city-street.jpg.jpg"
+                    alt="Colorful city street in Avelis"
+                    class="home-image"
+                >
+
+                <section class="intro-section">
+
+                    <h2 style="letter-spacing: 1px;">Enter Avelis</h2>
+
+                    <p>
+                        In a world where magic lives within every beating heart,
+                        kingdoms rise beneath the watchful light of the
+                        <strong>Eternal Flame</strong>. Across Avelis, stories of
+                        love, devotion, betrayal, and sacrifice unfold, shaping
+                        the lives of rulers and ordinary people alike.
+                    </p>
+
+                    <!-- Inline style example 2 for Activity 2 -->
+                    <p style="margin-top: 20px;">
+                        From the sunlit palaces of Solarath to quiet villages
+                        nestled among the mountains, every life leaves its mark
+                        upon the world. Yet even the smallest choices can alter
+                        the course of history, and
+                        <em>
+                            not every story remembered is the one that truly happened.
+                        </em>
+                    </p>
+
+                </section>
+
+                <section class="about-section">
+
+                    <h2>About the World</h2>
+
+                    <p>
+                        Welcome to Avelis, a world where magic is woven into the
+                        natural rhythms of life, from the roots beneath the soil
+                        to the light of the sun above.
+                    </p>
+
+                    <p>
+                        Its kingdoms are shaped by ancient traditions, sacred
+                        bonds, and the belief that every living thing carries
+                        a fragment of the Eternal Flame.
+                    </p>
+
+                    <p>
+                        Explore its landscapes, cultures, histories, and the
+                        countless lives that make this world more than the
+                        stories told within it.
+                    </p>
+
+                </section>
+
+                <blockquote>
+                    “The world is so much larger than the light we choose to see.”
+
+                    <cite>— Myrrin Sylvamer</cite>
+                </blockquote>
+
+                <section class="video-section">
+                <h2>Site Demonstrations</h2>
+
+                <h3>Character Page Demonstration</h3>
+
+                <video controls width="500">
+                    <source src="videos/character-video.mp4" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>
+
+                <p>
+                    This video demonstrates the Characters page and the linked
+                    character card navigation to the Lore Archive.
+                </p>
+
+                <h3>Lore Archive Demonstration</h3>
+
+                <video controls width="500">
+                    <source src="videos/lore-video.mp4" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>
+
+                <p>
+                    This video demonstrates the Lore Archive layout, including
+                    the search area, categories, and reference table.
+                </p>
+            </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <footer>
+        <p>Avelis World Companion</p>
+    </footer>
 
 </body>
 

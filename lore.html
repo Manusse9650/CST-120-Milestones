@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Avelis | Lore Archive</title>
+
+    <!-- CST-120 Milestone Project - Lore Archive Page -->
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Times New Roman", serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #2f241c;
+            background-color: #d7bf92;
+        }
+
+        header {
+            background-color: #8f8064;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: Castellar, Georgia, serif;
+            font-size: 40px;
+            color: #f5ead4;
+        }
+
+        .page-layout {
+            display: flex;
+            min-height: 80vh;
+        }
+
+        nav {
+            width: 180px;
+            background-color: #e2c99d;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            margin-bottom: 12px;
+        }
+
+        nav a {
+            color: #3e2d20;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        h2 {
+            font-family: Castellar, Georgia, serif;
+            color: #3e2d20;
+        }
+
+        .lore-content {
+            text-align: center;
+        }
+
+        .lore-intro {
+            max-width: 850px;
+            margin: 0 auto 25px auto;
+        }
+
+        .search-area {
+            margin: 25px 0;
+        }
+
+        .search-area input {
+            width: 300px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .categories {
+            margin: 20px 0 30px 0;
+        }
+
+        .categories span {
+            margin: 0 6px;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #f5ead4;
+        }
+
+        caption {
+            font-family: Castellar, Georgia, serif;
+            font-weight: bold;
+            color: #3e2d20;
+            margin-bottom: 10px;
+        }
+
+        th,
+        td {
+            border: 2px solid #8b633d;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #c8ad7f;
+            text-align: center;
+        }
+
+        .archive-navigation {
+            margin-top: 35px;
+        }
+
+        .archive-navigation a {
+            margin: 0 15px;
+            color: #3e2d20;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .archive-navigation a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #8f8064;
+            color: #f5ead4;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Avelis</h1>
+    </header>
+
+    <div class="page-layout">
+
+        <!-- Main navigation connects the major pages of the Avelis site. -->
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="#">World Map</a></li>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="lore.html">Lore Archive</a></li>
+                <li><a href="#">Books and Stories</a></li>
+            </ul>
+        </nav>
+
+        <main class="lore-content">
+
+            <section class="lore-intro">
+
+                <h2 style="letter-spacing: 1px;">Lore Archive</h2>
+
+                <p style="max-width: 800px; margin: 0 auto;">
+                    The Lore Archive provides definitions and information about
+                    beliefs, traditions, locations, timekeeping, and other details
+                    found throughout Avelis.
+                </p>
+
+            </section>
+
+            <section class="search-area">
+
+                <label for="lore-search">
+                    <strong>Search:</strong>
+                </label>
+
+                <input
+                    type="text"
+                    id="lore-search"
+                    name="lore-search"
+                    placeholder="Search the archive"
+                >
+
+            </section>
+
+            <section class="categories">
+
+                <strong>Category:</strong>
+
+                <span>Religion</span>
+                <span>|</span>
+
+                <span>Traditions</span>
+                <span>|</span>
+
+                <span>Timekeeping</span>
+                <span>|</span>
+
+                <span>Locations</span>
+                <span>|</span>
+
+                <span>Clothing and Symbols</span>
+                <span>|</span>
+
+                <span>Family</span>
+
+            </section>
+
+            <section>
+
+                <!--
+                    Header cells use scope="col" so assistive technologies
+                    can identify each table column.
+                -->
+                <table>
+
+                    <caption>Avelis Lore Archive</caption>
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">System</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Religion</td>
+                            <td>Eternal Flame</td>
+                            <td>
+                                The first light and source of all life. The Eternal
+                                Flame is believed to know all, give all, and sustain
+                                all. Every Heart Flame is born from it and ultimately
+                                returns to it.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Religion</td>
+                            <td>Heart Flame</td>
+                            <td>
+                                A living fragment of the Eternal Flame entrusted to
+                                every mortal. Caring for the Heart Flame through
+                                choices and deeds is considered one of life's greatest
+                                responsibilities.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Traditions</td>
+                            <td>Flame Binding</td>
+                            <td>
+                                The sacred union of two mortals before the Eternal
+                                Flame. Through binding vows and the Handfasting,
+                                their lives are joined and their magic is bound to
+                                answer as one.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Traditions</td>
+                            <td>Binding Basket</td>
+                            <td>
+                                A woven basket prepared for a newly bound couple and
+                                filled with gifts of nourishment, comfort, and hope
+                                for the life they begin together.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Traditions</td>
+                            <td>Handfasting</td>
+                            <td>
+                                A sacred rite performed during a Flame Binding in
+                                which the hands of two mortals are bound together
+                                with a woven cord to signify their union before the
+                                Eternal Flame.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Timekeeping</td>
+                            <td>Solturn</td>
+                            <td>
+                                One complete journey of Avelis around the Eternal
+                                Flame. A Solturn consists of ten moons, forty spans,
+                                and four hundred cycles.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Locations</td>
+
+                            <td>
+                                <strong>Veshalor</strong>
+
+                                <br>
+
+                                <audio controls>
+                                    <source src="audio/Veshalor.m4a" type="audio/mp4">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </td>
+
+                            <td>
+                                The holy city of Solarath, located within a volcanic
+                                basin in the Veshalor Mountains. It is the spiritual
+                                center of the Eternal Flame and is known for master
+                                glassmakers and sacred stained glass.
+                            </td>
+                        </tr>
+
+                        <tr>
+                        <td>Religion</td>
+
+                        <td>
+                            <strong>Aurelis</strong>
+
+                            <br>
+
+                            <audio controls>
+                                <source src="audio/Aurelis.m4a" type="audio/mp4">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+
+                        <td>
+                            A member of the Order of Aurelis who is devoted to
+                            the service of the temples and the Radiants.
+                        </td>
+                       </tr>
+
+                        <tr>
+                            <td>Clothing and Symbols</td>
+                            <td>Arm Cuffs</td>
+                            <td>
+                                Ceremonial bands worn on the upper arms that mark
+                                major bonds in a person's life. Nearly every citizen
+                                of Solarath wears a matched pair by adulthood.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Family</td>
+                            <td>Mother's Bells</td>
+                            <td>
+                                A strand of small bells worn around the waist or
+                                resting over the abdomen during pregnancy. Their
+                                sound is believed to guide a child's Heart Flame to
+                                their mother before birth.
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <section class="archive-navigation">
+                <a href="#">Previous</a>
+                <a href="#">Next</a>
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer>
+        <p>Avelis World Companion</p>
+    </footer>
+
+</body>
+
+</html>

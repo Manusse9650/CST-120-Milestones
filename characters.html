@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Avelis | Characters</title>
+
+    <!-- CST-120 Milestone Project - Characters Page -->
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Times New Roman", serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #2f241c;
+            background-color: #d7bf92;
+        }
+
+        header {
+            background-color: #8f8064;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: Castellar, Georgia, serif;
+            font-size: 40px;
+            color: #f5ead4;
+        }
+
+        .page-layout {
+            display: flex;
+            min-height: 80vh;
+        }
+
+        nav {
+            width: 180px;
+            background-color: #e2c99d;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            margin-bottom: 12px;
+        }
+
+        nav a {
+            color: #3e2d20;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        h2,
+        h3 {
+            font-family: Castellar, Georgia, serif;
+            color: #3e2d20;
+        }
+
+        .character-intro {
+            max-width: 850px;
+            margin-bottom: 35px;
+        }
+
+        .character-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .character-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .character-card {
+            text-align: center;
+        }
+
+        .character-frame {
+            width: 400px;
+            height: auto;
+            display: block;
+        }
+
+        .character-name {
+            margin-top: 10px;
+        }
+
+        .character-card:hover {
+            transform: scale(1.02);
+        }
+
+        footer {
+            background-color: #8f8064;
+            color: #f5ead4;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Avelis</h1>
+    </header>
+
+    <div class="page-layout">
+
+      
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="#">World Map</a></li>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="lore.html">Lore Archive</a></li>
+                <li><a href="#">Books and Stories</a></li>
+            </ul>
+        </nav>
+
+        <main>
+
+            <section class="character-intro">
+            <h2 style="letter-spacing: 1px;">Characters</h2>
+
+            <p style="max-width: 850px;">
+                Every story is shaped by the lives of those who inhabit it.
+                From royalty to ordinary villagers, the people of Avelis are
+                bound by love, loyalty, ambition, and the choices they make.
+                Explore the characters behind each story, discover their
+                connections, and uncover the roles they play in an ever-changing world.
+            </p>
+        </section>
+
+            <section class="character-list">
+
+                
+                <a href="lore.html" class="character-link">
+
+                    <article class="character-card">
+
+                        <img
+                            src="Images/character-cards.png"
+                            alt="Character card for Myrrin Sylvamer"
+                            class="character-frame"
+                        >
+
+                        <h3 class="character-name">Myrrin Sylvamer</h3>
+
+                        <audio controls>
+                            <source src="audio/Myrrin.m4a" type="audio/mp4">
+                            Your browser does not support the audio element.
+                        </audio>
+
+                    </article>
+
+                </a>
+
+                <article class="character-card">
+
+                    <img
+                        src="Images/character-cards.png"
+                        alt="Character card for Solarius"
+                        class="character-frame"
+                    >
+
+                    <h3 class="character-name">Solarius Aldeatus</h3>
+
+                    <audio controls>
+                        <source src="audio/Solarius.m4a" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer>
+        <p>Avelis World Companion</p>
+    </footer>
+
+</body>
+
+</html>
