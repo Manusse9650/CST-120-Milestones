@@ -1,3 +1,10 @@
+<!--
+    CST-120 Milestone 2 - Characters Page
+    This page introduces important characters from the world of Avelis.
+    Character cards, navigation, semantic HTML, and pronunciation audio
+    help users explore the world and understand invented character names.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +14,8 @@
 
     <title>Avelis | Characters</title>
 
-    <!-- CST-120 Milestone Project - Characters Page -->
-
     <style>
+
         body {
             margin: 0;
             font-family: "Times New Roman", serif;
@@ -41,6 +47,7 @@
             width: 180px;
             background-color: #e2c99d;
             padding: 20px;
+            flex-shrink: 0;
         }
 
         nav ul {
@@ -96,17 +103,40 @@
         }
 
         .character-frame {
-            width: 400px;
+            width: 300px;
             height: auto;
             display: block;
         }
 
         .character-name {
             margin-top: 10px;
+            margin-bottom: 8px;
         }
 
         .character-card:hover {
             transform: scale(1.02);
+        }
+
+        audio {
+            margin-top: 5px;
+        }
+
+        .audio-transcript {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        aside {
+            max-width: 700px;
+            margin: 50px auto 20px auto;
+            padding: 20px;
+            background-color: #e2c99d;
+            border: 1px solid #8f8064;
+            text-align: center;
+        }
+
+        aside h3 {
+            margin-top: 0;
         }
 
         footer {
@@ -119,18 +149,26 @@
         footer p {
             margin: 0;
         }
+
     </style>
 </head>
 
 <body>
 
+    <!--
+        The header identifies the website and provides a consistent
+        introductory landmark for users and assistive technologies.
+    -->
     <header>
         <h1>Avelis</h1>
     </header>
 
     <div class="page-layout">
 
-      
+        <!--
+            Relative anchor links provide consistent navigation between
+            Avelis pages and help users discover related site content.
+        -->
         <nav aria-label="Main navigation">
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -142,26 +180,42 @@
             </ul>
         </nav>
 
+        <!--
+            The main element identifies the primary content of this page
+            and separates it from repeated navigation and footer content.
+        -->
         <main>
 
+            <!--
+                This section introduces the purpose of the Characters page.
+            -->
             <section class="character-intro">
-            <h2 style="letter-spacing: 1px;">Characters</h2>
 
-            <p style="max-width: 850px;">
-                Every story is shaped by the lives of those who inhabit it.
-                From royalty to ordinary villagers, the people of Avelis are
-                bound by love, loyalty, ambition, and the choices they make.
-                Explore the characters behind each story, discover their
-                connections, and uncover the roles they play in an ever-changing world.
-            </p>
-        </section>
+                <h2 style="letter-spacing: 1px;">Characters</h2>
 
+                <p style="max-width: 850px;">
+                    Every story is shaped by the lives of those who inhabit it.
+                    From royalty to ordinary villagers, the people of Avelis are
+                    bound by love, loyalty, ambition, and the choices they make.
+                    Explore the characters behind each story, discover their
+                    connections, and uncover the roles they play in an ever-changing world.
+                </p>
+
+            </section>
+
+            <!--
+                Each article contains information about an individual character.
+                Article elements help organize self-contained character entries.
+            -->
             <section class="character-list">
 
-                
-                <a href="lore.html" class="character-link">
+                <article class="character-card">
 
-                    <article class="character-card">
+                    <!--
+                        The character image also functions as a media-based anchor
+                        linking users to additional information in the Lore Archive.
+                    -->
+                    <a href="lore.html" class="character-link">
 
                         <img
                             src="Images/character-cards.png"
@@ -169,40 +223,76 @@
                             class="character-frame"
                         >
 
-                        <h3 class="character-name">Myrrin Sylvamer</h3>
+                    </a>
 
-                        <audio controls>
-                            <source src="audio/Myrrin.m4a" type="audio/mp4">
-                            Your browser does not support the audio element.
-                        </audio>
+                    <h3 class="character-name">Myrrin Sylvamer</h3>
 
-                    </article>
+                    <!--
+                        Original pronunciation recording created for the Avelis project.
+                        Playback controls allow users to choose when audio begins.
+                        The transcript below provides a text alternative.
+                    -->
+                    <audio controls>
+                        <source src="audio/Myrrin.m4a" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
 
-                </a>
+                    <p class="audio-transcript">
+                        Transcript: Pronunciation of Myrrin Sylvamer.
+                    </p>
+
+                </article>
 
                 <article class="character-card">
 
                     <img
                         src="Images/character-cards.png"
-                        alt="Character card for Solarius"
+                        alt="Character card for Solarius Aldeatus"
                         class="character-frame"
                     >
 
                     <h3 class="character-name">Solarius Aldeatus</h3>
 
+                    <!--
+                        Original pronunciation recording created for the Avelis project.
+                        Playback controls give users control over the media.
+                        The transcript provides a text alternative.
+                    -->
                     <audio controls>
                         <source src="audio/Solarius.m4a" type="audio/mp4">
                         Your browser does not support the audio element.
                     </audio>
 
+                    <p class="audio-transcript">
+                        Transcript: Pronunciation of Solarius Aldeatus.
+                    </p>
+
                 </article>
 
             </section>
+
+            <!--
+                The aside provides supporting information related to the
+                pronunciation feature without interrupting the main character content.
+            -->
+            <aside>
+
+                <h3>Pronunciation Guide</h3>
+
+                <p>
+                    Selected character names include audio pronunciations to help
+                    readers become familiar with names unique to Avelis.
+                </p>
+
+            </aside>
 
         </main>
 
     </div>
 
+    <!--
+        The footer provides consistent closing information for the website.
+    -->
     <footer>
         <p>Avelis World Companion</p>
     </footer>
