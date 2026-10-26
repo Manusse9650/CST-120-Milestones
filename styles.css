@@ -1,0 +1,174 @@
+/*
+    Avelis World Companion - Shared Stylesheet
+
+    Naming approach:
+    Shared site elements use simple element and class selectors.
+    Page-specific styles remain in their individual HTML files when needed.
+    This keeps reusable styles predictable and allows intentional
+    specificity overrides without using !important.
+*/
+
+:root {
+    --color-background: #d7bf92;
+    --color-panel: #e2c99d;
+    --color-header: #8f8064;
+    --color-text: #2f241c;
+    --color-heading: #3e2d20;
+    --color-light: #f5ead4;
+    --color-accent: #d3b47b;
+    --color-border: #8f8064;
+}
+
+
+/* Shared page structure */
+
+body {
+    margin: 0;
+    font-family: "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+header {
+    background-color: var(--color-header);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-family: Castellar, Georgia, serif;
+    font-size: 40px;
+    color: var(--color-light);
+}
+
+.page-layout {
+    display: flex;
+    min-height: 80vh;
+}
+
+main {
+    flex: 1;
+    padding: 30px;
+}
+
+h2,
+h3 {
+    font-family: Castellar, Georgia, serif;
+    color: var(--color-heading);
+}
+
+
+/* Shared navigation */
+
+nav {
+    width: 180px;
+    background-color: var(--color-panel);
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav li {
+    margin-bottom: 12px;
+}
+
+nav a {
+    display: inline-block;
+    padding: 3px 5px;
+    border-radius: 4px;
+    color: var(--color-heading);
+    background-color: transparent;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease,
+                color 0.3s ease;
+}
+
+nav a:hover,
+nav a:focus {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+
+/* Shared media */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+audio,
+video {
+    max-width: 100%;
+}
+
+
+/* Shared supporting content */
+
+aside {
+    background-color: var(--color-panel);
+    border: 1px solid var(--color-border);
+}
+
+
+/*
+    Shared character styles.
+    The Characters page intentionally uses more specific
+    internal selectors to override some of these rules.
+*/
+
+.character-intro h2 {
+    color: #6f5137;
+}
+
+.character-intro p {
+    color: #6f5137;
+}
+
+.character-name {
+    font-size: 20px;
+}
+
+
+/* Shared footer */
+
+footer {
+    background-color: var(--color-header);
+    color: var(--color-light);
+    text-align: center;
+    padding: 15px;
+    letter-spacing: 1px;
+}
+
+footer p {
+    margin: 0;
+}
+
+
+/*
+    Accessibility:
+    Motion is reduced when the user's device requests
+    a reduced-motion experience.
+*/
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

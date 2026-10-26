@@ -1,12 +1,13 @@
+<!DOCTYPE html>
+
 <!--
-    CST-120 Milestone 2 - Lore Archive Page
+    CST-120 Milestone 3 - Lore Archive Page
     This page organizes important terminology, traditions, locations,
     religious concepts, and other worldbuilding information from Avelis.
-    A semantic table and pronunciation audio help users locate and
-    understand unfamiliar information.
+    Shared site styling is stored in styles.css, while archive-specific
+    layout and table presentation remain on this page.
 -->
 
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,84 +16,34 @@
 
     <title>Avelis | Lore Archive</title>
 
+    <link rel="stylesheet" href="styles.css">
+
     <style>
 
-        body {
-            margin: 0;
-            font-family: "Times New Roman", serif;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #2f241c;
-            background-color: #d7bf92;
-        }
-
-        header {
-            background-color: #8f8064;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-family: Castellar, Georgia, serif;
-            font-size: 40px;
-            color: #f5ead4;
-        }
-
-        .page-layout {
-            display: flex;
-            min-height: 80vh;
-        }
-
-        nav {
-            width: 180px;
-            background-color: #e2c99d;
-            padding: 20px;
-            flex-shrink: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        nav li {
-            margin-bottom: 12px;
-        }
-
-        nav a {
-            color: #3e2d20;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            flex: 1;
-            padding: 30px;
-        }
-
-        h2,
-        h3 {
-            font-family: Castellar, Georgia, serif;
-            color: #3e2d20;
-        }
+        /* Lore page layout */
 
         .lore-content {
             text-align: center;
         }
 
+        .lore-title {
+            letter-spacing: 1px;
+        }
+
         .lore-intro {
-            max-width: 850px;
+            max-width: 800px;
             margin: 0 auto 25px auto;
         }
 
+
+        /* Planned search interface */
+
         .search-area {
             margin: 20px 0;
+        }
+
+        .search-area label {
+            font-weight: bold;
         }
 
         .search-area input {
@@ -101,24 +52,32 @@
             padding: 8px;
             font-family: "Times New Roman", serif;
             font-size: 16px;
+            border: 1px solid #8f8064;
         }
+
+
+        /* Archive categories */
 
         .categories {
             margin-bottom: 25px;
         }
 
         .categories span {
-            margin: 0 8px;
+            display: inline-block;
+            margin: 4px 8px;
         }
 
-        table {
+
+        /* Lore reference table */
+
+        .lore-table {
             width: 90%;
             margin: 0 auto;
             border-collapse: collapse;
             background-color: #f5ead4;
         }
 
-        caption {
+        .lore-table caption {
             font-family: Castellar, Georgia, serif;
             font-weight: bold;
             font-size: 20px;
@@ -126,20 +85,23 @@
             color: #3e2d20;
         }
 
-        th,
-        td {
+        .lore-table th,
+        .lore-table td {
             border: 2px solid #8b633d;
             padding: 12px;
             text-align: left;
             vertical-align: top;
         }
 
-        th {
+        .lore-table th {
             background-color: #c8ad7f;
             text-align: center;
         }
 
-        audio {
+
+        /* Pronunciation media */
+
+        .lore-table audio {
             margin-top: 8px;
             max-width: 100%;
         }
@@ -148,6 +110,9 @@
             font-size: 14px;
             margin: 5px 0 0 0;
         }
+
+
+        /* Archive navigation */
 
         .archive-navigation {
             margin-top: 25px;
@@ -159,49 +124,71 @@
             margin: 0 15px;
         }
 
-        aside {
+
+        /* Supporting archive information */
+
+        .archive-aside {
             max-width: 750px;
             margin: 40px auto 20px auto;
             padding: 20px;
-            background-color: #e2c99d;
-            border: 1px solid #8f8064;
             text-align: center;
         }
 
-        aside h3 {
+        .archive-aside h3 {
             margin-top: 0;
         }
 
-        footer {
-            background-color: #8f8064;
-            color: #f5ead4;
-            text-align: center;
-            padding: 15px;
-        }
 
-        footer p {
-            margin: 0;
+        /* Responsive table and layout */
+
+        @media (max-width: 800px) {
+
+            .page-layout {
+                display: block;
+            }
+
+            nav {
+                width: auto;
+            }
+
+            nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            nav li {
+                margin-bottom: 0;
+            }
+
+            .lore-table {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            .lore-table th,
+            .lore-table td {
+                padding: 8px;
+            }
         }
 
     </style>
 </head>
 
+
 <body>
 
-    <!--
-        The header identifies the Avelis website and provides a
-        consistent introductory landmark across the site.
-    -->
+    <!-- Shared site header -->
+
     <header>
         <h1>Avelis</h1>
     </header>
 
+
     <div class="page-layout">
 
-        <!--
-            Consistent relative navigation connects the Lore Archive
-            with other areas of the Avelis site and supports content discovery.
-        -->
+        <!-- Main site navigation -->
+
         <nav aria-label="Main navigation">
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -213,30 +200,27 @@
             </ul>
         </nav>
 
-        <!--
-            The main element identifies the primary content of the page
-            and separates it from repeated navigation and footer content.
-        -->
+
         <main>
 
             <section class="lore-content">
 
-                <h2 style="letter-spacing: 1px;">Lore Archive</h2>
+                <h2 class="lore-title">
+                    Lore Archive
+                </h2>
 
-                <p
-                    class="lore-intro"
-                    style="max-width: 800px; margin: 0 auto;"
-                >
+                <p class="lore-intro">
                     The Lore Archive provides definitions and information
                     about systems, traditions, locations, and other details
                     found throughout Avelis.
                 </p>
 
+
                 <!--
-                    The search field is included as part of the planned
-                    archive interface. Search functionality will be expanded
-                    as later project milestones introduce scripting.
+                    Search is included as part of the planned archive interface.
+                    Functionality can be expanded when scripting is introduced.
                 -->
+
                 <div class="search-area">
 
                     <label for="lore-search">
@@ -252,6 +236,9 @@
 
                 </div>
 
+
+                <!-- Archive categories -->
+
                 <div class="categories">
 
                     <strong>Categories:</strong>
@@ -265,12 +252,13 @@
 
                 </div>
 
+
                 <!--
-                    The table uses a caption, thead, tbody, and scope
-                    attributes so the relationship between column headers
-                    and table data is clearer for users and assistive technology.
+                    The table uses semantic table elements and scoped headers
+                    to make relationships between information clearer.
                 -->
-                <table>
+
+                <table class="lore-table">
 
                     <caption>
                         Avelis Lore Archive
@@ -286,9 +274,11 @@
 
                     </thead>
 
+
                     <tbody>
 
                         <tr>
+
                             <td>Religion</td>
 
                             <td>
@@ -301,9 +291,12 @@
                                 give all, and sustain all. Every Heart Flame
                                 is born from it and ultimately returns to it.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Religion</td>
 
                             <td>
@@ -316,9 +309,12 @@
                                 Heart Flame through choices and deeds is
                                 considered one of life's greatest responsibilities.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Traditions</td>
 
                             <td>
@@ -331,9 +327,12 @@
                                 Handfasting, their lives are joined and their
                                 magic is bound to answer as one.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Traditions</td>
 
                             <td>
@@ -345,9 +344,12 @@
                                 couple and filled with gifts of nourishment,
                                 comfort, and hope for the life they begin together.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Traditions</td>
 
                             <td>
@@ -360,9 +362,12 @@
                                 together with a woven cord to signify their
                                 union before the Eternal Flame.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Timekeeping</td>
 
                             <td>
@@ -374,22 +379,26 @@
                                 Eternal Flame. A Solturn consists of ten moons,
                                 forty spans, and four hundred cycles.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Locations</td>
 
                             <td>
+
                                 <strong>Veshalor</strong>
 
                                 <br>
 
                                 <!--
                                     Original pronunciation recording created
-                                    for the Avelis project. Playback controls
-                                    allow users to choose when media begins.
-                                    The transcript provides a text alternative.
+                                    for the Avelis project. The transcript
+                                    provides a written alternative.
                                 -->
+
                                 <audio controls>
                                     <source
                                         src="audio/Veshalor.m4a"
@@ -401,6 +410,7 @@
                                 <p class="audio-transcript">
                                     Transcript: Pronunciation of Veshalor.
                                 </p>
+
                             </td>
 
                             <td>
@@ -410,9 +420,49 @@
                                 and is known for master glassmakers and sacred
                                 stained glass.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
+                            <td>Religion</td>
+
+                            <td>
+
+                                <strong>Aurelis</strong>
+
+                                <br>
+
+                                <!--
+                                    Pronunciation audio helps users understand
+                                    unfamiliar terminology from Avelis.
+                                -->
+
+                                <audio controls>
+                                    <source
+                                        src="audio/Aurelis.m4a"
+                                        type="audio/mp4"
+                                    >
+                                    Your browser does not support the audio element.
+                                </audio>
+
+                                <p class="audio-transcript">
+                                    Transcript: Pronunciation of Aurelis.
+                                </p>
+
+                            </td>
+
+                            <td>
+                                A member of the Order of Aurelis who is devoted
+                                to the service of the temples and the Radiants.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
                             <td>Clothing and Symbols</td>
 
                             <td>
@@ -425,9 +475,12 @@
                                 every citizen of Solarath wears a matched pair
                                 by adulthood.
                             </td>
+
                         </tr>
 
+
                         <tr>
+
                             <td>Family</td>
 
                             <td>
@@ -440,42 +493,12 @@
                                 Their sound is believed to guide a child's
                                 Heart Flame to their mother before birth.
                             </td>
+
                         </tr>
 
-                        <tr>
-                            <td>Religion</td>
-
-                            <td>
-                                <strong>Aurelis</strong>
-
-                                <br>
-
-                                <!--
-                                    Original pronunciation recording created
-                                    for the Avelis project. Audio adds value by
-                                    helping readers understand invented terminology.
-                                    The transcript provides a text alternative.
-                                -->
-                                <audio controls>
-                                    <source
-                                        src="audio/Aurelis.m4a"
-                                        type="audio/mp4"
-                                    >
-                                    Your browser does not support the audio element.
-                                </audio>
-
-                                <p class="audio-transcript">
-                                    Transcript: Pronunciation of Aurelis.
-                                </p>
-                            </td>
-
-                            <td>
-                                A member of the Order of Aurelis who is devoted
-                                to the service of the temples and the Radiants.
-                            </td>
-                        </tr>
 
                         <tr>
+
                             <td>Religion</td>
 
                             <td>
@@ -487,16 +510,16 @@
                                 to guard the sacred flames and those under
                                 their protection.
                             </td>
+
                         </tr>
 
                     </tbody>
 
                 </table>
 
-                <!--
-                    These links represent future movement through larger
-                    archive collections as the website expands.
-                -->
+
+                <!-- Future archive navigation -->
+
                 <div class="archive-navigation">
                     <a href="#">Previous</a>
                     <a href="#">Next</a>
@@ -504,11 +527,10 @@
 
             </section>
 
-            <!--
-                The aside provides supporting information related to using
-                the Lore Archive without interrupting the primary table.
-            -->
-            <aside>
+
+            <!-- Supporting archive information -->
+
+            <aside class="archive-aside">
 
                 <h3>Using the Archive</h3>
 
@@ -524,10 +546,9 @@
 
     </div>
 
-    <!--
-        The footer provides consistent closing information across
-        the Avelis website.
-    -->
+
+    <!-- Shared site footer -->
+
     <footer>
         <p>Avelis World Companion</p>
     </footer>

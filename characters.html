@@ -1,11 +1,12 @@
+<!DOCTYPE html>
+
 <!--
-    CST-120 Milestone 2 - Characters Page
+    CST-120 Milestone 3 - Characters Page
     This page introduces important characters from the world of Avelis.
-    Character cards, navigation, semantic HTML, and pronunciation audio
-    help users explore the world and understand invented character names.
+    Shared site styling is stored in styles.css, while character-specific
+    layout, interaction, and intentional specificity overrides remain here.
 -->
 
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,77 +15,42 @@
 
     <title>Avelis | Characters</title>
 
+    <link rel="stylesheet" href="styles.css">
+
     <style>
 
-        body {
-            margin: 0;
-            font-family: "Times New Roman", serif;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #2f241c;
-            background-color: #d7bf92;
-        }
-
-        header {
-            background-color: #8f8064;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-family: Castellar, Georgia, serif;
-            font-size: 40px;
-            color: #f5ead4;
-        }
-
-        .page-layout {
-            display: flex;
-            min-height: 80vh;
-        }
-
-        nav {
-            width: 180px;
-            background-color: #e2c99d;
-            padding: 20px;
-            flex-shrink: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        nav li {
-            margin-bottom: 12px;
-        }
-
-        nav a {
-            color: #3e2d20;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            flex: 1;
-            padding: 30px;
-        }
-
-        h2,
-        h3 {
-            font-family: Castellar, Georgia, serif;
-            color: #3e2d20;
-        }
+        /* Characters page introduction */
 
         .character-intro {
             max-width: 850px;
             margin-bottom: 35px;
+            padding: 20px;
+            background-color: #e2c99d;
         }
+
+        /*
+            These selectors intentionally have greater specificity than
+            the shared character-intro rules in styles.css.
+        */
+
+        main .character-intro h2 {
+            letter-spacing: 1px;
+            color: #3e2d20;
+        }
+
+        main .character-intro p {
+            max-width: 850px;
+            font-size: 19px;
+            color: #2f241c;
+        }
+
+        .intro-emphasis {
+            color: #5b3b2a;
+            font-style: italic;
+        }
+
+
+        /* Character cards */
 
         .character-list {
             display: flex;
@@ -100,12 +66,23 @@
 
         .character-card {
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .character-card:hover,
+        .character-card:focus-within {
+            transform: scale(1.02);
         }
 
         .character-frame {
             width: 300px;
             height: auto;
             display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .character-frame:hover {
+            transform: rotate(1deg);
         }
 
         .character-name {
@@ -113,11 +90,19 @@
             margin-bottom: 8px;
         }
 
-        .character-card:hover {
-            transform: scale(1.02);
+        /*
+            This page-specific selector intentionally overrides the
+            shared .character-name font size in styles.css.
+        */
+
+        article.character-card .character-name {
+            font-size: 24px;
         }
 
-        audio {
+
+        /* Pronunciation media */
+
+        .character-card audio {
             margin-top: 5px;
         }
 
@@ -126,49 +111,151 @@
             margin-top: 5px;
         }
 
-        aside {
+
+        /* Pronunciation guide */
+
+        .pronunciation-guide {
             max-width: 700px;
             margin: 50px auto 20px auto;
             padding: 20px;
-            background-color: #e2c99d;
-            border: 1px solid #8f8064;
             text-align: center;
+            transition:
+                background-color 0.4s ease,
+                border-color 0.4s ease;
         }
 
-        aside h3 {
+        .pronunciation-guide:hover {
+            background-color: #ecd8b4;
+            border-color: #6f5137;
+        }
+
+        .pronunciation-guide h3 {
             margin-top: 0;
         }
 
-        footer {
-            background-color: #8f8064;
-            color: #f5ead4;
-            text-align: center;
-            padding: 15px;
+
+        /* Animation 1: subtle movement */
+
+        @keyframes gentleMove {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-6px);
+            }
         }
 
-        footer p {
-            margin: 0;
+        .character-name {
+            animation: gentleMove 1.5s ease-in-out alternate;
+        }
+
+
+        /* Animation 2: heading color */
+
+        @keyframes softColorChange {
+            from {
+                color: #3e2d20;
+            }
+
+            to {
+                color: #8f8064;
+            }
+        }
+
+        .character-intro h2 {
+            animation: softColorChange 2s ease-in-out alternate;
+        }
+
+
+        /* Animation 3: slower timing */
+
+        @keyframes gentlePulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pronunciation-guide {
+            animation: gentlePulse 3s ease-in-out;
+        }
+
+
+        /* Animation 4: delayed appearance */
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .audio-transcript {
+            animation: fadeIn 1s ease 1s both;
+        }
+
+
+        /* Responsive character layout */
+
+        @media (max-width: 800px) {
+
+            .page-layout {
+                display: block;
+            }
+
+            nav {
+                width: auto;
+            }
+
+            nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            nav li {
+                margin-bottom: 0;
+            }
+
+            .character-frame {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .character-intro {
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
 
     </style>
 </head>
 
+
 <body>
 
-    <!--
-        The header identifies the website and provides a consistent
-        introductory landmark for users and assistive technologies.
-    -->
+    <!-- Shared site header -->
+
     <header>
         <h1>Avelis</h1>
     </header>
 
+
     <div class="page-layout">
 
-        <!--
-            Relative anchor links provide consistent navigation between
-            Avelis pages and help users discover related site content.
-        -->
+        <!-- Main site navigation -->
+
         <nav aria-label="Main navigation">
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -180,60 +267,67 @@
             </ul>
         </nav>
 
-        <!--
-            The main element identifies the primary content of this page
-            and separates it from repeated navigation and footer content.
-        -->
+
         <main>
 
-            <!--
-                This section introduces the purpose of the Characters page.
-            -->
+            <!-- Characters page introduction -->
+
             <section class="character-intro">
 
-                <h2 style="letter-spacing: 1px;">Characters</h2>
+                <h2>Characters</h2>
 
-                <p style="max-width: 850px;">
+                <p>
                     Every story is shaped by the lives of those who inhabit it.
                     From royalty to ordinary villagers, the people of Avelis are
                     bound by love, loyalty, ambition, and the choices they make.
-                    Explore the characters behind each story, discover their
-                    connections, and uncover the roles they play in an ever-changing world.
+
+                    <span class="intro-emphasis">
+                        Explore the characters behind each story, discover their
+                        connections, and uncover the roles they play in an
+                        ever-changing world.
+                    </span>
                 </p>
 
             </section>
 
-            <!--
-                Each article contains information about an individual character.
-                Article elements help organize self-contained character entries.
-            -->
+
+            <!-- Character entries -->
+
             <section class="character-list">
 
                 <article class="character-card">
 
                     <!--
-                        The character image also functions as a media-based anchor
-                        linking users to additional information in the Lore Archive.
+                        Myrrin's image also acts as a link to the Lore Archive,
+                        connecting character content with related world information.
                     -->
+
                     <a href="lore.html" class="character-link">
 
                         <img
-                            src="Images/character-cards.png"
+                            src="images/character-cards.png"
                             alt="Character card for Myrrin Sylvamer"
                             class="character-frame"
                         >
 
                     </a>
 
-                    <h3 class="character-name">Myrrin Sylvamer</h3>
+
+                    <h3 class="character-name">
+                        Myrrin Sylvamer
+                    </h3>
+
 
                     <!--
-                        Original pronunciation recording created for the Avelis project.
-                        Playback controls allow users to choose when audio begins.
-                        The transcript below provides a text alternative.
+                        Audio controls allow users to choose when playback begins.
+                        The written transcript provides a text alternative.
                     -->
+
                     <audio controls>
-                        <source src="audio/Myrrin.m4a" type="audio/mp4">
+                        <source
+                            src="audio/Myrrin.m4a"
+                            type="audio/mp4"
+                        >
                         Your browser does not support the audio element.
                     </audio>
 
@@ -243,23 +337,31 @@
 
                 </article>
 
+
                 <article class="character-card">
 
                     <img
-                        src="Images/character-cards.png"
+                        src="images/character-cards.png"
                         alt="Character card for Solarius Aldeatus"
                         class="character-frame"
                     >
 
-                    <h3 class="character-name">Solarius Aldeatus</h3>
+
+                    <h3 class="character-name">
+                        Solarius Aldeatus
+                    </h3>
+
 
                     <!--
-                        Original pronunciation recording created for the Avelis project.
-                        Playback controls give users control over the media.
-                        The transcript provides a text alternative.
+                        Audio controls provide user-controlled pronunciation media.
+                        The written transcript provides a text alternative.
                     -->
+
                     <audio controls>
-                        <source src="audio/Solarius.m4a" type="audio/mp4">
+                        <source
+                            src="audio/Solarius.m4a"
+                            type="audio/mp4"
+                        >
                         Your browser does not support the audio element.
                     </audio>
 
@@ -271,11 +373,10 @@
 
             </section>
 
-            <!--
-                The aside provides supporting information related to the
-                pronunciation feature without interrupting the main character content.
-            -->
-            <aside>
+
+            <!-- Supporting pronunciation information -->
+
+            <aside class="pronunciation-guide">
 
                 <h3>Pronunciation Guide</h3>
 
@@ -290,9 +391,9 @@
 
     </div>
 
-    <!--
-        The footer provides consistent closing information for the website.
-    -->
+
+    <!-- Shared site footer -->
+
     <footer>
         <p>Avelis World Companion</p>
     </footer>

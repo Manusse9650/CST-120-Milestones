@@ -1,12 +1,12 @@
+<!DOCTYPE html>
+
 <!--
-    CST-120 Milestone 2 - Home Page
+    CST-120 Milestone 3 - Home Page
     This page introduces the world of Avelis and serves as the main
-    entry point for the website. It connects users to character,
-    lore, map, calendar, and story content while demonstrating
-    semantic structure, navigation, media, and accessible design.
+    entry point for the website. Shared site styles are stored in
+    styles.css, while Home-specific layout remains on this page.
 -->
 
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,73 +15,11 @@
 
     <title>Avelis | Home</title>
 
+    <link rel="stylesheet" href="styles.css">
+
     <style>
 
-        body {
-            margin: 0;
-            font-family: "Times New Roman", serif;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #2f241c;
-            background-color: #d7bf92;
-        }
-
-        header {
-            background-color: #8f8064;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-family: Castellar, Georgia, serif;
-            font-size: 40px;
-            color: #f5ead4;
-        }
-
-        .page-layout {
-            display: flex;
-            min-height: 80vh;
-        }
-
-        nav {
-            width: 180px;
-            background-color: #e2c99d;
-            padding: 20px;
-            flex-shrink: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        nav li {
-            margin-bottom: 12px;
-        }
-
-        nav a {
-            color: #3e2d20;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            flex: 1;
-            padding: 30px;
-            min-width: 0;
-        }
-
-        h2,
-        h3 {
-            font-family: Castellar, Georgia, serif;
-            color: #3e2d20;
-        }
+        /* Home page image */
 
         .home-image {
             width: 100%;
@@ -93,6 +31,9 @@
             border: 2px solid #8b633d;
         }
 
+
+        /* Main Home page content */
+
         .home-content {
             max-width: 900px;
             margin: 0 auto;
@@ -101,6 +42,17 @@
         .home-content section {
             margin-bottom: 35px;
         }
+
+        .home-heading {
+            letter-spacing: 1px;
+        }
+
+        .about-world {
+            margin-top: 20px;
+        }
+
+
+        /* Featured quote */
 
         blockquote {
             margin: 30px auto;
@@ -119,9 +71,16 @@
             font-weight: bold;
         }
 
+
+        /* Site demonstration videos */
+
         .video-section {
             max-width: 900px;
             margin: 40px auto 0 auto;
+        }
+
+        .video-section article {
+            margin-bottom: 35px;
         }
 
         .video-section video {
@@ -136,49 +95,65 @@
             margin-bottom: 30px;
         }
 
-        aside {
+
+        /* Supporting information */
+
+        .home-aside {
             max-width: 750px;
             margin: 40px auto 20px auto;
             padding: 20px;
-            background-color: #e2c99d;
-            border: 1px solid #8f8064;
             text-align: center;
         }
 
-        aside h3 {
+        .home-aside h3 {
             margin-top: 0;
         }
 
-        footer {
-            background-color: #8f8064;
-            color: #f5ead4;
-            text-align: center;
-            padding: 15px;
-        }
 
-        footer p {
-            margin: 0;
+        /* Responsive layout */
+
+        @media (max-width: 800px) {
+
+            .page-layout {
+                display: block;
+            }
+
+            nav {
+                width: auto;
+            }
+
+            nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            nav li {
+                margin-bottom: 0;
+            }
+
+            .home-image {
+                height: auto;
+            }
         }
 
     </style>
 </head>
 
+
 <body>
 
-    <!--
-        The header identifies the Avelis website and provides a
-        consistent introductory landmark across all pages.
-    -->
+    <!-- Shared site header -->
+
     <header>
         <h1>Avelis</h1>
     </header>
 
+
     <div class="page-layout">
 
-        <!--
-            Relative anchor links create consistent navigation between
-            the major areas of the site and help users discover related content.
-        -->
+        <!-- Main site navigation -->
+
         <nav aria-label="Main navigation">
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -190,27 +165,28 @@
             </ul>
         </nav>
 
-        <!--
-            The main element contains the unique content of the Home page
-            and separates it from repeated navigation and footer content.
-        -->
+
         <main>
 
             <!--
-                The image introduces the visual setting of Avelis and
-                supports the worldbuilding purpose of the site.
+                Temporary visual used until the final Avelis world
+                imagery is added in a later stage of the project.
             -->
+
             <img
-                src="Images/temporary-city-street.jpg.jpg"
+                src="images/temporary-city-street.jpg.jpg"
                 alt="Fantasy city street representing the world of Avelis"
                 class="home-image"
             >
 
+
             <div class="home-content">
+
+                <!-- Introduction to Avelis -->
 
                 <section>
 
-                    <h2 style="letter-spacing: 1px;">
+                    <h2 class="home-heading">
                         Enter Avelis
                     </h2>
 
@@ -228,11 +204,14 @@
 
                 </section>
 
+
+                <!-- General world description -->
+
                 <section>
 
                     <h2>About the World</h2>
 
-                    <p style="margin-top: 20px;">
+                    <p class="about-world">
                         Welcome to Avelis, a world where magic is woven into the
                         natural rhythms of life, from the roots beneath the soil
                         to the light of the sun above. Its kingdoms are shaped by
@@ -245,6 +224,9 @@
 
                 </section>
 
+
+                <!-- Featured quotation -->
+
                 <blockquote>
                     “The world is so much larger than the light we choose to see.”
                     <cite>— Myrrin Sylvamer</cite>
@@ -252,14 +234,13 @@
 
             </div>
 
-            <!--
-                Original screen recordings created for the Avelis project.
-                Video controls allow users to choose when playback begins.
-                Written descriptions provide transcript-style alternatives.
-            -->
+
+            <!-- Original project demonstrations -->
+
             <section class="video-section">
 
                 <h2>Site Demonstrations</h2>
+
 
                 <article>
 
@@ -285,6 +266,7 @@
                     </p>
 
                 </article>
+
 
                 <article>
 
@@ -312,11 +294,10 @@
 
             </section>
 
-            <!--
-                The aside provides supporting information about the purpose
-                of the Avelis companion site without interrupting the main content.
-            -->
-            <aside>
+
+            <!-- Supporting project information -->
+
+            <aside class="home-aside">
 
                 <h3>Exploring Avelis</h3>
 
@@ -332,10 +313,9 @@
 
     </div>
 
-    <!--
-        The footer provides consistent closing information across
-        the Avelis website.
-    -->
+
+    <!-- Shared site footer -->
+
     <footer>
         <p>Avelis World Companion</p>
     </footer>
