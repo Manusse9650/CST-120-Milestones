@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 3 - Lore Archive Page
+    CST-120 Milestone 4 - Lore Archive Page
     This page organizes important terminology, traditions, locations,
     religious concepts, and other worldbuilding information from Avelis.
     Shared site styling is stored in styles.css, while archive-specific
@@ -36,10 +36,16 @@
         }
 
 
-        /* Planned search interface */
+        /*
+            Grid keeps the search label and input aligned while allowing
+            the input field to use the remaining available space.
+        */
 
         .search-area {
-            margin: 20px 0;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: center;
         }
 
         .search-area label {
@@ -56,15 +62,21 @@
         }
 
 
-        /* Archive categories */
+        /*
+            Flexbox allows archive categories to remain centered and
+            wrap naturally when the available screen width becomes smaller.
+        */
 
         .categories {
             margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 16px;
         }
 
         .categories span {
             display: inline-block;
-            margin: 4px 8px;
         }
 
 
@@ -112,16 +124,30 @@
         }
 
 
-        /* Archive navigation */
+        /*
+            Grid separates the Previous and Next archive links into
+            two columns and keeps them aligned on opposite sides.
+        */
 
         .archive-navigation {
             margin-top: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
         }
 
         .archive-navigation a {
             color: #3e2d20;
             font-weight: bold;
-            margin: 0 15px;
+        }
+
+        .archive-navigation a:first-child {
+            justify-self: start;
+        }
+
+        .archive-navigation a:last-child {
+            justify-self: end;
         }
 
 
@@ -139,27 +165,9 @@
         }
 
 
-        /* Responsive table and layout */
+        /* Responsive table */
 
         @media (max-width: 800px) {
-
-            .page-layout {
-                display: block;
-            }
-
-            nav {
-                width: auto;
-            }
-
-            nav ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            nav li {
-                margin-bottom: 0;
-            }
 
             .lore-table {
                 width: 100%;
@@ -173,6 +181,7 @@
         }
 
     </style>
+
 </head>
 
 
@@ -190,14 +199,16 @@
         <!-- Main site navigation -->
 
         <nav aria-label="Main navigation">
+
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="characters.html">Characters</a></li>
-                <li><a href="#">World Map</a></li>
+                <li><a href="map.html">World Map</a></li>
                 <li><a href="#">Calendar</a></li>
                 <li><a href="lore.html">Lore Archive</a></li>
                 <li><a href="#">Books and Stories</a></li>
             </ul>
+
         </nav>
 
 

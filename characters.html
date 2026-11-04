@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 3 - Characters Page
+    CST-120 Milestone 4 - Characters Page
     This page introduces important characters from the world of Avelis.
     Shared site styling is stored in styles.css, while character-specific
     layout, interaction, and intentional specificity overrides remain here.
@@ -50,7 +50,10 @@
         }
 
 
-        /* Character cards */
+        /*
+            Flexbox keeps the character cards in a centered vertical list.
+            Gap provides consistent spacing between each character entry.
+        */
 
         .character-list {
             display: flex;
@@ -59,31 +62,84 @@
             gap: 40px;
         }
 
-        .character-link {
-            color: inherit;
-            text-decoration: none;
-        }
+
+        /*
+            Grid organizes the card image, character name, audio,
+            and transcript into one centered column.
+        */
 
         .character-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-items: center;
+            gap: 10px;
             text-align: center;
             transition: transform 0.3s ease;
         }
 
-        .character-card:hover,
-        .character-card:focus-within {
+        /*
+            Existing hover transformation:
+            the full character card grows slightly.
+        */
+
+        .character-card:hover {
             transform: scale(1.02);
         }
 
-        .character-frame {
+
+        /* Flip card */
+
+        .flip-card {
             width: 300px;
-            height: auto;
-            display: block;
-            transition: transform 0.3s ease;
+            height: 450px;
+            perspective: 1000px;
+            cursor: pointer;
+            background-color: transparent;
         }
 
-        .character-frame:hover {
-            transform: rotate(1deg);
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s ease;
+            transform-style: preserve-3d;
         }
+
+        /*
+            The flipped class is added with JavaScript
+            only after the visitor clicks the card.
+        */
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background-color: transparent;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+
+        /* Character card images */
+
+        .character-frame {
+            width: 300px;
+            height: 450px;
+            object-fit: contain;
+            display: block;
+            background-color: transparent;
+        }
+
+
+        /* Character names */
 
         .character-name {
             margin-top: 10px;
@@ -134,9 +190,10 @@
         }
 
 
-        /* Animation 1: subtle movement */
+        /* Animation 1: subtle character-name movement */
 
         @keyframes gentleMove {
+
             from {
                 transform: translateY(0);
             }
@@ -151,9 +208,10 @@
         }
 
 
-        /* Animation 2: heading color */
+        /* Animation 2: introduction heading color change */
 
         @keyframes softColorChange {
+
             from {
                 color: #3e2d20;
             }
@@ -168,9 +226,10 @@
         }
 
 
-        /* Animation 3: slower timing */
+        /* Animation 3: pronunciation guide pulse */
 
         @keyframes gentlePulse {
+
             0% {
                 transform: scale(1);
             }
@@ -189,9 +248,10 @@
         }
 
 
-        /* Animation 4: delayed appearance */
+        /* Animation 4: transcript appearance */
 
         @keyframes fadeIn {
+
             from {
                 opacity: 0;
             }
@@ -210,22 +270,10 @@
 
         @media (max-width: 800px) {
 
-            .page-layout {
-                display: block;
-            }
-
-            nav {
-                width: auto;
-            }
-
-            nav ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            nav li {
-                margin-bottom: 0;
+            .flip-card {
+                width: 90%;
+                max-width: 300px;
+                height: 450px;
             }
 
             .character-frame {
@@ -239,7 +287,52 @@
             }
         }
 
+
+        /* Box model example */
+
+        .outline-example {
+            margin: 50px auto 20px auto;
+            padding: 20px;
+            border: 1px solid #8f8064;
+            outline: 3px solid #6f5137;
+            outline-offset: 5px;
+        }
+
+
+        /*
+            Accessibility:
+            Animations and movement are removed when the user's
+            device requests a reduced-motion experience.
+        */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .character-card {
+                transition-duration: 0.01ms;
+            }
+
+            .character-card:hover {
+                transform: none;
+            }
+
+            .flip-card-inner {
+                transition-duration: 0.01ms;
+            }
+
+            .character-name,
+            .character-intro h2,
+            .pronunciation-guide,
+            .audio-transcript {
+                animation: none;
+            }
+
+            .pronunciation-guide {
+                transition-duration: 0.01ms;
+            }
+        }
+
     </style>
+
 </head>
 
 
@@ -257,14 +350,16 @@
         <!-- Main site navigation -->
 
         <nav aria-label="Main navigation">
+
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="characters.html">Characters</a></li>
-                <li><a href="#">World Map</a></li>
+                <li><a href="map.html">World Map</a></li>
                 <li><a href="#">Calendar</a></li>
                 <li><a href="lore.html">Lore Archive</a></li>
                 <li><a href="#">Books and Stories</a></li>
             </ul>
+
         </nav>
 
 
@@ -295,22 +390,42 @@
 
             <section class="character-list">
 
+
+                <!-- Myrrin Sylvamer -->
+
                 <article class="character-card">
 
-                    <!--
-                        Myrrin's image also acts as a link to the Lore Archive,
-                        connecting character content with related world information.
-                    -->
+                    <div
+                        class="flip-card"
+                        onclick="flipCard(this)"
+                    >
 
-                    <a href="lore.html" class="character-link">
+                        <div class="flip-card-inner">
 
-                        <img
-                            src="images/character-cards.png"
-                            alt="Character card for Myrrin Sylvamer"
-                            class="character-frame"
-                        >
+                            <div class="flip-card-front">
 
-                    </a>
+                                <img
+                                    src="images/Myrrin-Card-Draft.png"
+                                    alt="Character card for Myrrin Sylvamer"
+                                    class="character-frame"
+                                >
+
+                            </div>
+
+
+                            <div class="flip-card-back">
+
+                                <img
+                                    src="images/Card-Blank.png"
+                                    alt="Back of Myrrin Sylvamer's character card"
+                                    class="character-frame"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
 
                     <h3 class="character-name">
@@ -318,18 +433,19 @@
                     </h3>
 
 
-                    <!--
-                        Audio controls allow users to choose when playback begins.
-                        The written transcript provides a text alternative.
-                    -->
+                    <!-- Pronunciation audio -->
 
                     <audio controls>
+
                         <source
                             src="audio/Myrrin.m4a"
                             type="audio/mp4"
                         >
+
                         Your browser does not support the audio element.
+
                     </audio>
+
 
                     <p class="audio-transcript">
                         Transcript: Pronunciation of Myrrin Sylvamer.
@@ -338,13 +454,41 @@
                 </article>
 
 
+                <!-- Solarius Aldeatus -->
+
                 <article class="character-card">
 
-                    <img
-                        src="images/character-cards.png"
-                        alt="Character card for Solarius Aldeatus"
-                        class="character-frame"
+                    <div
+                        class="flip-card"
+                        onclick="flipCard(this)"
                     >
+
+                        <div class="flip-card-inner">
+
+                            <div class="flip-card-front">
+
+                                <img
+                                    src="images/Solarius-Card-Draft.png"
+                                    alt="Character card for Solarius Aldeatus"
+                                    class="character-frame"
+                                >
+
+                            </div>
+
+
+                            <div class="flip-card-back">
+
+                                <img
+                                    src="images/Card-Blank.png"
+                                    alt="Back of Solarius Aldeatus's character card"
+                                    class="character-frame"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
 
                     <h3 class="character-name">
@@ -352,18 +496,19 @@
                     </h3>
 
 
-                    <!--
-                        Audio controls provide user-controlled pronunciation media.
-                        The written transcript provides a text alternative.
-                    -->
+                    <!-- Pronunciation audio -->
 
                     <audio controls>
+
                         <source
                             src="audio/Solarius.m4a"
                             type="audio/mp4"
                         >
+
                         Your browser does not support the audio element.
+
                     </audio>
+
 
                     <p class="audio-transcript">
                         Transcript: Pronunciation of Solarius Aldeatus.
@@ -376,13 +521,14 @@
 
             <!-- Supporting pronunciation information -->
 
-            <aside class="pronunciation-guide">
+            <aside class="pronunciation-guide outline-example">
 
                 <h3>Pronunciation Guide</h3>
 
                 <p>
                     Selected character names include audio pronunciations to help
-                    readers become familiar with names unique to Avelis.
+                    readers become familiar with names unique to Avelis. Click a
+                    character card to view the reverse side.
                 </p>
 
             </aside>
@@ -397,6 +543,17 @@
     <footer>
         <p>Avelis World Companion</p>
     </footer>
+
+
+    <!-- Character card flip -->
+
+    <script>
+
+        function flipCard(card) {
+            card.classList.toggle("flipped");
+        }
+
+    </script>
 
 </body>
 

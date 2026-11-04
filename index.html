@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 3 - Home Page
+    CST-120 Milestone 4 - Home Page
     This page introduces the world of Avelis and serves as the main
     entry point for the website. Shared site styles are stored in
     styles.css, while Home-specific layout remains on this page.
@@ -32,15 +32,28 @@
         }
 
 
-        /* Main Home page content */
+        /*
+            Grid keeps the main Home page sections organized with
+            consistent spacing between each section.
+        */
 
         .home-content {
             max-width: 900px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
         }
 
         .home-content section {
-            margin-bottom: 35px;
+            margin-bottom: 0;
+        }
+
+        .box-example {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #8b633d;
+            max-width: 850px;
         }
 
         .home-heading {
@@ -72,14 +85,25 @@
         }
 
 
-        /* Site demonstration videos */
+        /*
+            Flexbox allows the demonstration videos to display beside
+            one another when space is available and wrap on smaller screens.
+        */
 
         .video-section {
             max-width: 900px;
             margin: 40px auto 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .video-section h2 {
+            width: 100%;
         }
 
         .video-section article {
+            flex: 1 1 350px;
             margin-bottom: 35px;
         }
 
@@ -109,28 +133,26 @@
             margin-top: 0;
         }
 
+        .spacing-example {
+            margin: 30px auto;
+            padding: 25px;
+            border: 1px solid #8f8064;
+            max-width: 850px;
+            background-color: #f5ead4;
+        }
 
-        /* Responsive layout */
+
+        /* Student information activity */
+
+        .student-info {
+            max-width: 850px;
+            margin: 30px auto;
+        }
+
+
+        /* Responsive Home page image */
 
         @media (max-width: 800px) {
-
-            .page-layout {
-                display: block;
-            }
-
-            nav {
-                width: auto;
-            }
-
-            nav ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            nav li {
-                margin-bottom: 0;
-            }
 
             .home-image {
                 height: auto;
@@ -138,6 +160,7 @@
         }
 
     </style>
+
 </head>
 
 
@@ -155,14 +178,16 @@
         <!-- Main site navigation -->
 
         <nav aria-label="Main navigation">
+
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="characters.html">Characters</a></li>
-                <li><a href="#">World Map</a></li>
+                <li><a href="map.html">World Map</a></li>
                 <li><a href="#">Calendar</a></li>
                 <li><a href="lore.html">Lore Archive</a></li>
                 <li><a href="#">Books and Stories</a></li>
             </ul>
+
         </nav>
 
 
@@ -184,7 +209,7 @@
 
                 <!-- Introduction to Avelis -->
 
-                <section>
+                <section class="box-example">
 
                     <h2 class="home-heading">
                         Enter Avelis
@@ -207,7 +232,7 @@
 
                 <!-- General world description -->
 
-                <section>
+                <section class="spacing-example">
 
                     <h2>About the World</h2>
 
@@ -247,22 +272,24 @@
                     <h3>Character Page Demonstration</h3>
 
                     <video controls width="500">
+
                         <source
                             src="videos/character-video.mp4"
                             type="video/mp4"
                         >
+
                         Your browser does not support the video element.
+
                     </video>
 
                     <p>
-                        This video demonstrates the Characters page and the linked
-                        character card navigation to the Lore Archive.
+                        This video demonstrates the Characters page and
+                        its interactive character cards.
                     </p>
 
                     <p class="video-transcript">
-                        Transcript: The recording scrolls through the Characters page
-                        and demonstrates selecting a character card that links to the
-                        Lore Archive.
+                        Transcript: The recording scrolls through the Characters
+                        page and demonstrates the character card interface.
                     </p>
 
                 </article>
@@ -273,16 +300,19 @@
                     <h3>Lore Archive Demonstration</h3>
 
                     <video controls width="500">
+
                         <source
                             src="videos/lore-video.mp4"
                             type="video/mp4"
                         >
+
                         Your browser does not support the video element.
+
                     </video>
 
                     <p>
-                        This video demonstrates the Lore Archive layout, including
-                        the search area, categories, and reference table.
+                        This video demonstrates the Lore Archive layout,
+                        including the search area, categories, and reference table.
                     </p>
 
                     <p class="video-transcript">
@@ -297,17 +327,45 @@
 
             <!-- Supporting project information -->
 
-            <aside class="home-aside">
+            <aside class="home-aside box-example-two">
 
                 <h3>Exploring Avelis</h3>
 
                 <p>
                     The Avelis World Companion is designed as a reference for
                     characters, locations, traditions, terminology, and stories.
-                    Additional sections will be expanded as later milestones are completed.
+                    Additional sections will be expanded as later milestones
+                    are completed.
                 </p>
 
             </aside>
+
+
+            <!-- JavaScript student information activity -->
+
+            <section class="student-info">
+
+                <h2>Student Information</h2>
+
+                <label for="visitor-name">
+                    Enter your name:
+                </label>
+
+                <input
+                    type="text"
+                    id="visitor-name"
+                >
+
+                <button
+                    type="button"
+                    onclick="showStudentInfo()"
+                >
+                    Show Information
+                </button>
+
+                <div id="student-output"></div>
+
+            </section>
 
         </main>
 
@@ -319,6 +377,37 @@
     <footer>
         <p>Avelis World Companion</p>
     </footer>
+
+
+    <!-- Student information interaction -->
+
+    <script>
+
+        function showStudentInfo() {
+
+            let visitorName =
+                document.getElementById("visitor-name").value;
+
+            let studentName = "Samantha Manuszak";
+            let educationLevel = "Sophomore";
+            let major = "Biomedical Engineering";
+            let classDesignation =
+                "CST-120 Introduction to Web Development";
+            let anticipatedOccupation = "Biomedical Engineer";
+
+            document.getElementById("student-output").innerHTML =
+                "<p>Hello, " + visitorName + "!</p>" +
+                "<p><strong>Name:</strong> " + studentName + "</p>" +
+                "<p><strong>Education Level:</strong> " +
+                educationLevel + "</p>" +
+                "<p><strong>Major:</strong> " + major + "</p>" +
+                "<p><strong>Class Designation:</strong> " +
+                classDesignation + "</p>" +
+                "<p><strong>Anticipated Occupation:</strong> " +
+                anticipatedOccupation + "</p>";
+        }
+
+    </script>
 
 </body>
 

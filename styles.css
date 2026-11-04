@@ -8,6 +8,9 @@
     specificity overrides without using !important.
 */
 
+
+/* Shared color variables */
+
 :root {
     --color-background: #d7bf92;
     --color-panel: #e2c99d;
@@ -17,6 +20,20 @@
     --color-light: #f5ead4;
     --color-accent: #d3b47b;
     --color-border: #8f8064;
+}
+
+
+/*
+    Custom font:
+    Original handwriting font created by Samantha Manuszak.
+    Used with permission from the creator for this academic project.
+*/
+
+@font-face {
+    font-family: "Samantha Handwriting";
+    src: url("font/Samantha-Handwriting.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 
@@ -88,8 +105,9 @@ nav a {
     background-color: transparent;
     font-weight: bold;
     text-decoration: none;
-    transition: background-color 0.3s ease,
-                color 0.3s ease;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
 nav a:hover,
@@ -118,6 +136,13 @@ video {
 aside {
     background-color: var(--color-panel);
     border: 1px solid var(--color-border);
+}
+
+.box-example-two {
+    margin: 40px auto 20px auto;
+    padding: 25px;
+    border: 2px solid #8b633d;
+    max-width: 750px;
 }
 
 
@@ -156,6 +181,34 @@ footer p {
 
 
 /*
+    Responsive navigation:
+    The page layout changes from a sidebar to a stacked layout
+    on narrower screens. Navigation links wrap when needed.
+*/
+
+@media (max-width: 800px) {
+
+    .page-layout {
+        display: block;
+    }
+
+    nav {
+        width: auto;
+    }
+
+    nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    nav li {
+        margin-bottom: 0;
+    }
+}
+
+
+/*
     Accessibility:
     Motion is reduced when the user's device requests
     a reduced-motion experience.
@@ -163,12 +216,7 @@ footer p {
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    nav a {
+        transition-duration: 0.01ms;
     }
 }
