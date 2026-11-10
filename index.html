@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 4 - Home Page
+    CST-120 Milestone 5 - Home Page
     This page introduces the world of Avelis and serves as the main
     entry point for the website. Shared site styles are stored in
     styles.css, while Home-specific layout remains on this page.
+    JavaScript behavior is stored externally in js/home.js.
 -->
 
 <html lang="en">
@@ -149,6 +150,51 @@
             margin: 30px auto;
         }
 
+        .student-info form {
+            display: grid;
+            gap: 12px;
+            max-width: 500px;
+        }
+
+        .student-info label {
+            font-weight: bold;
+        }
+
+        .student-info input,
+        .student-info select {
+            padding: 8px;
+            font-family: "Times New Roman", serif;
+            font-size: 16px;
+            border: 1px solid #8f8064;
+        }
+
+        .student-info button {
+            width: fit-content;
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+
+
+        /*
+            Validation messages appear directly below their related
+            form controls so visitors can understand what needs attention.
+        */
+
+        .form-error {
+            min-height: 20px;
+            margin: -6px 0 4px 0;
+            font-size: 15px;
+            color: #7a1f1f;
+        }
+
+        .input-error {
+            border: 2px solid #7a1f1f;
+        }
+
+        #student-output {
+            margin-top: 20px;
+        }
+
 
         /* Responsive Home page image */
 
@@ -157,6 +203,26 @@
             .home-image {
                 height: auto;
             }
+
+            .student-info form {
+                width: 100%;
+            }
+        }
+
+        .explore-link {
+            display: inline-block;
+            padding: 10px 16px;
+            color: #3e2d20;
+            background-color: #e2c99d;
+            border: 1px solid #8f8064;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .explore-link:hover,
+        .explore-link:focus {
+            background-color: #d3b47b;
         }
 
     </style>
@@ -341,29 +407,100 @@
             </aside>
 
 
-            <!-- JavaScript student information activity -->
+            <!--
+                Milestone 5 exploration form:
+                JavaScript validates the required fields and then creates
+                a personalized link to the selected area of Avelis.
+            -->
 
             <section class="student-info">
 
-                <h2>Student Information</h2>
+                <h2>Begin Your Journey</h2>
 
-                <label for="visitor-name">
-                    Enter your name:
-                </label>
+                <p>
+                    Enter your name and choose an area of Avelis you would
+                    like to explore. Your selection will provide a direct
+                    path to that part of the world companion.
+                </p>
 
-                <input
-                    type="text"
-                    id="visitor-name"
+
+                <form
+                    id="student-form"
+                    novalidate
                 >
 
-                <button
-                    type="button"
-                    onclick="showStudentInfo()"
-                >
-                    Show Information
-                </button>
+                    <label for="visitor-name">
+                        Enter your name:
+                    </label>
 
-                <div id="student-output"></div>
+                    <input
+                        type="text"
+                        id="visitor-name"
+                        name="visitor-name"
+                        required
+                        aria-describedby="name-error"
+                    >
+
+                    <p
+                        id="name-error"
+                        class="form-error"
+                        aria-live="polite"
+                    ></p>
+
+
+                    <label for="visitor-interest">
+                        What would you like to explore?
+                    </label>
+
+                    <select
+                        id="visitor-interest"
+                        name="visitor-interest"
+                        required
+                        aria-describedby="interest-error"
+                    >
+
+                        <option value="">
+                            Select an option
+                        </option>
+
+                        <option value="Characters">
+                            Characters
+                        </option>
+
+                        <option value="World Map">
+                            World Map
+                        </option>
+
+                        <option value="Lore Archive">
+                            Lore Archive
+                        </option>
+
+                    </select>
+
+                    <p
+                        id="interest-error"
+                        class="form-error"
+                        aria-live="polite"
+                    ></p>
+
+
+                    <button type="submit">
+                        Begin Journey
+                    </button>
+
+                </form>
+
+
+                <!--
+                    JavaScript places the personalized greeting,
+                    selected destination, creator information,
+                    and destination link inside this area.
+                -->
+
+                <div
+                    id="student-output"
+                    aria-live="polite"
+                ></div>
 
             </section>
 
@@ -379,35 +516,13 @@
     </footer>
 
 
-    <!-- Student information interaction -->
+    <!--
+        Milestone 5 uses external JavaScript.
+        The script is placed after the page content so the HTML elements
+        exist before home.js attaches its event listeners.
+    -->
 
-    <script>
-
-        function showStudentInfo() {
-
-            let visitorName =
-                document.getElementById("visitor-name").value;
-
-            let studentName = "Samantha Manuszak";
-            let educationLevel = "Sophomore";
-            let major = "Biomedical Engineering";
-            let classDesignation =
-                "CST-120 Introduction to Web Development";
-            let anticipatedOccupation = "Biomedical Engineer";
-
-            document.getElementById("student-output").innerHTML =
-                "<p>Hello, " + visitorName + "!</p>" +
-                "<p><strong>Name:</strong> " + studentName + "</p>" +
-                "<p><strong>Education Level:</strong> " +
-                educationLevel + "</p>" +
-                "<p><strong>Major:</strong> " + major + "</p>" +
-                "<p><strong>Class Designation:</strong> " +
-                classDesignation + "</p>" +
-                "<p><strong>Anticipated Occupation:</strong> " +
-                anticipatedOccupation + "</p>";
-        }
-
-    </script>
+    <script src="js/home.js"></script>
 
 </body>
 

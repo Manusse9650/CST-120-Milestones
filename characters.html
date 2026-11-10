@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 4 - Characters Page
+    CST-120 Milestone 5 - Characters Page
     This page introduces important characters from the world of Avelis.
     Shared site styling is stored in styles.css, while character-specific
-    layout, interaction, and intentional specificity overrides remain here.
+    layout and interaction remain on this page.
+    JavaScript behavior is stored externally in js/characters.js.
 -->
 
 <html lang="en">
@@ -97,6 +98,11 @@
             background-color: transparent;
         }
 
+        .flip-card:focus {
+            outline: 3px solid #6f5137;
+            outline-offset: 5px;
+        }
+
         .flip-card-inner {
             position: relative;
             width: 100%;
@@ -107,7 +113,7 @@
 
         /*
             The flipped class is added with JavaScript
-            only after the visitor clicks the card.
+            only after the visitor activates the card.
         */
 
         .flip-card.flipped .flip-card-inner {
@@ -164,6 +170,14 @@
 
         .audio-transcript {
             font-size: 15px;
+            margin-top: 5px;
+        }
+
+
+        /* Character information */
+
+        .character-info {
+            max-width: 300px;
             margin-top: 5px;
         }
 
@@ -397,7 +411,10 @@
 
                     <div
                         class="flip-card"
-                        onclick="flipCard(this)"
+                        role="button"
+                        tabindex="0"
+                        aria-pressed="false"
+                        aria-label="Flip Myrrin Sylvamer character card"
                     >
 
                         <div class="flip-card-inner">
@@ -451,6 +468,26 @@
                         Transcript: Pronunciation of Myrrin Sylvamer.
                     </p>
 
+
+                    <!-- Character information -->
+
+                    <button
+                        type="button"
+                        id="myrrin-info-button"
+                        aria-expanded="false"
+                        aria-controls="myrrin-info"
+                    >
+                        Character Information
+                    </button>
+
+                    <div
+                        id="myrrin-info"
+                        class="character-info"
+                        aria-hidden="true"
+                        tabindex="-1"
+                        hidden
+                    ></div>
+
                 </article>
 
 
@@ -460,7 +497,10 @@
 
                     <div
                         class="flip-card"
-                        onclick="flipCard(this)"
+                        role="button"
+                        tabindex="0"
+                        aria-pressed="false"
+                        aria-label="Flip Solarius Aldeatus character card"
                     >
 
                         <div class="flip-card-inner">
@@ -527,9 +567,14 @@
 
                 <p>
                     Selected character names include audio pronunciations to help
-                    readers become familiar with names unique to Avelis. Click a
-                    character card to view the reverse side.
+                    readers become familiar with names unique to Avelis. Select
+                    or press Enter on a character card to view its reverse side.
                 </p>
+
+                <p
+                    id="character-count"
+                    aria-live="polite"
+                ></p>
 
             </aside>
 
@@ -545,15 +590,13 @@
     </footer>
 
 
-    <!-- Character card flip -->
+    <!--
+        Milestone 5 uses external JavaScript.
+        The script is placed after the page content so the HTML elements
+        exist before characters.js attaches its event listeners.
+    -->
 
-    <script>
-
-        function flipCard(card) {
-            card.classList.toggle("flipped");
-        }
-
-    </script>
+    <script src="js/characters.js"></script>
 
 </body>
 

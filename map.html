@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 4 - Map Page
+    CST-120 Milestone 5 - Map Page
     This page allows visitors to switch between different maps of Avelis.
     Shared site styling is stored in styles.css, while map-specific
-    layout and interaction are included on this page.
+    layout remains on this page.
+    JavaScript behavior is stored externally in js/map.js.
 -->
 
 <html lang="en">
@@ -61,9 +62,21 @@
                 background-color 0.3s ease;
         }
 
-        .map-buttons button:hover {
+        .map-buttons button:hover,
+        .map-buttons button:focus {
             transform: scale(1.05);
             background-color: #d3b47b;
+        }
+
+
+        /*
+            The active button receives a stronger visual state
+            that matches its aria-pressed value.
+        */
+
+        .map-buttons button.active-map {
+            background-color: #c49a5a;
+            border: 2px solid #6f5137;
         }
 
 
@@ -118,7 +131,8 @@
                 transition-duration: 0.01ms;
             }
 
-            .map-buttons button:hover {
+            .map-buttons button:hover,
+            .map-buttons button:focus {
                 transform: none;
             }
         }
@@ -174,19 +188,43 @@
             </section>
 
 
-            <!-- Map selection buttons -->
+            <!--
+                Map selection buttons.
 
-            <section class="map-buttons">
+                aria-pressed communicates which map option is currently
+                selected to assistive technology.
+            -->
 
-                <button onclick="showMap('City-Map.jpeg', 'City Map')">
+            <section
+                class="map-buttons"
+                aria-label="Choose a map of Avelis"
+            >
+
+                <button
+                    type="button"
+                    data-map="city"
+                    aria-pressed="true"
+                    aria-controls="map-image"
+                    class="active-map"
+                >
                     City Map
                 </button>
 
-                <button onclick="showMap('Geography-Map.jpeg', 'Geography Map')">
+                <button
+                    type="button"
+                    data-map="geography"
+                    aria-pressed="false"
+                    aria-controls="map-image"
+                >
                     Geography Map
                 </button>
 
-                <button onclick="showMap('Political-Map.jpeg', 'Political Map')">
+                <button
+                    type="button"
+                    data-map="political"
+                    aria-pressed="false"
+                    aria-controls="map-image"
+                >
                     Political Map
                 </button>
 
@@ -195,19 +233,28 @@
 
             <!-- Current map -->
 
-            <section class="map-display">
+            <section
+                class="map-display"
+                aria-label="Selected map"
+            >
 
                 <img
                     id="map-image"
                     src="images/City-Map.jpeg"
-                    alt="City map of Avelis"
+                    alt="City Map of Avelis"
                 >
+
+                <!--
+                    aria-live announces the new map title when
+                    JavaScript changes the selected map.
+                -->
 
                 <h3
                     id="map-title"
                     class="map-title"
+                    aria-live="polite"
                 >
-                    City Map
+                    Viewing: City Map
                 </h3>
 
             </section>
@@ -224,23 +271,13 @@
     </footer>
 
 
-    <!-- Map switching -->
+    <!--
+        Milestone 5 uses external JavaScript.
+        The script is placed after the page content so the map
+        controls exist before map.js attaches its event listeners.
+    -->
 
-    <script>
-
-        function showMap(mapFile, mapName) {
-
-            document.getElementById("map-image").src =
-                "images/" + mapFile;
-
-            document.getElementById("map-image").alt =
-                mapName + " of Avelis";
-
-            document.getElementById("map-title").innerHTML =
-                mapName;
-        }
-
-    </script>
+    <script src="js/map.js"></script>
 
 </body>
 

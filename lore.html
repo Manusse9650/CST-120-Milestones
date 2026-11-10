@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 4 - Lore Archive Page
+    CST-120 Milestone 5 - Lore Archive Page
+
     This page organizes important terminology, traditions, locations,
     religious concepts, and other worldbuilding information from Avelis.
-    Shared site styling is stored in styles.css, while archive-specific
-    layout and table presentation remain on this page.
+
+    Shared site styling is stored in styles.css.
+    Lore-specific layout remains on this page.
+
+    JavaScript behavior is stored externally in js/lore.js.
+
+    jQuery 3.7.1 is loaded from the official jQuery CDN and is used
+    for the accessible Archive Guide show/hide interaction.
 -->
 
 <html lang="en">
@@ -61,6 +68,11 @@
             border: 1px solid #8f8064;
         }
 
+        .search-message {
+            margin: 10px 0 20px 0;
+            font-style: italic;
+        }
+
 
         /*
             Flexbox allows archive categories to remain centered and
@@ -68,7 +80,7 @@
         */
 
         .categories {
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -77,6 +89,11 @@
 
         .categories span {
             display: inline-block;
+        }
+
+        .category-count {
+            margin-bottom: 25px;
+            font-style: italic;
         }
 
 
@@ -165,6 +182,44 @@
         }
 
 
+        /*
+            Milestone 5 jQuery demonstration.
+
+            The Archive Guide begins hidden and is shown or hidden
+            through jQuery in lore.js.
+        */
+
+        .archive-guide-button {
+            padding: 9px 16px;
+            margin-top: 10px;
+            font-family: "Times New Roman", serif;
+            font-size: 16px;
+            color: #3e2d20;
+            background-color: #e2c99d;
+            border: 1px solid #8f8064;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .archive-guide-button:hover,
+        .archive-guide-button:focus {
+            background-color: #d3b47b;
+        }
+
+        .archive-guide {
+            max-width: 650px;
+            margin: 20px auto 0 auto;
+            padding: 15px;
+            border: 1px solid #8f8064;
+            background-color: #f5ead4;
+            text-align: left;
+        }
+
+        .archive-guide.active-guide {
+            border: 2px solid #6f5137;
+        }
+
+
         /* Responsive table */
 
         @media (max-width: 800px) {
@@ -177,6 +232,11 @@
             .lore-table th,
             .lore-table td {
                 padding: 8px;
+            }
+
+            .search-area {
+                grid-template-columns: 1fr;
+                justify-items: center;
             }
         }
 
@@ -228,8 +288,8 @@
 
 
                 <!--
-                    Search is included as part of the planned archive interface.
-                    Functionality can be expanded when scripting is introduced.
+                    Search updates automatically as the visitor types.
+                    JavaScript filters the table rows in lore.js.
                 -->
 
                 <div class="search-area">
@@ -243,9 +303,16 @@
                         id="lore-search"
                         name="lore-search"
                         placeholder="Search the archive"
+                        aria-describedby="search-message"
                     >
 
                 </div>
+
+                <p
+                    id="search-message"
+                    class="search-message"
+                    aria-live="polite"
+                ></p>
 
 
                 <!-- Archive categories -->
@@ -263,11 +330,14 @@
 
                 </div>
 
+                <p
+                    id="category-count"
+                    class="category-count"
+                    aria-live="polite"
+                ></p>
 
-                <!--
-                    The table uses semantic table elements and scoped headers
-                    to make relationships between information clearer.
-                -->
+
+                <!-- Lore reference table -->
 
                 <table class="lore-table">
 
@@ -404,18 +474,15 @@
 
                                 <br>
 
-                                <!--
-                                    Original pronunciation recording created
-                                    for the Avelis project. The transcript
-                                    provides a written alternative.
-                                -->
-
                                 <audio controls>
+
                                     <source
                                         src="audio/Veshalor.m4a"
                                         type="audio/mp4"
                                     >
+
                                     Your browser does not support the audio element.
+
                                 </audio>
 
                                 <p class="audio-transcript">
@@ -445,17 +512,15 @@
 
                                 <br>
 
-                                <!--
-                                    Pronunciation audio helps users understand
-                                    unfamiliar terminology from Avelis.
-                                -->
-
                                 <audio controls>
+
                                     <source
                                         src="audio/Aurelis.m4a"
                                         type="audio/mp4"
                                     >
+
                                     Your browser does not support the audio element.
+
                                 </audio>
 
                                 <p class="audio-transcript">
@@ -532,8 +597,15 @@
                 <!-- Future archive navigation -->
 
                 <div class="archive-navigation">
-                    <a href="#">Previous</a>
-                    <a href="#">Next</a>
+
+                    <a href="#">
+                        Previous
+                    </a>
+
+                    <a href="#">
+                        Next
+                    </a>
+
                 </div>
 
             </section>
@@ -551,6 +623,52 @@
                     include pronunciation recordings for unfamiliar words.
                 </p>
 
+
+                <!--
+                    Milestone 5 jQuery interaction.
+
+                    lore.js uses jQuery to show and hide the guide,
+                    update ARIA attributes, change the button text,
+                    and apply an additional CSS class.
+                -->
+
+                <button
+                    type="button"
+                    id="archive-guide-button"
+                    class="archive-guide-button"
+                    aria-expanded="false"
+                    aria-controls="archive-guide"
+                >
+                    Show Archive Guide
+                </button>
+
+
+                <div
+                    id="archive-guide"
+                    class="archive-guide"
+                    aria-hidden="true"
+                    tabindex="-1"
+                    hidden
+                >
+
+                    <h4>
+                        Archive Guide
+                    </h4>
+
+                    <p>
+                        Use the search field to locate information by
+                        category, system name, location, tradition, or
+                        words contained within an entry.
+                    </p>
+
+                    <p>
+                        Clearing the search field restores all archive
+                        entries. Selected names also include pronunciation
+                        recordings that can be played directly from the table.
+                    </p>
+
+                </div>
+
             </aside>
 
         </main>
@@ -563,6 +681,26 @@
     <footer>
         <p>Avelis World Companion</p>
     </footer>
+
+
+    <!--
+        jQuery 3.7.1 is loaded from the official jQuery CDN.
+
+        jQuery is used on this page to demonstrate show/hide behavior
+        and additional DOM/attribute manipulation required for Milestone 5.
+    -->
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+    ></script>
+
+
+    <!--
+        Lore-specific JavaScript is stored externally.
+        It loads after jQuery so lore.js can use jQuery methods.
+    -->
+
+    <script src="js/lore.js"></script>
 
 </body>
 
