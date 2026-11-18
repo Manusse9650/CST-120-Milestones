@@ -1,7 +1,8 @@
 /*
-    CST-120 Milestone 5 - Home Page JavaScript
+    CST-120 Milestone 6 - Home Page JavaScript
 
-    This file controls the Begin Your Journey form on index.html.
+    This file controls the Begin Your Journey form
+    and the Creator Note jQuery interaction on index.html.
 
     It demonstrates:
     - External JavaScript
@@ -14,6 +15,8 @@
     - Template literals
     - Inline user feedback
     - Accessibility-focused feedback
+    - jQuery show/hide interaction
+    - jQuery attribute and text updates
 */
 
 
@@ -112,6 +115,7 @@ function showStudentInfo() {
 
     let interestLink;
 
+
     switch (visitorInterest) {
 
         case "Characters":
@@ -132,60 +136,145 @@ function showStudentInfo() {
 
 
     /*
-        A multiline template literal keeps the result organized
-        and allows the selected destination and webpage link
-        to be inserted directly into the message.
+        Clear any previous successful output.
     */
 
-    let studentMessage = `
-        <p>
-            <strong>Hello, ${formattedName}! Welcome to Avelis.</strong>
-        </p>
-
-        <p>
-            You selected that you would like to explore the
-            <strong>${visitorInterest}</strong>.
-            Begin your journey below.
-        </p>
-
-        <p>
-            <a
-                href="${interestLink}"
-                class="explore-link"
-            >
-                Explore the ${visitorInterest}
-            </a>
-        </p>
-
-        <p>
-            <strong>Website Creator:</strong>
-            ${studentInfo.name}
-        </p>
-
-        <p>
-            <strong>Education Level:</strong>
-            ${studentInfo.educationLevel}
-        </p>
-
-        <p>
-            <strong>Major:</strong>
-            ${studentInfo.major}
-        </p>
-
-        <p>
-            <strong>Class Designation:</strong>
-            ${studentInfo.classDesignation}
-        </p>
-
-        <p>
-            <strong>Anticipated Occupation:</strong>
-            ${studentInfo.anticipatedOccupation}
-        </p>
-    `;
+    studentOutput.textContent =
+        "";
 
 
-    studentOutput.innerHTML =
-        studentMessage;
+    /*
+        Create the greeting with textContent so the visitor's
+        typed name is treated only as text rather than HTML.
+    */
+
+    const greeting =
+        document.createElement("p");
+
+    const greetingStrong =
+        document.createElement("strong");
+
+    greetingStrong.textContent =
+        `Hello, ${formattedName}! Welcome to Avelis.`;
+
+    greeting.appendChild(greetingStrong);
+
+    studentOutput.appendChild(greeting);
+
+
+    /*
+        Create the destination message.
+    */
+
+    const destinationMessage =
+        document.createElement("p");
+
+    destinationMessage.append(
+        "You selected that you would like to explore the "
+    );
+
+    const destinationStrong =
+        document.createElement("strong");
+
+    destinationStrong.textContent =
+        visitorInterest;
+
+    destinationMessage.appendChild(
+        destinationStrong
+    );
+
+    destinationMessage.append(
+        ". Begin your journey below."
+    );
+
+    studentOutput.appendChild(
+        destinationMessage
+    );
+
+
+    /*
+        Create the destination link.
+    */
+
+    const linkParagraph =
+        document.createElement("p");
+
+    const exploreLink =
+        document.createElement("a");
+
+    exploreLink.href =
+        interestLink;
+
+    exploreLink.className =
+        "explore-link";
+
+    exploreLink.textContent =
+        `Explore the ${visitorInterest}`;
+
+    linkParagraph.appendChild(
+        exploreLink
+    );
+
+    studentOutput.appendChild(
+        linkParagraph
+    );
+
+
+    /*
+        Helper function for creator information.
+
+        This keeps each information row consistent.
+    */
+
+    function addCreatorInfo(label, value) {
+
+        const infoParagraph =
+            document.createElement("p");
+
+        const infoLabel =
+            document.createElement("strong");
+
+        infoLabel.textContent =
+            label + ": ";
+
+        infoParagraph.appendChild(
+            infoLabel
+        );
+
+        infoParagraph.append(
+            value
+        );
+
+        studentOutput.appendChild(
+            infoParagraph
+        );
+    }
+
+
+    addCreatorInfo(
+        "Website Creator",
+        studentInfo.name
+    );
+
+    addCreatorInfo(
+        "Education Level",
+        studentInfo.educationLevel
+    );
+
+    addCreatorInfo(
+        "Major",
+        studentInfo.major
+    );
+
+    addCreatorInfo(
+        "Class Designation",
+        studentInfo.classDesignation
+    );
+
+    addCreatorInfo(
+        "Anticipated Occupation",
+        studentInfo.anticipatedOccupation
+    );
 }
 
 
@@ -208,164 +297,309 @@ function showStudentInfo() {
     Errors are connected to their controls through
     aria-describedby in the HTML. aria-invalid is updated
     so assistive technology can identify invalid fields.
-    The first invalid field receives focus to reduce
-    navigation difficulty.
+    The first invalid field receives focus.
 */
 
-studentForm.addEventListener("submit", function(event) {
+studentForm.addEventListener(
+    "submit",
+    function(event) {
 
-    /*
-        Stop the browser's normal form submission so
-        JavaScript can validate the form first.
-    */
+        /*
+            Stop the browser's normal form submission so
+            JavaScript can validate the form first.
+        */
 
-    event.preventDefault();
-
-
-    /*
-        Select every required form control.
-
-        The loop ends after every required control has
-        been checked once. If there are no required
-        controls, the loop performs zero iterations.
-    */
-
-    const requiredFields =
-        studentForm.querySelectorAll("[required]");
-
-
-    let formIsValid = true;
-
-    let firstInvalidField = null;
-
-
-    /*
-        Validation loop:
-
-        Each required field is checked once.
-        Empty fields are marked invalid while valid fields
-        have previous error messages removed.
-    */
-
-    for (let i = 0; i < requiredFields.length; i++) {
-
-        let field =
-            requiredFields[i];
+        event.preventDefault();
 
 
         /*
-            trim() allows text fields containing only spaces
-            to be treated as empty.
+            Select every required form control.
+
+            The loop ends after every required control has
+            been checked once.
         */
 
-        let fieldValue =
-            field.value.trim();
-
-
-        let errorElement =
-            document.getElementById(
-                field.getAttribute("aria-describedby")
+        const requiredFields =
+            studentForm.querySelectorAll(
+                "[required]"
             );
+
+
+        let formIsValid =
+            true;
+
+        let firstInvalidField =
+            null;
 
 
         /*
-            Selection statement:
+            Validation loop:
 
-            Empty fields are marked invalid and receive
-            a clear inline message.
+            Each required field is checked once.
+            Empty fields are marked invalid while valid fields
+            have previous error messages removed.
         */
 
-        if (fieldValue === "") {
+        for (
+            let i = 0;
+            i < requiredFields.length;
+            i++
+        ) {
 
-            formIsValid = false;
-
-            field.classList.add("input-error");
-
-            field.setAttribute(
-                "aria-invalid",
-                "true"
-            );
+            let field =
+                requiredFields[i];
 
 
             /*
-                The error message changes based on which
-                required control needs attention.
+                trim() allows fields containing only spaces
+                to be treated as empty.
             */
 
-            if (field.id === "visitor-name") {
+            let fieldValue =
+                field.value.trim();
 
-                errorElement.textContent =
-                    "Please enter your name.";
 
-            } else if (field.id === "visitor-interest") {
-
-                errorElement.textContent =
-                    "Please select an area of Avelis to explore.";
-            }
+            let errorElement =
+                document.getElementById(
+                    field.getAttribute(
+                        "aria-describedby"
+                    )
+                );
 
 
             /*
-                Store only the first invalid control so
-                focus can move there after validation.
+                Empty fields receive an error state
+                and an inline message.
             */
 
-            if (firstInvalidField === null) {
-                firstInvalidField = field;
+            if (fieldValue === "") {
+
+                formIsValid =
+                    false;
+
+                field.classList.add(
+                    "input-error"
+                );
+
+                field.setAttribute(
+                    "aria-invalid",
+                    "true"
+                );
+
+
+                if (
+                    field.id ===
+                    "visitor-name"
+                ) {
+
+                    errorElement.textContent =
+                        "Please enter your name.";
+
+                } else if (
+                    field.id ===
+                    "visitor-interest"
+                ) {
+
+                    errorElement.textContent =
+                        "Please select an area of Avelis to explore.";
+                }
+
+
+                /*
+                    Store only the first invalid field
+                    for focus management.
+                */
+
+                if (
+                    firstInvalidField ===
+                    null
+                ) {
+
+                    firstInvalidField =
+                        field;
+                }
+
+            } else {
+
+                /*
+                    Clear previous error states
+                    from valid fields.
+                */
+
+                field.classList.remove(
+                    "input-error"
+                );
+
+                field.setAttribute(
+                    "aria-invalid",
+                    "false"
+                );
+
+                errorElement.textContent =
+                    "";
             }
+        }
+
+
+        /*
+            Only display the personalized result
+            when every required field is valid.
+        */
+
+        if (formIsValid) {
+
+            studentOutput.textContent =
+                "";
+
+            showStudentInfo();
 
         } else {
 
             /*
-                Valid controls have previous error styles,
-                messages, and ARIA error states removed.
+                Clear previous successful output.
             */
 
-            field.classList.remove("input-error");
+            studentOutput.textContent =
+                "Please correct the form fields above.";
 
-            field.setAttribute(
-                "aria-invalid",
+
+            /*
+                Move focus to the first invalid field.
+            */
+
+            if (
+                firstInvalidField !==
+                null
+            ) {
+
+                firstInvalidField.focus();
+            }
+        }
+    }
+);
+
+
+/*
+    Activity 6 jQuery Example 2:
+    Creator Note interaction.
+
+    Purpose:
+    Shows and hides additional information about
+    the creator of the website.
+
+    Trigger:
+    The visitor selects the Show Creator Note button.
+
+    Expected outcome:
+    The note appears or disappears and the button text
+    changes to reflect the current state.
+
+    Accessibility:
+    aria-expanded and aria-hidden are updated so assistive
+    technology can determine whether the note is open.
+*/
+
+
+$("#creator-note-button").on(
+    "click",
+    function() {
+
+        let creatorNote =
+            $("#creator-note");
+
+        let creatorButton =
+            $("#creator-note-button");
+
+
+        /*
+            Read the current accessibility state.
+        */
+
+        let isExpanded =
+            creatorButton.attr(
+                "aria-expanded"
+            ) === "true";
+
+
+        /*
+            If the note is currently closed,
+            display it using jQuery fadeIn().
+        */
+
+        if (isExpanded === false) {
+
+            creatorNote.prop(
+                "hidden",
+                false
+            );
+
+
+            creatorNote.fadeIn();
+
+
+            creatorButton
+                .attr(
+                    "aria-expanded",
+                    "true"
+                )
+                .text(
+                    "Hide Creator Note"
+                );
+
+
+            creatorNote.attr(
+                "aria-hidden",
                 "false"
             );
 
-            errorElement.textContent =
-                "";
+
+            /*
+                Move focus to the newly revealed note.
+            */
+
+            creatorNote.trigger(
+                "focus"
+            );
+
+        } else {
+
+            /*
+                Fade the note out.
+            */
+
+            creatorNote.fadeOut(
+                function() {
+
+                    creatorNote
+                        .prop(
+                            "hidden",
+                            true
+                        )
+                        .attr(
+                            "aria-hidden",
+                            "true"
+                        );
+                }
+            );
+
+
+            creatorButton
+                .attr(
+                    "aria-expanded",
+                    "false"
+                )
+                .text(
+                    "Show Creator Note"
+                );
+
+
+            /*
+                Return focus to the button.
+            */
+
+            creatorButton.trigger(
+                "focus"
+            );
         }
     }
-
-
-    /*
-        Selection statement:
-
-        Only display the personalized journey information
-        when every required field passes validation.
-    */
-
-    if (formIsValid) {
-
-        studentOutput.innerHTML =
-            "";
-
-        showStudentInfo();
-
-    } else {
-
-        /*
-            Clear any previous successful output so it does
-            not conflict with current validation feedback.
-        */
-
-        studentOutput.innerHTML =
-            "<p>Please correct the form fields above.</p>";
-
-
-        /*
-            Moving focus to the first invalid field helps
-            keyboard and screen-reader users locate the
-            problem efficiently.
-        */
-
-        if (firstInvalidField !== null) {
-            firstInvalidField.focus();
-        }
-    }
-});
+);

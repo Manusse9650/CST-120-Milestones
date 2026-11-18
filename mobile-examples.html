@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Avelis | Mobile Examples</title>
+
+
+    <!--
+        jQuery Mobile 1.4.5 stylesheet.
+        This library provides touch-friendly responsive controls.
+    -->
+
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+    >
+
+
+    <style>
+
+        body {
+            font-family: "Times New Roman", serif;
+        }
+
+
+        .avelis-heading {
+            text-align: center;
+        }
+
+
+        .creator-name {
+            font-weight: bold;
+        }
+
+
+        .mobile-example-section {
+            margin-bottom: 30px;
+        }
+
+
+        .example-description {
+            margin-bottom: 15px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div
+        data-role="page"
+        id="mobile-examples"
+    >
+
+
+        <!-- Mobile page header -->
+
+        <div
+            data-role="header"
+            data-theme="a"
+        >
+
+            <h1>
+                Avelis Mobile Guide
+            </h1>
+
+        </div>
+
+
+        <div
+            role="main"
+            class="ui-content"
+        >
+
+
+            <p class="avelis-heading">
+                Mobile examples created by
+                <span class="creator-name">
+                    Samantha Manuszak
+                </span>
+            </p>
+
+
+            <!--
+                jQuery Mobile Example 1:
+                Collapsible creator information.
+
+                The collapsible provides a compact way for
+                mobile visitors to reveal information only
+                when they need it.
+            -->
+
+            <section class="mobile-example-section">
+
+                <h2>
+                    Example 1: Mobile Collapsible
+                </h2>
+
+
+                <p class="example-description">
+                    Select the section below to reveal
+                    information about the creator.
+                </p>
+
+
+                <div
+                    data-role="collapsible"
+                    data-collapsed="true"
+                >
+
+                    <h3>
+                        About the Creator
+                    </h3>
+
+
+                    <p>
+                        The Avelis World Companion was created by
+                        <strong>Samantha Manuszak</strong>
+                        for CST-120: Introduction to Web Development.
+                    </p>
+
+
+                    <p>
+                        The project combines web development with
+                        original worldbuilding, character artwork,
+                        maps, lore, and stories.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!--
+                jQuery Mobile Example 2:
+                Touch-friendly navigation.
+
+                The navbar divides the available width into
+                large selectable buttons that are easier to
+                use on smaller screens.
+            -->
+
+            <section class="mobile-example-section">
+
+                <h2>
+                    Example 2: Mobile Navigation
+                </h2>
+
+
+                <p class="example-description">
+                    Use the mobile navigation below to move
+                    between areas of the Avelis website.
+                </p>
+
+
+                <div
+                    data-role="navbar"
+                    aria-label="Avelis mobile navigation"
+                >
+
+                    <ul>
+
+                        <li>
+                            <a
+                                href="index.html"
+                                data-icon="home"
+                            >
+                                Home
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a
+                                href="characters.html"
+                                data-icon="user"
+                            >
+                                Characters
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a
+                                href="lore.html"
+                                data-icon="grid"
+                            >
+                                Lore
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+        <!-- Mobile page footer -->
+
+        <div
+            data-role="footer"
+            data-position="static"
+        >
+
+            <h4>
+                Samantha Manuszak | CST-120
+            </h4>
+
+        </div>
+
+
+    </div>
+
+
+    <!--
+        jQuery must load before jQuery Mobile.
+    -->
+
+    <script
+        src="https://code.jquery.com/jquery-1.11.1.min.js"
+    ></script>
+
+
+    <script
+        src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"
+    ></script>
+
+
+</body>
+
+</html>

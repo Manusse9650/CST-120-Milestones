@@ -1,126 +1,240 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 5 - Lore Archive Page
+    CST-120 Milestone 6 - Lore Archive Page
 
-    This page organizes important terminology, traditions, locations,
-    religious concepts, and other worldbuilding information from Avelis.
+    The Lore Archive organizes worldbuilding information from Avelis.
 
-    Shared site styling is stored in styles.css.
-    Lore-specific layout remains on this page.
+    Archive entries are stored separately in:
+    data/Lore-Archive.csv
 
-    JavaScript behavior is stored externally in js/lore.js.
+    JavaScript in js/lore.js loads the CSV data, builds the archive
+    table, manages search and category filtering, and controls the
+    jQuery Archive Guide.
 
-    jQuery 3.7.1 is loaded from the official jQuery CDN and is used
-    for the accessible Archive Guide show/hide interaction.
+    Separating the archive data from the HTML allows the archive
+    to grow without making this page unnecessarily long.
 -->
 
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Avelis | Lore Archive</title>
 
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- Shared site stylesheet -->
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
 
     <style>
 
-        /* Lore page layout */
+        /*
+            Lore page layout
+        */
 
         .lore-content {
             text-align: center;
         }
 
+
         .lore-title {
             letter-spacing: 1px;
         }
 
+
         .lore-intro {
             max-width: 800px;
-            margin: 0 auto 25px auto;
+            margin: 0 auto 30px auto;
         }
 
 
         /*
-            Grid keeps the search label and input aligned while allowing
-            the input field to use the remaining available space.
+            Search area
+
+            Grid keeps the label and search field aligned
+            while allowing the input to expand when space permits.
         */
 
         .search-area {
+            max-width: 750px;
+            margin: 0 auto 25px auto;
+
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 10px;
+
             align-items: center;
         }
+
 
         .search-area label {
             font-weight: bold;
         }
 
+
         .search-area input {
-            width: 300px;
-            max-width: 90%;
-            padding: 8px;
+            width: 100%;
+            padding: 10px;
+
             font-family: "Times New Roman", serif;
             font-size: 16px;
+
+            color: #3e2d20;
+            background-color: #ffffff;
+
             border: 1px solid #8f8064;
+            border-radius: 4px;
         }
 
-        .search-message {
-            margin: 10px 0 20px 0;
+
+        .search-area input:focus {
+            outline: 2px solid #8b633d;
+            outline-offset: 2px;
+        }
+
+
+        /*
+            Archive category area
+
+            Flexbox allows the complete list of archive
+            categories to wrap naturally across screen sizes.
+        */
+
+        .category-section {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+        }
+
+
+        .category-section h3 {
+            margin-bottom: 15px;
+        }
+
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /*
+            Category buttons are prepared for JavaScript filtering.
+
+            They will allow visitors to display one category
+            without searching through the complete archive.
+        */
+
+        .category-button {
+            padding: 8px 12px;
+
+            font-family: "Times New Roman", serif;
+            font-size: 15px;
+
+            color: #3e2d20;
+            background-color: #e2c99d;
+
+            border: 1px solid #8f8064;
+            border-radius: 4px;
+
+            cursor: pointer;
+        }
+
+
+        .category-button:hover,
+        .category-button:focus {
+            background-color: #d3b47b;
+        }
+
+
+        .category-button.active-category {
+            background-color: #8b633d;
+            color: #ffffff;
+        }
+
+
+        /*
+            Category and search information is announced
+            without interrupting the visitor.
+        */
+
+        .archive-status {
+            min-height: 24px;
+
+            margin: 10px auto 20px auto;
+
             font-style: italic;
         }
 
 
         /*
-            Flexbox allows archive categories to remain centered and
-            wrap naturally when the available screen width becomes smaller.
+            Table container
+
+            The wrapper allows horizontal scrolling on smaller
+            screens instead of forcing the table off the page.
         */
 
-        .categories {
-            margin-bottom: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px 16px;
-        }
+        .table-wrapper {
+            width: 95%;
+            max-width: 1200px;
 
-        .categories span {
-            display: inline-block;
-        }
+            margin: 0 auto;
 
-        .category-count {
-            margin-bottom: 25px;
-            font-style: italic;
+            overflow-x: auto;
         }
 
 
-        /* Lore reference table */
+        /*
+            Lore reference table
+        */
 
         .lore-table {
-            width: 90%;
-            margin: 0 auto;
+            width: 100%;
+
             border-collapse: collapse;
+
             background-color: #f5ead4;
         }
 
+
         .lore-table caption {
+            margin-bottom: 12px;
+
             font-family: Castellar, Georgia, serif;
-            font-weight: bold;
             font-size: 20px;
-            margin-bottom: 10px;
+            font-weight: bold;
+
             color: #3e2d20;
         }
 
+
         .lore-table th,
         .lore-table td {
-            border: 2px solid #8b633d;
             padding: 12px;
+
+            border: 2px solid #8b633d;
+
             text-align: left;
             vertical-align: top;
         }
+
 
         .lore-table th {
             background-color: #c8ad7f;
@@ -128,115 +242,171 @@
         }
 
 
-        /* Pronunciation media */
+        /*
+            Category column
+        */
 
-        .lore-table audio {
-            margin-top: 8px;
-            max-width: 100%;
-        }
-
-        .audio-transcript {
-            font-size: 14px;
-            margin: 5px 0 0 0;
+        .lore-table th:first-child,
+        .lore-table td:first-child {
+            width: 22%;
         }
 
 
         /*
-            Grid separates the Previous and Next archive links into
-            two columns and keeps them aligned on opposite sides.
+            Entry/System column
         */
 
-        .archive-navigation {
-            margin-top: 25px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .archive-navigation a {
-            color: #3e2d20;
-            font-weight: bold;
-        }
-
-        .archive-navigation a:first-child {
-            justify-self: start;
-        }
-
-        .archive-navigation a:last-child {
-            justify-self: end;
+        .lore-table th:nth-child(2),
+        .lore-table td:nth-child(2) {
+            width: 23%;
         }
 
 
-        /* Supporting archive information */
+        /*
+            Details column receives the most space.
+        */
+
+        .lore-table th:nth-child(3),
+        .lore-table td:nth-child(3) {
+            width: 55%;
+        }
+
+
+        /*
+            Pronunciation recordings may be added to selected
+            archive entries by JavaScript.
+        */
+
+        .lore-table audio {
+            display: block;
+
+            max-width: 100%;
+
+            margin-top: 8px;
+        }
+
+
+        .audio-transcript {
+            margin: 5px 0 0 0;
+
+            font-size: 14px;
+        }
+
+
+        /*
+            Loading and empty-result rows
+        */
+
+        .archive-message-row td {
+            padding: 25px;
+
+            text-align: center;
+            font-style: italic;
+        }
+
+
+        /*
+            Archive Guide
+
+            This interaction remains part of the Milestone 5
+            jQuery demonstration and continues into Milestone 6.
+        */
 
         .archive-aside {
             max-width: 750px;
+
             margin: 40px auto 20px auto;
             padding: 20px;
+
             text-align: center;
         }
+
 
         .archive-aside h3 {
             margin-top: 0;
         }
 
 
-        /*
-            Milestone 5 jQuery demonstration.
-
-            The Archive Guide begins hidden and is shown or hidden
-            through jQuery in lore.js.
-        */
-
         .archive-guide-button {
             padding: 9px 16px;
             margin-top: 10px;
+
             font-family: "Times New Roman", serif;
             font-size: 16px;
+
             color: #3e2d20;
             background-color: #e2c99d;
+
             border: 1px solid #8f8064;
             border-radius: 4px;
+
             cursor: pointer;
         }
+
 
         .archive-guide-button:hover,
         .archive-guide-button:focus {
             background-color: #d3b47b;
         }
 
+
         .archive-guide {
             max-width: 650px;
+
             margin: 20px auto 0 auto;
             padding: 15px;
+
             border: 1px solid #8f8064;
+
             background-color: #f5ead4;
+
             text-align: left;
         }
+
 
         .archive-guide.active-guide {
             border: 2px solid #6f5137;
         }
 
 
-        /* Responsive table */
+        /*
+            Responsive design
+        */
 
         @media (max-width: 800px) {
 
-            .lore-table {
-                width: 100%;
-                font-size: 16px;
+            .search-area {
+                grid-template-columns: 1fr;
+
+                text-align: left;
             }
+
+
+            .categories {
+                justify-content: flex-start;
+            }
+
+
+            .category-button {
+                flex: 1 1 180px;
+            }
+
+
+            .table-wrapper {
+                width: 100%;
+            }
+
+
+            .lore-table {
+                min-width: 700px;
+
+                font-size: 15px;
+            }
+
 
             .lore-table th,
             .lore-table td {
                 padding: 8px;
-            }
-
-            .search-area {
-                grid-template-columns: 1fr;
-                justify-items: center;
             }
         }
 
@@ -247,26 +417,66 @@
 
 <body>
 
+
     <!-- Shared site header -->
 
     <header>
-        <h1>Avelis</h1>
+
+        <h1>
+            Avelis
+        </h1>
+
     </header>
 
 
     <div class="page-layout">
+
 
         <!-- Main site navigation -->
 
         <nav aria-label="Main navigation">
 
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="characters.html">Characters</a></li>
-                <li><a href="map.html">World Map</a></li>
-                <li><a href="#">Calendar</a></li>
-                <li><a href="lore.html">Lore Archive</a></li>
-                <li><a href="#">Books and Stories</a></li>
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="characters.html">
+                        Characters
+                    </a>
+                </li>
+
+                <li>
+                    <a href="map.html">
+                        World Map
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Calendar
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="lore.html"
+                        aria-current="page"
+                    >
+                        Lore Archive
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Books and Stories
+                    </a>
+                </li>
+
             </ul>
 
         </nav>
@@ -274,363 +484,383 @@
 
         <main>
 
+
             <section class="lore-content">
+
 
                 <h2 class="lore-title">
                     Lore Archive
                 </h2>
 
+
                 <p class="lore-intro">
+
                     The Lore Archive provides definitions and information
-                    about systems, traditions, locations, and other details
-                    found throughout Avelis.
+                    about the geography, societies, traditions, systems,
+                    magic, and everyday life found throughout Avelis.
+
+                    Use the search field or select a category to explore
+                    the archive.
+
                 </p>
 
 
                 <!--
-                    Search updates automatically as the visitor types.
-                    JavaScript filters the table rows in lore.js.
+                    Live search.
+
+                    JavaScript will search the entries loaded from
+                    data/Lore-Archive.csv as the visitor types.
                 -->
 
                 <div class="search-area">
 
                     <label for="lore-search">
-                        Search:
+                        Search the Archive:
                     </label>
 
+
                     <input
-                        type="text"
+                        type="search"
                         id="lore-search"
                         name="lore-search"
-                        placeholder="Search the archive"
-                        aria-describedby="search-message"
+                        placeholder="Search names, categories, or details"
+                        autocomplete="off"
+                        aria-describedby="archive-status"
                     >
 
                 </div>
 
+
+                <!--
+                    Archive categories
+
+                    The category names match the categories used
+                    in the Lore-Archive CSV file.
+                -->
+
+                <section
+                    class="category-section"
+                    aria-labelledby="category-heading"
+                >
+
+
+                    <h3 id="category-heading">
+                        Browse by Category
+                    </h3>
+
+
+                    <div
+                        class="categories"
+                        id="archive-categories"
+                    >
+
+
+                        <!-- Show all archive entries -->
+
+                        <button
+                            type="button"
+                            class="category-button active-category"
+                            data-category="all"
+                            aria-pressed="true"
+                        >
+                            All Categories
+                        </button>
+
+
+                        <!-- Geography & Environment -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Geography & Environment"
+                            aria-pressed="false"
+                        >
+                            Geography &amp; Environment
+                        </button>
+
+
+                        <!-- Community & Society -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Community & Society"
+                            aria-pressed="false"
+                        >
+                            Community &amp; Society
+                        </button>
+
+
+                        <!-- Economy & Trade -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Economy & Trade"
+                            aria-pressed="false"
+                        >
+                            Economy &amp; Trade
+                        </button>
+
+
+                        <!-- Household -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Household"
+                            aria-pressed="false"
+                        >
+                            Household
+                        </button>
+
+
+                        <!-- Law & Justice -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Law & Justice"
+                            aria-pressed="false"
+                        >
+                            Law &amp; Justice
+                        </button>
+
+
+                        <!-- Medicine & Health -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Medicine & Health"
+                            aria-pressed="false"
+                        >
+                            Medicine &amp; Health
+                        </button>
+
+
+                        <!-- Religion & Tradition -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Religion & Tradition"
+                            aria-pressed="false"
+                        >
+                            Religion &amp; Tradition
+                        </button>
+
+
+                        <!-- Transportation -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Transportation"
+                            aria-pressed="false"
+                        >
+                            Transportation
+                        </button>
+
+
+                        <!-- Military & Emergency -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Military & Emergency"
+                            aria-pressed="false"
+                        >
+                            Military &amp; Emergency
+                        </button>
+
+
+                        <!-- Infrastructure -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Infrastructure"
+                            aria-pressed="false"
+                        >
+                            Infrastructure
+                        </button>
+
+
+                        <!-- Magic -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Magic"
+                            aria-pressed="false"
+                        >
+                            Magic
+                        </button>
+
+
+                        <!-- Housing & Architecture -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Housing & Architecture"
+                            aria-pressed="false"
+                        >
+                            Housing &amp; Architecture
+                        </button>
+
+
+                        <!-- Education & Work -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Education & Work"
+                            aria-pressed="false"
+                        >
+                            Education &amp; Work
+                        </button>
+
+
+                        <!-- Food & Agriculture -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Food & Agriculture"
+                            aria-pressed="false"
+                        >
+                            Food &amp; Agriculture
+                        </button>
+
+
+                        <!-- Family -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Family"
+                            aria-pressed="false"
+                        >
+                            Family
+                        </button>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!--
+                    JavaScript updates this text with the number
+                    of matching archive entries.
+                -->
+
                 <p
-                    id="search-message"
-                    class="search-message"
+                    id="archive-status"
+                    class="archive-status"
                     aria-live="polite"
-                ></p>
-
-
-                <!-- Archive categories -->
-
-                <div class="categories">
-
-                    <strong>Categories:</strong>
-
-                    <span>Religion</span>
-                    <span>Traditions</span>
-                    <span>Timekeeping</span>
-                    <span>Locations</span>
-                    <span>Clothing and Symbols</span>
-                    <span>Family</span>
-
-                </div>
-
-                <p
-                    id="category-count"
-                    class="category-count"
-                    aria-live="polite"
-                ></p>
-
-
-                <!-- Lore reference table -->
-
-                <table class="lore-table">
-
-                    <caption>
-                        Avelis Lore Archive
-                    </caption>
-
-                    <thead>
-
-                        <tr>
-                            <th scope="col">Category</th>
-                            <th scope="col">System</th>
-                            <th scope="col">Details</th>
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        <tr>
-
-                            <td>Religion</td>
-
-                            <td>
-                                Eternal Flame
-                            </td>
-
-                            <td>
-                                The first light and source of all life.
-                                The Eternal Flame is believed to know all,
-                                give all, and sustain all. Every Heart Flame
-                                is born from it and ultimately returns to it.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Religion</td>
-
-                            <td>
-                                Heart Flame
-                            </td>
-
-                            <td>
-                                A living fragment of the Eternal Flame
-                                entrusted to every mortal. Caring for the
-                                Heart Flame through choices and deeds is
-                                considered one of life's greatest responsibilities.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Traditions</td>
-
-                            <td>
-                                Flame Binding
-                            </td>
-
-                            <td>
-                                The sacred union of two mortals before the
-                                Eternal Flame. Through binding vows and the
-                                Handfasting, their lives are joined and their
-                                magic is bound to answer as one.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Traditions</td>
-
-                            <td>
-                                Binding Basket
-                            </td>
-
-                            <td>
-                                A woven basket prepared for a newly bound
-                                couple and filled with gifts of nourishment,
-                                comfort, and hope for the life they begin together.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Traditions</td>
-
-                            <td>
-                                Handfasting
-                            </td>
-
-                            <td>
-                                A sacred rite performed during a Flame Binding
-                                in which the hands of two mortals are bound
-                                together with a woven cord to signify their
-                                union before the Eternal Flame.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Timekeeping</td>
-
-                            <td>
-                                Solturn
-                            </td>
-
-                            <td>
-                                One complete journey of Avelis around the
-                                Eternal Flame. A Solturn consists of ten moons,
-                                forty spans, and four hundred cycles.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Locations</td>
-
-                            <td>
-
-                                <strong>Veshalor</strong>
-
-                                <br>
-
-                                <audio controls>
-
-                                    <source
-                                        src="audio/Veshalor.m4a"
-                                        type="audio/mp4"
-                                    >
-
-                                    Your browser does not support the audio element.
-
-                                </audio>
-
-                                <p class="audio-transcript">
-                                    Transcript: Pronunciation of Veshalor.
-                                </p>
-
-                            </td>
-
-                            <td>
-                                The holy city of Solarath, located within
-                                a volcanic basin in the Veshalor Mountains.
-                                It is the spiritual center of the Eternal Flame
-                                and is known for master glassmakers and sacred
-                                stained glass.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Religion</td>
-
-                            <td>
-
-                                <strong>Aurelis</strong>
-
-                                <br>
-
-                                <audio controls>
-
-                                    <source
-                                        src="audio/Aurelis.m4a"
-                                        type="audio/mp4"
-                                    >
-
-                                    Your browser does not support the audio element.
-
-                                </audio>
-
-                                <p class="audio-transcript">
-                                    Transcript: Pronunciation of Aurelis.
-                                </p>
-
-                            </td>
-
-                            <td>
-                                A member of the Order of Aurelis who is devoted
-                                to the service of the temples and the Radiants.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Clothing and Symbols</td>
-
-                            <td>
-                                Arm Cuffs
-                            </td>
-
-                            <td>
-                                Ceremonial bands worn on the upper arms that
-                                mark major bonds in a person's life. Nearly
-                                every citizen of Solarath wears a matched pair
-                                by adulthood.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Family</td>
-
-                            <td>
-                                Mother's Bells
-                            </td>
-
-                            <td>
-                                A strand of small bells worn around the waist
-                                or resting over the abdomen during pregnancy.
-                                Their sound is believed to guide a child's
-                                Heart Flame to their mother before birth.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>Religion</td>
-
-                            <td>
-                                Embryn
-                            </td>
-
-                            <td>
-                                A member of the Order of Embryn who is sworn
-                                to guard the sacred flames and those under
-                                their protection.
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-
-                <!-- Future archive navigation -->
-
-                <div class="archive-navigation">
-
-                    <a href="#">
-                        Previous
-                    </a>
-
-                    <a href="#">
-                        Next
-                    </a>
-
-                </div>
-
-            </section>
-
-
-            <!-- Supporting archive information -->
-
-            <aside class="archive-aside">
-
-                <h3>Using the Archive</h3>
-
-                <p>
-                    The Lore Archive collects recurring terms and traditions
-                    from Avelis in one reference area. Selected entries also
-                    include pronunciation recordings for unfamiliar words.
+                >
+                    Loading the Avelis Lore Archive...
                 </p>
 
 
                 <!--
-                    Milestone 5 jQuery interaction.
+                    Lore reference table
 
-                    lore.js uses jQuery to show and hide the guide,
-                    update ARIA attributes, change the button text,
-                    and apply an additional CSS class.
+                    The tbody intentionally contains no permanent
+                    lore entries.
+
+                    js/lore.js will read data/Lore-Archive.csv
+                    and create the rows automatically.
                 -->
+
+                <div class="table-wrapper">
+
+                    <table class="lore-table">
+
+
+                        <caption>
+                            Avelis Lore Archive
+                        </caption>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th scope="col">
+                                    Category
+                                </th>
+
+                                <th scope="col">
+                                    Entry
+                                </th>
+
+                                <th scope="col">
+                                    Details
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="lore-table-body">
+
+
+                            <!--
+                                Temporary loading row.
+
+                                JavaScript removes this row after
+                                the CSV data is successfully loaded.
+                            -->
+
+                            <tr class="archive-message-row">
+
+                                <td colspan="3">
+                                    Loading archive entries...
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+
+            </section>
+
+
+            <!--
+                Supporting archive information
+
+                The Archive Guide remains the jQuery show/hide
+                demonstration used in the milestone project.
+            -->
+
+            <aside class="archive-aside">
+
+
+                <h3>
+                    Using the Archive
+                </h3>
+
+
+                <p>
+
+                    The Lore Archive collects recurring terms,
+                    traditions, locations, systems, and details
+                    from Avelis in one searchable reference area.
+
+                </p>
+
 
                 <button
                     type="button"
@@ -651,27 +881,46 @@
                     hidden
                 >
 
+
                     <h4>
                         Archive Guide
                     </h4>
 
-                    <p>
-                        Use the search field to locate information by
-                        category, system name, location, tradition, or
-                        words contained within an entry.
-                    </p>
 
                     <p>
-                        Clearing the search field restores all archive
-                        entries. Selected names also include pronunciation
-                        recordings that can be played directly from the table.
+
+                        Use the search field to look for a specific
+                        word, place, custom, system, or other topic.
+
                     </p>
+
+
+                    <p>
+
+                        Category buttons can narrow the archive to
+                        one area of Avelis worldbuilding. Select
+                        All Categories to return to the complete archive.
+
+                    </p>
+
+
+                    <p>
+
+                        The archive information is stored separately
+                        from this webpage so new entries can be added
+                        without expanding the HTML document.
+
+                    </p>
+
 
                 </div>
 
+
             </aside>
 
+
         </main>
+
 
     </div>
 
@@ -679,15 +928,19 @@
     <!-- Shared site footer -->
 
     <footer>
-        <p>Avelis World Companion</p>
+
+        <p>
+            Avelis World Companion
+        </p>
+
     </footer>
 
 
     <!--
-        jQuery 3.7.1 is loaded from the official jQuery CDN.
+        jQuery 3.7.1
 
-        jQuery is used on this page to demonstrate show/hide behavior
-        and additional DOM/attribute manipulation required for Milestone 5.
+        jQuery must load before lore.js so the Archive Guide
+        interaction can use jQuery methods.
     -->
 
     <script
@@ -696,11 +949,19 @@
 
 
     <!--
-        Lore-specific JavaScript is stored externally.
-        It loads after jQuery so lore.js can use jQuery methods.
+        Lore Archive JavaScript
+
+        This file will:
+        - Load data/Lore-Archive.csv
+        - Build archive table rows
+        - Search archive entries
+        - Filter categories
+        - Update result counts
+        - Control the jQuery Archive Guide
     -->
 
     <script src="js/lore.js"></script>
+
 
 </body>
 
