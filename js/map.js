@@ -1,220 +1,345 @@
 /*
-    CST-120 Milestone 5 - Map Page JavaScript
+    CST-120 Milestone 6
+    Avelis Map Page JavaScript
 
     This file controls the interactive map selection on map.html.
 
-    It demonstrates:
+    Features:
     - External JavaScript
-    - Objects
+    - JavaScript objects
     - Selection statements
     - Template literals
-    - Loops
-    - Event listeners
-    - ARIA updates
-    - Visual state changes
+    - Event delegation
+    - ARIA accessibility updates
+    - Visual active states
+    - Responsive-friendly interaction
 */
 
 
-/*
-    Wait until the HTML document has completely loaded
-    before selecting elements or attaching event listeners.
-*/
+/* =========================================================
+   WAIT FOR PAGE TO LOAD
+   ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function() {
-
-
-    /*
-        Map data object.
-
-        Each property stores the image filename and display
-        name for one map option.
-    */
-
-    const mapData = {
-
-        city: {
-            file: "City-Map.jpeg",
-            name: "City Map"
-        },
-
-        geography: {
-            file: "Geography-Map.jpeg",
-            name: "Geography Map"
-        },
-
-        political: {
-            file: "Political-Map.jpeg",
-            name: "Political Map"
-        }
-    };
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
 
-    /*
-        Store the map image, title, and buttons.
-    */
+        /* =====================================================
+           MAP DATA
+           =====================================================
 
-    const mapImage =
-        document.getElementById("map-image");
-
-    const mapTitle =
-        document.getElementById("map-title");
-
-    const mapButtons =
-        document.querySelectorAll(".map-buttons button");
-
-
-    /*
-        showMap()
-
-        Purpose:
-        Changes the displayed image based on the map
-        selected by the visitor.
-
-        Expected outcome:
-        The image, alternative text, heading, button style,
-        and ARIA state all update.
-    */
-
-    function showMap(mapType) {
-
-        let selectedMap;
-
-
-        /*
-            Selection statement:
-
-            The switch statement determines which map
-            object should be displayed.
+           Each map contains:
+           - Image filename
+           - Display name
+           - Alternative text
+           - Short description
         */
 
-        switch (mapType) {
+        const mapData = {
 
-            case "city":
-                selectedMap = mapData.city;
-                break;
+            city: {
 
-            case "geography":
-                selectedMap = mapData.geography;
-                break;
+                file:
+                    "City-Map.jpeg",
 
-            case "political":
-                selectedMap = mapData.political;
-                break;
+                name:
+                    "City Map",
 
-            default:
-                selectedMap = mapData.city;
-        }
+                alt:
+                    "City map of Avelis",
 
+                description:
+                    "View important cities, settlements, and developed areas throughout Avelis."
 
-        /*
-            Template literals create the image path,
-            alternative text, and heading.
-        */
-
-        let mapImageSource =
-            `images/${selectedMap.file}`;
-
-        let mapAltText =
-            `${selectedMap.name} of Avelis`;
-
-        let mapHeading =
-            `Viewing: ${selectedMap.name}`;
+            },
 
 
-        /*
-            Update the displayed map.
-        */
+            geography: {
 
-        mapImage.src =
-            mapImageSource;
+                file:
+                    "Geography-Map.jpeg",
 
-        mapImage.alt =
-            mapAltText;
+                name:
+                    "Geography Map",
 
-        mapTitle.textContent =
-            mapHeading;
+                alt:
+                    "Geographic map of Avelis",
 
+                description:
+                    "Explore the physical geography of Avelis, including major landforms and natural regions."
 
-        /*
-            Loop through all map buttons.
-
-            The loop ends after every button has been
-            checked once.
-
-            The selected button receives the active style
-            and aria-pressed="true".
-        */
-
-        for (let i = 0; i < mapButtons.length; i++) {
-
-            let buttonMapType =
-                mapButtons[i].getAttribute("data-map");
+            },
 
 
-            if (buttonMapType === mapType) {
+            political: {
 
-                mapButtons[i].classList.add(
-                    "active-map"
-                );
+                file:
+                    "Political-Map.jpeg",
 
-                mapButtons[i].setAttribute(
-                    "aria-pressed",
-                    "true"
-                );
+                name:
+                    "Political Map",
 
-            } else {
+                alt:
+                    "Political map of Avelis",
 
-                mapButtons[i].classList.remove(
-                    "active-map"
-                );
+                description:
+                    "View the kingdoms, borders, and political regions that shape the world of Avelis."
 
-                mapButtons[i].setAttribute(
-                    "aria-pressed",
-                    "false"
-                );
             }
+
+        };
+
+
+        /* =====================================================
+           PAGE ELEMENTS
+           ===================================================== */
+
+        const mapImage =
+            document.getElementById(
+                "map-image"
+            );
+
+
+        const mapTitle =
+            document.getElementById(
+                "map-title"
+            );
+
+
+        const mapDescription =
+            document.getElementById(
+                "map-description"
+            );
+
+
+        const mapButtonContainer =
+            document.querySelector(
+                ".map-buttons"
+            );
+
+
+        /*
+            Stop safely if the required elements
+            do not exist on the page.
+        */
+
+        if (
+            mapImage === null ||
+            mapTitle === null ||
+            mapButtonContainer === null
+        ) {
+
+            return;
+
         }
-    }
 
 
-    /*
-        Map button event listeners.
+        /* =====================================================
+           SHOW MAP
+           ===================================================== */
 
-        Purpose:
-        Each button sends its data-map value to showMap().
+        function showMap(
+            mapType
+        ) {
 
-        Trigger:
-        The visitor clicks one of the map buttons.
+            let selectedMap;
 
-        Expected outcome:
-        The selected map appears immediately.
 
-        Accessibility:
-        Native button elements support both mouse and
-        keyboard activation.
-    */
+            /*
+                Selection statement.
 
-    for (let i = 0; i < mapButtons.length; i++) {
+                The switch determines which map object
+                should be displayed.
+            */
 
-        mapButtons[i].addEventListener(
-            "click",
-            function(event) {
+            switch (
+                mapType
+            ) {
 
-                let mapType =
-                    event.currentTarget.getAttribute(
+                case "city":
+
+                    selectedMap =
+                        mapData.city;
+
+                    break;
+
+
+                case "geography":
+
+                    selectedMap =
+                        mapData.geography;
+
+                    break;
+
+
+                case "political":
+
+                    selectedMap =
+                        mapData.political;
+
+                    break;
+
+
+                default:
+
+                    selectedMap =
+                        mapData.city;
+
+                    mapType =
+                        "city";
+
+            }
+
+
+            /* =================================================
+               UPDATE MAP IMAGE
+               ================================================= */
+
+            const mapImageSource =
+                `images/${selectedMap.file}`;
+
+
+            mapImage.src =
+                mapImageSource;
+
+
+            mapImage.alt =
+                selectedMap.alt;
+
+
+            /* =================================================
+               UPDATE MAP HEADING
+               ================================================= */
+
+            mapTitle.textContent =
+                `Viewing: ${selectedMap.name}`;
+
+
+            /* =================================================
+               UPDATE DESCRIPTION
+               ================================================= */
+
+            if (
+                mapDescription !== null
+            ) {
+
+                mapDescription.textContent =
+                    selectedMap.description;
+
+            }
+
+
+            /* =================================================
+               UPDATE BUTTON STATES
+               ================================================= */
+
+            const mapButtons =
+                mapButtonContainer.querySelectorAll(
+                    "button[data-map]"
+                );
+
+
+            for (
+                let i = 0;
+                i < mapButtons.length;
+                i++
+            ) {
+
+                const button =
+                    mapButtons[i];
+
+
+                const buttonMapType =
+                    button.getAttribute(
                         "data-map"
                     );
 
-                showMap(mapType);
+
+                if (
+                    buttonMapType === mapType
+                ) {
+
+                    button.classList.add(
+                        "active-map"
+                    );
+
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        "true"
+                    );
+
+
+                } else {
+
+                    button.classList.remove(
+                        "active-map"
+                    );
+
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        "false"
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MAP BUTTON EVENTS
+           =====================================================
+
+           Event delegation allows one listener to control
+           all current and future map buttons.
+        */
+
+        mapButtonContainer.addEventListener(
+            "click",
+            function(
+                event
+            ) {
+
+                const selectedButton =
+                    event.target.closest(
+                        "button[data-map]"
+                    );
+
+
+                if (
+                    selectedButton === null
+                ) {
+
+                    return;
+
+                }
+
+
+                const mapType =
+                    selectedButton.getAttribute(
+                        "data-map"
+                    );
+
+
+                showMap(
+                    mapType
+                );
+
             }
         );
+
+
+        /* =====================================================
+           INITIAL MAP
+           ===================================================== */
+
+        showMap(
+            "city"
+        );
+
     }
-
-
-    /*
-        Set the initial map state when the page loads.
-    */
-
-    showMap("city");
-
-});
+);

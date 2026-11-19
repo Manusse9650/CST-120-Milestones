@@ -1,140 +1,327 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 5 - Map Page
+    CST-120 Milestone 6 - Map Page
+
     This page allows visitors to switch between different maps of Avelis.
-    Shared site styling is stored in styles.css, while map-specific
-    layout remains on this page.
-    JavaScript behavior is stored externally in js/map.js.
+
+    Shared site styling is stored in styles.css.
+
+    Map-specific layout remains on this page.
+
+    JavaScript behavior is stored externally in:
+    js/map.js
 -->
 
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Avelis | Maps</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="styles.css">
+    <title>
+        Avelis | Maps
+    </title>
+
+
+    <!-- Shared Avelis stylesheet -->
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
 
     <style>
 
-        /* Map page introduction */
+        /* =====================================================
+           MAP PAGE INTRODUCTION
+           ===================================================== */
 
         .map-intro {
-            max-width: 850px;
-            margin: 0 auto 30px auto;
-            text-align: center;
+
+            max-width:
+                850px;
+
+            margin:
+                0 auto 30px auto;
+
+            text-align:
+                center;
+
         }
+
 
         .map-heading {
-            font-family: "Samantha Handwriting", cursive;
-            font-size: 40px;
+
+            font-family:
+                "Samantha Handwriting",
+                cursive;
+
+            font-size:
+                40px;
+
         }
 
 
+        /* =====================================================
+           MAP BUTTONS
+           ===================================================== */
+
         /*
-            Flexbox keeps the map buttons in one row when space is available.
-            flex-wrap allows them to move onto another line on smaller screens,
-            while gap keeps even spacing between each button.
+            Flexbox keeps the map buttons in one row when
+            enough space is available.
+
+            flex-wrap allows the buttons to move onto another
+            line on narrower screens.
         */
 
         .map-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                25px;
+
         }
 
+
         .map-buttons button {
-            padding: 10px 18px;
-            font-family: "Samantha Handwriting", cursive;
-            font-size: 22px;
-            color: #3e2d20;
-            background-color: #e2c99d;
-            border: 1px solid #8f8064;
-            border-radius: 4px;
-            cursor: pointer;
+
+            padding:
+                10px 18px;
+
+            font-family:
+                "Samantha Handwriting",
+                cursive;
+
+            font-size:
+                22px;
+
+            color:
+                #3e2d20;
+
+            background-color:
+                #e2c99d;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
+            cursor:
+                pointer;
+
             transition:
                 transform 0.3s ease,
                 background-color 0.3s ease;
+
         }
+
 
         .map-buttons button:hover,
         .map-buttons button:focus {
-            transform: scale(1.05);
-            background-color: #d3b47b;
+
+            transform:
+                scale(1.05);
+
+            background-color:
+                #d3b47b;
+
         }
 
 
         /*
-            The active button receives a stronger visual state
-            that matches its aria-pressed value.
+            The active button receives a stronger
+            visual state matching aria-pressed="true".
         */
 
         .map-buttons button.active-map {
-            background-color: #c49a5a;
-            border: 2px solid #6f5137;
+
+            background-color:
+                #c49a5a;
+
+            border:
+                2px solid
+                #6f5137;
+
         }
 
 
-        /* Map display */
+        /* =====================================================
+           MAP DISPLAY
+           ===================================================== */
 
         .map-display {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
+
+            max-width:
+                1000px;
+
+            margin:
+                0 auto;
+
+            text-align:
+                center;
+
         }
+
 
         .map-display img {
-            width: 100%;
-            max-width: 1000px;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            border: 2px solid #8f8064;
+
+            width:
+                100%;
+
+            max-width:
+                1000px;
+
+            height:
+                auto;
+
+            display:
+                block;
+
+            margin:
+                0 auto;
+
+            border:
+                2px solid
+                #8f8064;
+
         }
+
 
         .map-title {
-            margin-top: 15px;
-            font-family: "Samantha Handwriting", cursive;
-            font-size: 32px;
+
+            margin-top:
+                15px;
+
+            margin-bottom:
+                5px;
+
+            font-family:
+                "Samantha Handwriting",
+                cursive;
+
+            font-size:
+                32px;
+
         }
 
 
-        /* Responsive map layout */
+        /*
+            JavaScript updates this description
+            whenever a different map is selected.
+        */
+
+        #map-description {
+
+            max-width:
+                750px;
+
+            margin:
+                0 auto 20px auto;
+
+            padding:
+                10px 15px;
+
+            font-size:
+                17px;
+
+            line-height:
+                1.5;
+
+            background-color:
+                #e2c99d;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE MAP LAYOUT
+           ===================================================== */
 
         @media (max-width: 800px) {
 
             .map-buttons {
-                flex-direction: column;
-                align-items: center;
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    center;
+
             }
 
+
             .map-buttons button {
-                width: 200px;
+
+                width:
+                    220px;
+
             }
+
+
+            .map-heading {
+
+                font-size:
+                    34px;
+
+            }
+
         }
 
 
+        /* =====================================================
+           ACCESSIBILITY
+           ===================================================== */
+
         /*
-            Accessibility:
-            Button motion is reduced when the user's device requests
-            a reduced-motion experience.
+            Button motion is reduced when the visitor's
+            device requests reduced motion.
         */
 
         @media (prefers-reduced-motion: reduce) {
 
             .map-buttons button {
-                transition-duration: 0.01ms;
+
+                transition-duration:
+                    0.01ms;
+
             }
+
 
             .map-buttons button:hover,
             .map-buttons button:focus {
-                transform: none;
+
+                transform:
+                    none;
+
             }
+
         }
 
     </style>
@@ -144,34 +331,118 @@
 
 <body>
 
-    <!-- Shared site header -->
+
+    <!-- =====================================================
+         SHARED SITE HEADER
+         ===================================================== -->
 
     <header>
-        <h1>Avelis</h1>
+
+        <h1>
+            Avelis
+        </h1>
+
     </header>
+
 
 
     <div class="page-layout">
 
-        <!-- Main site navigation -->
 
-        <nav aria-label="Main navigation">
+        <!-- =================================================
+             MAIN SITE NAVIGATION
+             ================================================= -->
+
+        <nav
+            aria-label="Main navigation"
+        >
 
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="characters.html">Characters</a></li>
-                <li><a href="map.html">World Map</a></li>
-                <li><a href="#">Calendar</a></li>
-                <li><a href="lore.html">Lore Archive</a></li>
-                <li><a href="#">Books and Stories</a></li>
-            </ul>
+
+
+                <li>
+
+                    <a
+                        href="index.html"
+                    >
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="characters.html"
+                    >
+                        Characters
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="map.html"
+                        aria-current="page"
+                    >
+                        World Map
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="calendar.html"
+                    >
+                        Calendar
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="lore.html"
+                    >
+                        Lore Archive
+                    </a>
+
+                </li>
+
+
+                <li>
+
+            <a
+                href="books&amp;stories.html"
+            >
+                Books and Stories
+            </a>
+
+        </li>
+
+
+        </ul>
 
         </nav>
 
 
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
         <main>
 
-            <!-- Map page introduction -->
+
+            <!-- =================================================
+                 MAP PAGE INTRODUCTION
+                 ================================================= -->
 
             <section class="map-intro">
 
@@ -179,20 +450,27 @@
                     Maps of Avelis
                 </h2>
 
+
                 <p>
+
                     Explore Avelis through different views of the world.
                     Select a map below to view cities, geography, or
                     political boundaries.
+
                 </p>
 
             </section>
 
 
-            <!--
-                Map selection buttons.
 
-                aria-pressed communicates which map option is currently
-                selected to assistive technology.
+            <!-- =================================================
+                 MAP SELECTION BUTTONS
+                 =================================================
+
+                 aria-pressed communicates which option is
+                 currently selected to assistive technology.
+
+                 JavaScript updates these values.
             -->
 
             <section
@@ -200,52 +478,61 @@
                 aria-label="Choose a map of Avelis"
             >
 
+
                 <button
                     type="button"
                     data-map="city"
                     aria-pressed="true"
-                    aria-controls="map-image"
+                    aria-controls="map-image map-title map-description"
                     class="active-map"
                 >
                     City Map
                 </button>
 
+
                 <button
                     type="button"
                     data-map="geography"
                     aria-pressed="false"
-                    aria-controls="map-image"
+                    aria-controls="map-image map-title map-description"
                 >
                     Geography Map
                 </button>
+
 
                 <button
                     type="button"
                     data-map="political"
                     aria-pressed="false"
-                    aria-controls="map-image"
+                    aria-controls="map-image map-title map-description"
                 >
                     Political Map
                 </button>
 
+
             </section>
 
 
-            <!-- Current map -->
+
+            <!-- =================================================
+                 CURRENT MAP
+                 ================================================= -->
 
             <section
                 class="map-display"
                 aria-label="Selected map"
             >
 
+
                 <img
                     id="map-image"
                     src="images/City-Map.jpeg"
-                    alt="City Map of Avelis"
+                    alt="City map of Avelis"
                 >
 
+
                 <!--
-                    aria-live announces the new map title when
+                    aria-live announces the map title when
                     JavaScript changes the selected map.
                 -->
 
@@ -257,27 +544,52 @@
                     Viewing: City Map
                 </h3>
 
+
+                <!--
+                    JavaScript updates this text to explain
+                    the currently selected map.
+                -->
+
+                <p
+                    id="map-description"
+                    aria-live="polite"
+                >
+                    View important cities, settlements, and developed
+                    areas throughout Avelis.
+                </p>
+
+
             </section>
+
 
         </main>
 
     </div>
 
 
-    <!-- Shared site footer -->
+
+    <!-- =====================================================
+         SHARED SITE FOOTER
+         ===================================================== -->
 
     <footer>
-        <p>Avelis World Companion</p>
+
+        <p>
+            Avelis World Companion
+        </p>
+
     </footer>
 
 
-    <!--
-        Milestone 5 uses external JavaScript.
-        The script is placed after the page content so the map
-        controls exist before map.js attaches its event listeners.
-    -->
 
-    <script src="js/map.js"></script>
+    <!-- =====================================================
+         EXTERNAL MAP JAVASCRIPT
+         ===================================================== -->
+
+    <script
+        src="js/map.js"
+    ></script>
+
 
 </body>
 

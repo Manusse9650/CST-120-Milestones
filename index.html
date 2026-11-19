@@ -3,12 +3,17 @@
 <!--
     CST-120 Milestone 6 - Home Page
 
-    This page introduces the world of Avelis and serves as the main
-    entry point for the website. Shared site styles are stored in
-    styles.css, while Home-specific layout remains on this page.
+    This page introduces the world of Avelis and serves as the
+    main entry point for the website.
 
-    JavaScript behavior is stored externally in js/home.js.
-    jQuery is used for the Activity 6 Creator Note interaction.
+    Shared site styles are stored in styles.css.
+
+    Home-specific layout remains on this page.
+
+    JavaScript behavior is stored externally in:
+    js/home.js
+
+    jQuery is used for the Creator Note interaction.
 -->
 
 <html lang="en">
@@ -22,7 +27,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Avelis | Home</title>
+    <title>
+        Avelis | Home
+    </title>
+
+
+    <!-- =====================================================
+         SHARED AVELIS STYLESHEET
+         ===================================================== -->
 
     <link
         rel="stylesheet"
@@ -32,285 +44,570 @@
 
     <style>
 
-        /* Home page image */
+        /* =====================================================
+           HOME PAGE IMAGE
+           ===================================================== */
 
         .home-image {
-            width: 100%;
-            max-width: 900px;
-            height: 340px;
-            object-fit: cover;
-            display: block;
-            margin: 0 auto 30px auto;
-            border: 2px solid #8b633d;
+
+            width:
+                100%;
+
+            max-width:
+                900px;
+
+            height:
+                340px;
+
+            object-fit:
+                cover;
+
+            display:
+                block;
+
+            margin:
+                0 auto 30px auto;
+
+            border:
+                2px solid
+                #8b633d;
+
         }
 
 
+        /* =====================================================
+           HOME CONTENT
+           ===================================================== */
+
         /*
-            Grid keeps the main Home page sections organized with
-            consistent spacing between each section.
+            Grid keeps the main Home page sections organized
+            with consistent spacing.
         */
 
         .home-content {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
+
+            max-width:
+                900px;
+
+            margin:
+                0 auto;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr;
+
+            gap:
+                25px;
+
         }
 
 
         .home-content section {
-            margin-bottom: 0;
+
+            margin-bottom:
+                0;
+
         }
 
 
         .box-example {
-            margin: 20px auto;
-            padding: 20px;
-            border: 2px solid #8b633d;
-            max-width: 850px;
+
+            margin:
+                20px auto;
+
+            padding:
+                20px;
+
+            border:
+                2px solid
+                #8b633d;
+
+            max-width:
+                850px;
+
         }
 
 
         .home-heading {
-            letter-spacing: 1px;
+
+            letter-spacing:
+                1px;
+
         }
 
 
         .about-world {
-            margin-top: 20px;
+
+            margin-top:
+                20px;
+
         }
 
 
-        /* Featured quote */
+        /* =====================================================
+           FEATURED QUOTE
+           ===================================================== */
 
         blockquote {
-            margin: 30px auto;
-            padding: 20px;
-            max-width: 700px;
-            background-color: #f5ead4;
-            border-left: 5px solid #8b633d;
-            font-style: italic;
-            text-align: center;
+
+            margin:
+                30px auto;
+
+            padding:
+                20px;
+
+            max-width:
+                700px;
+
+            background-color:
+                #f5ead4;
+
+            border-left:
+                5px solid
+                #8b633d;
+
+            font-style:
+                italic;
+
+            text-align:
+                center;
+
         }
 
 
         blockquote cite {
-            display: block;
-            margin-top: 10px;
-            font-style: normal;
-            font-weight: bold;
+
+            display:
+                block;
+
+            margin-top:
+                10px;
+
+            font-style:
+                normal;
+
+            font-weight:
+                bold;
+
         }
 
 
+        /* =====================================================
+           VIDEO SECTION
+           ===================================================== */
+
         /*
-            Flexbox allows the demonstration videos to display beside
-            one another when space is available and wrap on smaller screens.
+            Flexbox allows demonstration videos to display
+            beside one another when room is available.
         */
 
         .video-section {
-            max-width: 900px;
-            margin: 40px auto 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
+
+            max-width:
+                900px;
+
+            margin:
+                40px auto 0 auto;
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                30px;
+
         }
 
 
         .video-section h2 {
-            width: 100%;
+
+            width:
+                100%;
+
         }
 
 
         .video-section article {
-            flex: 1 1 350px;
-            margin-bottom: 35px;
+
+            flex:
+                1 1 350px;
+
+            margin-bottom:
+                35px;
+
         }
 
 
         .video-section video {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 10px;
+
+            max-width:
+                100%;
+
+            height:
+                auto;
+
+            display:
+                block;
+
+            margin-bottom:
+                10px;
+
         }
 
 
         .video-transcript {
-            font-size: 15px;
-            margin-bottom: 30px;
+
+            font-size:
+                15px;
+
+            margin-bottom:
+                30px;
+
         }
 
 
-        /* Supporting information */
+        /* =====================================================
+           SUPPORTING INFORMATION
+           ===================================================== */
 
         .home-aside {
-            max-width: 750px;
-            margin: 40px auto 20px auto;
-            padding: 20px;
-            text-align: center;
+
+            max-width:
+                750px;
+
+            margin:
+                40px auto 20px auto;
+
+            padding:
+                20px;
+
+            text-align:
+                center;
+
         }
 
 
         .home-aside h3 {
-            margin-top: 0;
+
+            margin-top:
+                0;
+
         }
 
 
         .spacing-example {
-            margin: 30px auto;
-            padding: 25px;
-            border: 1px solid #8f8064;
-            max-width: 850px;
-            background-color: #f5ead4;
+
+            margin:
+                30px auto;
+
+            padding:
+                25px;
+
+            border:
+                1px solid
+                #8f8064;
+
+            max-width:
+                850px;
+
+            background-color:
+                #f5ead4;
+
         }
 
 
-        /* Student information activity */
+        /* =====================================================
+           BEGIN YOUR JOURNEY FORM
+           ===================================================== */
 
         .student-info {
-            max-width: 850px;
-            margin: 30px auto;
+
+            max-width:
+                850px;
+
+            margin:
+                30px auto;
+
         }
 
 
         .student-info form {
-            display: grid;
-            gap: 12px;
-            max-width: 500px;
+
+            display:
+                grid;
+
+            gap:
+                12px;
+
+            max-width:
+                500px;
+
         }
 
 
         .student-info label {
-            font-weight: bold;
+
+            font-weight:
+                bold;
+
         }
 
 
         .student-info input,
         .student-info select {
-            padding: 8px;
-            font-family: "Times New Roman", serif;
-            font-size: 16px;
-            border: 1px solid #8f8064;
+
+            padding:
+                8px;
+
+            font-family:
+                "Times New Roman",
+                serif;
+
+            font-size:
+                16px;
+
+            border:
+                1px solid
+                #8f8064;
+
         }
 
 
         .student-info button {
-            width: fit-content;
-            padding: 8px 14px;
-            cursor: pointer;
+
+            width:
+                fit-content;
+
+            padding:
+                8px 14px;
+
+            cursor:
+                pointer;
+
         }
 
 
         /*
-            Validation messages appear directly below their related
-            form controls so visitors can understand what needs attention.
+            Validation messages appear directly below
+            their related form controls.
         */
 
         .form-error {
-            min-height: 20px;
-            margin: -6px 0 4px 0;
-            font-size: 15px;
-            color: #7a1f1f;
+
+            min-height:
+                20px;
+
+            margin:
+                -6px 0 4px 0;
+
+            font-size:
+                15px;
+
+            color:
+                #7a1f1f;
+
         }
 
 
         .input-error {
-            border: 2px solid #7a1f1f;
+
+            border:
+                2px solid
+                #7a1f1f;
+
         }
 
 
         #student-output {
-            margin-top: 20px;
+
+            margin-top:
+                20px;
+
         }
 
 
         .explore-link {
-            display: inline-block;
-            padding: 10px 16px;
-            color: #3e2d20;
-            background-color: #e2c99d;
-            border: 1px solid #8f8064;
-            border-radius: 4px;
-            font-weight: bold;
-            text-decoration: none;
+
+            display:
+                inline-block;
+
+            padding:
+                10px 16px;
+
+            color:
+                #3e2d20;
+
+            background-color:
+                #e2c99d;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
+            font-weight:
+                bold;
+
+            text-decoration:
+                none;
+
         }
 
 
         .explore-link:hover,
         .explore-link:focus {
-            background-color: #d3b47b;
+
+            background-color:
+                #d3b47b;
+
         }
 
 
-        /*
-            Activity 6 jQuery Creator Note.
+        /* =====================================================
+           JQUERY CREATOR NOTE
+           ===================================================== */
 
-            This section provides a second jQuery demonstration
-            that is incorporated directly into the milestone website.
+        /*
+            Milestone 6 jQuery interaction.
+
+            jQuery shows and hides information about
+            the creator of the website.
         */
 
         .creator-note-section {
-            max-width: 850px;
-            margin: 30px auto;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #8f8064;
-            background-color: #f5ead4;
+
+            max-width:
+                850px;
+
+            margin:
+                30px auto;
+
+            padding:
+                20px;
+
+            text-align:
+                center;
+
+            border:
+                1px solid
+                #8f8064;
+
+            background-color:
+                #f5ead4;
+
         }
 
 
         .creator-note-section h2 {
-            margin-top: 0;
+
+            margin-top:
+                0;
+
         }
 
 
         #creator-note-button {
-            padding: 9px 16px;
-            font-family: "Times New Roman", serif;
-            font-size: 16px;
-            color: #3e2d20;
-            background-color: #e2c99d;
-            border: 1px solid #8f8064;
-            border-radius: 4px;
-            cursor: pointer;
+
+            padding:
+                9px 16px;
+
+            font-family:
+                "Times New Roman",
+                serif;
+
+            font-size:
+                16px;
+
+            color:
+                #3e2d20;
+
+            background-color:
+                #e2c99d;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
+            cursor:
+                pointer;
+
         }
 
 
         #creator-note-button:hover,
         #creator-note-button:focus {
-            background-color: #d3b47b;
+
+            background-color:
+                #d3b47b;
+
         }
 
 
         #creator-note {
-            max-width: 650px;
-            margin: 20px auto 0 auto;
-            padding: 15px;
-            border: 1px solid #8f8064;
-            background-color: #ffffff;
-            text-align: left;
+
+            max-width:
+                650px;
+
+            margin:
+                20px auto 0 auto;
+
+            padding:
+                15px;
+
+            border:
+                1px solid
+                #8f8064;
+
+            background-color:
+                #ffffff;
+
+            text-align:
+                left;
+
         }
 
 
-        /* Responsive Home page layout */
+        /* =====================================================
+           RESPONSIVE HOME PAGE
+           ===================================================== */
 
         @media (max-width: 800px) {
 
             .home-image {
-                height: auto;
+
+                height:
+                    auto;
+
             }
 
 
             .student-info form {
-                width: 100%;
+
+                width:
+                    100%;
+
             }
 
 
             .creator-note-section {
-                margin-left: 10px;
-                margin-right: 10px;
+
+                margin-left:
+                    10px;
+
+                margin-right:
+                    10px;
+
             }
+
         }
 
     </style>
@@ -321,71 +618,123 @@
 <body>
 
 
-    <!-- Shared site header -->
+    <!-- =====================================================
+         SHARED SITE HEADER
+         ===================================================== -->
 
     <header>
 
-        <h1>Avelis</h1>
+        <h1>
+            Avelis
+        </h1>
 
     </header>
+
 
 
     <div class="page-layout">
 
 
-        <!-- Main site navigation -->
+        <!-- =================================================
+             MAIN SITE NAVIGATION
+             ================================================= -->
 
-        <nav aria-label="Main navigation">
+        <nav
+            aria-label="Main navigation"
+        >
 
             <ul>
 
+
                 <li>
-                    <a href="index.html">
+
+                    <a
+                        href="index.html"
+                        aria-current="page"
+                    >
                         Home
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="characters.html">
+
+                    <a
+                        href="characters.html"
+                    >
                         Characters
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="map.html">
+
+                    <a
+                        href="map.html"
+                    >
                         World Map
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="#">
+
+                    <a
+                        href="calendar.html"
+                    >
                         Calendar
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="lore.html">
+
+                    <a
+                        href="lore.html"
+                    >
                         Lore Archive
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="#">
-                        Books and Stories
-                    </a>
-                </li>
+
+                <a
+                    href="books&amp;stories.html"
+                >
+                    Books and Stories
+                </a>
+
+            </li>
+
 
             </ul>
 
         </nav>
 
 
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
         <main>
 
 
+            <!-- =================================================
+                 HOME IMAGE
+                 ================================================= -->
+
             <!--
-                Temporary visual used until the final Avelis world
-                imagery is added in a later stage of the project.
+                Temporary visual representing Avelis.
+
+                This can be replaced later without changing
+                the rest of the Home page structure.
             -->
 
             <img
@@ -395,18 +744,24 @@
             >
 
 
+
             <div class="home-content">
 
 
-                <!-- Introduction to Avelis -->
+                <!-- =================================================
+                     INTRODUCTION TO AVELIS
+                     ================================================= -->
 
                 <section class="box-example">
+
 
                     <h2 class="home-heading">
                         Enter Avelis
                     </h2>
 
+
                     <p>
+
                         In a world where magic lives within every beating heart,
                         kingdoms rise beneath the watchful light of the Eternal
                         Flame. Across Avelis, stories of love, devotion, betrayal,
@@ -416,20 +771,28 @@
                         leaves its mark upon the world. Yet even the smallest
                         choices can alter the course of history, and not every
                         story remembered is the one that truly happened.
+
                     </p>
+
 
                 </section>
 
 
-                <!-- General world description -->
+
+                <!-- =================================================
+                     ABOUT THE WORLD
+                     ================================================= -->
 
                 <section class="spacing-example">
+
 
                     <h2>
                         About the World
                     </h2>
 
+
                     <p class="about-world">
+
                         Welcome to Avelis, a world where magic is woven into the
                         natural rhythms of life, from the roots beneath the soil
                         to the light of the sun above. Its kingdoms are shaped by
@@ -438,12 +801,17 @@
                         Explore its landscapes, cultures, histories, and the
                         countless lives that make this world more than the stories
                         told within it.
+
                     </p>
+
 
                 </section>
 
 
-                <!-- Featured quotation -->
+
+                <!-- =================================================
+                     FEATURED QUOTE
+                     ================================================= -->
 
                 <blockquote>
 
@@ -455,19 +823,28 @@
 
                 </blockquote>
 
+
             </div>
 
 
-            <!-- Original project demonstrations -->
+
+            <!-- =================================================
+                 SITE DEMONSTRATIONS
+                 ================================================= -->
 
             <section class="video-section">
+
 
                 <h2>
                     Site Demonstrations
                 </h2>
 
 
+
+                <!-- Character page demonstration -->
+
                 <article>
+
 
                     <h3>
                         Character Page Demonstration
@@ -490,20 +867,29 @@
 
 
                     <p>
+
                         This video demonstrates the Characters page and
                         its interactive character cards.
+
                     </p>
 
 
                     <p class="video-transcript">
+
                         Transcript: The recording scrolls through the Characters
                         page and demonstrates the character card interface.
+
                     </p>
+
 
                 </article>
 
 
+
+                <!-- Lore Archive demonstration -->
+
                 <article>
+
 
                     <h3>
                         Lore Archive Demonstration
@@ -526,57 +912,81 @@
 
 
                     <p>
+
                         This video demonstrates the Lore Archive layout,
                         including the search area, categories, and reference table.
+
                     </p>
 
 
                     <p class="video-transcript">
+
                         Transcript: The recording scrolls through the Lore Archive
                         and displays the search area, category labels, and lore table.
+
                     </p>
 
+
                 </article>
+
 
             </section>
 
 
-            <!-- Supporting project information -->
 
-            <aside class="home-aside box-example-two">
+            <!-- =================================================
+                 SUPPORTING PROJECT INFORMATION
+                 ================================================= -->
+
+            <aside
+                class="home-aside box-example-two"
+            >
+
 
                 <h3>
                     Exploring Avelis
                 </h3>
 
+
                 <p>
+
                     The Avelis World Companion is designed as a reference for
-                    characters, locations, traditions, terminology, and stories.
-                    Additional sections will be expanded as later milestones
-                    are completed.
+                    characters, locations, traditions, terminology, calendars,
+                    and stories. Visitors can explore the world through character
+                    profiles, interactive maps, the Lore Archive, the Avelis
+                    calendar, and stories set throughout the world.
+
                 </p>
+
 
             </aside>
 
 
-            <!--
-                Milestone 6 exploration form:
 
-                JavaScript validates the required fields and then creates
-                a personalized link to the selected area of Avelis.
+            <!-- =================================================
+                 BEGIN YOUR JOURNEY
+                 =================================================
+
+                 JavaScript validates required fields and creates
+                 a personalized link to the selected part of Avelis.
             -->
 
             <section class="student-info">
+
 
                 <h2>
                     Begin Your Journey
                 </h2>
 
+
                 <p>
+
                     Enter your name and choose an area of Avelis you would
                     like to explore. Your selection will provide a direct
                     path to that part of the world companion.
+
                 </p>
+
 
 
                 <form
@@ -585,7 +995,11 @@
                 >
 
 
-                    <label for="visitor-name">
+                    <!-- Visitor name -->
+
+                    <label
+                        for="visitor-name"
+                    >
                         Enter your name:
                     </label>
 
@@ -603,10 +1017,16 @@
                         id="name-error"
                         class="form-error"
                         aria-live="polite"
-                    ></p>
+                    >
+                    </p>
 
 
-                    <label for="visitor-interest">
+
+                    <!-- Visitor destination -->
+
+                    <label
+                        for="visitor-interest"
+                    >
                         What would you like to explore?
                     </label>
 
@@ -618,21 +1038,36 @@
                         aria-describedby="interest-error"
                     >
 
+
                         <option value="">
                             Select an option
                         </option>
+
 
                         <option value="Characters">
                             Characters
                         </option>
 
+
                         <option value="World Map">
                             World Map
                         </option>
 
+
                         <option value="Lore Archive">
                             Lore Archive
                         </option>
+
+
+                        <option value="Calendar">
+                            Calendar
+                        </option>
+
+
+                        <option value="Books and Stories">
+                            Books and Stories
+                        </option>
+
 
                     </select>
 
@@ -641,49 +1076,62 @@
                         id="interest-error"
                         class="form-error"
                         aria-live="polite"
-                    ></p>
+                    >
+                    </p>
 
 
-                    <button type="submit">
+
+                    <button
+                        type="submit"
+                    >
                         Begin Journey
                     </button>
+
 
                 </form>
 
 
+
                 <!--
-                    JavaScript places the personalized greeting,
-                    selected destination, creator information,
-                    and destination link inside this area.
+                    home.js places the personalized greeting
+                    and destination link here.
                 -->
 
                 <div
                     id="student-output"
                     aria-live="polite"
-                ></div>
+                >
+                </div>
+
 
             </section>
 
 
-            <!--
-                Activity 6 jQuery Example 2:
 
-                This section uses jQuery to show and hide
-                information about the website creator.
+            <!-- =================================================
+                 CREATOR NOTE
+                 =================================================
 
-                The matching interaction is stored in js/home.js.
+                 Milestone 6 jQuery example.
+
+                 jQuery shows and hides the creator information.
             -->
 
             <section class="creator-note-section">
+
 
                 <h2>
                     About the Creator
                 </h2>
 
+
                 <p>
+
                     Learn a little more about the person creating
                     the Avelis World Companion.
+
                 </p>
+
 
 
                 <button
@@ -696,6 +1144,7 @@
                 </button>
 
 
+
                 <div
                     id="creator-note"
                     aria-hidden="true"
@@ -703,19 +1152,27 @@
                     hidden
                 >
 
+
                     <p>
+
                         The Avelis World Companion was created by
                         <strong>Samantha Manuszak</strong>
                         for CST-120: Introduction to Web Development.
+
                     </p>
 
+
                     <p>
+
                         The worldbuilding, website design, character artwork,
                         maps, and other creative elements are being developed
                         as part of the continuing Avelis project.
+
                     </p>
 
+
                 </div>
+
 
             </section>
 
@@ -725,7 +1182,10 @@
     </div>
 
 
-    <!-- Shared site footer -->
+
+    <!-- =====================================================
+         SHARED SITE FOOTER
+         ===================================================== -->
 
     <footer>
 
@@ -736,11 +1196,15 @@
     </footer>
 
 
-    <!--
-        jQuery 3.7.1 is loaded from the official jQuery CDN.
 
-        jQuery must load before home.js so the Creator Note
-        interaction can use jQuery methods.
+    <!-- =====================================================
+         JQUERY
+         =====================================================
+
+         jQuery must load before home.js.
+
+         home.js uses it for the Creator Note
+         show/hide interaction.
     -->
 
     <script
@@ -748,9 +1212,14 @@
     ></script>
 
 
-    <!-- Home page JavaScript -->
 
-    <script src="js/home.js"></script>
+    <!-- =====================================================
+         HOME PAGE JAVASCRIPT
+         ===================================================== -->
+
+    <script
+        src="js/home.js"
+    ></script>
 
 
 </body>

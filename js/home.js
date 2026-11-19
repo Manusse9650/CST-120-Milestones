@@ -20,513 +20,674 @@
 */
 
 
-/*
-    Student information object.
+/* =========================================================
+   WEBSITE CREATOR INFORMATION
+   ========================================================= */
 
-    This object stores information about the website creator
-    that will be displayed after the visitor successfully
-    completes the form.
+/*
+    This object stores information about the website creator.
+
+    The information is displayed after the visitor
+    successfully completes the Begin Your Journey form.
 */
 
 const studentInfo = {
-    name: "Samantha Manuszak",
-    educationLevel: "Sophomore",
-    major: "Biomedical Engineering",
-    classDesignation: "CST-120 Introduction to Web Development",
-    anticipatedOccupation: "Biomedical Engineer"
+
+    name:
+        "Samantha Manuszak",
+
+    educationLevel:
+        "Sophomore",
+
+    major:
+        "Biomedical Engineering",
+
+    classDesignation:
+        "CST-120 Introduction to Web Development",
+
+    anticipatedOccupation:
+        "Biomedical Engineer"
+
 };
 
 
-/*
-    Cache the form and output elements.
-
-    These selectors are stored once so the same elements
-    do not need to be searched for repeatedly.
-*/
+/* =========================================================
+   CACHE PAGE ELEMENTS
+   ========================================================= */
 
 const studentForm =
-    document.getElementById("student-form");
+    document.getElementById(
+        "student-form"
+    );
+
 
 const studentOutput =
-    document.getElementById("student-output");
+    document.getElementById(
+        "student-output"
+    );
 
 
-/*
-    showStudentInfo()
+/* =========================================================
+   SHOW STUDENT INFORMATION
+   =========================================================
 
-    Purpose:
-    Formats the visitor's name, identifies the page connected
-    to their selected interest, and displays a personalized
-    link that helps them continue exploring Avelis.
-
-    Expected outcome:
-    The visitor sees a greeting, their selected destination,
-    a link to that page, and information about the website creator.
+   Purpose:
+   Formats the visitor's name, determines which page
+   matches their selected interest, and creates a
+   personalized destination link.
 */
 
 function showStudentInfo() {
 
+
+    /* =====================================================
+       VISITOR NAME
+       ===================================================== */
+
     /*
-        trim() removes spaces from the beginning and end
-        of the visitor's entered name.
+        trim() removes spaces from the beginning
+        and end of the entered name.
     */
 
-    let visitorName =
-        document.getElementById("visitor-name")
+    const visitorName =
+        document.getElementById(
+            "visitor-name"
+        )
         .value
         .trim();
 
 
     /*
-        charAt() selects the first character of the name.
-        toUpperCase() formats that character consistently.
+        charAt() selects the first character.
+
+        toUpperCase() formats the first character
+        consistently.
     */
 
-    let firstLetter =
-        visitorName.charAt(0).toUpperCase();
+    const firstLetter =
+        visitorName
+        .charAt(0)
+        .toUpperCase();
 
 
     /*
-        slice() selects the remaining characters.
-        toLowerCase() creates consistent name formatting.
+        slice() selects everything after the
+        first character.
+
+        toLowerCase() creates consistent formatting.
     */
 
-    let remainingLetters =
-        visitorName.slice(1).toLowerCase();
+    const remainingLetters =
+        visitorName
+        .slice(1)
+        .toLowerCase();
 
 
-    let formattedName =
-        firstLetter + remainingLetters;
+    const formattedName =
+        firstLetter +
+        remainingLetters;
 
 
-    let visitorInterest =
-        document.getElementById("visitor-interest").value;
+    /* =====================================================
+       VISITOR INTEREST
+       ===================================================== */
+
+    const visitorInterest =
+        document.getElementById(
+            "visitor-interest"
+        )
+        .value;
 
 
     /*
-        Selection statement:
+        Selection statement.
 
-        The switch statement connects each dropdown choice
-        with the matching webpage.
-
-        The default provides a safe fallback to the Home page
-        if an unexpected value is received.
+        Each dropdown option connects to its
+        matching Avelis webpage.
     */
 
     let interestLink;
 
 
-    switch (visitorInterest) {
+    switch (
+        visitorInterest
+    ) {
 
         case "Characters":
-            interestLink = "characters.html";
+
+            interestLink =
+                "characters.html";
+
             break;
+
 
         case "World Map":
-            interestLink = "map.html";
+
+            interestLink =
+                "map.html";
+
             break;
+
 
         case "Lore Archive":
-            interestLink = "lore.html";
+
+            interestLink =
+                "lore.html";
+
             break;
 
+
+        case "Calendar":
+
+            interestLink =
+                "calendar.html";
+
+            break;
+
+
+        case "Books and Stories":
+
+            interestLink =
+                "books.html";
+
+            break;
+
+
         default:
-            interestLink = "index.html";
+
+            /*
+                Safe fallback if an unexpected
+                value is received.
+            */
+
+            interestLink =
+                "index.html";
+
     }
 
 
-    /*
-        Clear any previous successful output.
-    */
+    /* =====================================================
+       CLEAR PREVIOUS OUTPUT
+       ===================================================== */
 
     studentOutput.textContent =
         "";
 
 
-    /*
-        Create the greeting with textContent so the visitor's
-        typed name is treated only as text rather than HTML.
+    /* =====================================================
+       PERSONALIZED GREETING
+       =====================================================
+
+       textContent is used so visitor input is treated
+       only as text rather than HTML.
     */
 
     const greeting =
-        document.createElement("p");
+        document.createElement(
+            "p"
+        );
+
 
     const greetingStrong =
-        document.createElement("strong");
+        document.createElement(
+            "strong"
+        );
+
 
     greetingStrong.textContent =
         `Hello, ${formattedName}! Welcome to Avelis.`;
 
-    greeting.appendChild(greetingStrong);
 
-    studentOutput.appendChild(greeting);
+    greeting.appendChild(
+        greetingStrong
+    );
 
 
-    /*
-        Create the destination message.
-    */
+    studentOutput.appendChild(
+        greeting
+    );
+
+
+    /* =====================================================
+       DESTINATION MESSAGE
+       ===================================================== */
 
     const destinationMessage =
-        document.createElement("p");
+        document.createElement(
+            "p"
+        );
+
 
     destinationMessage.append(
         "You selected that you would like to explore the "
     );
 
+
     const destinationStrong =
-        document.createElement("strong");
+        document.createElement(
+            "strong"
+        );
+
 
     destinationStrong.textContent =
         visitorInterest;
+
 
     destinationMessage.appendChild(
         destinationStrong
     );
 
+
     destinationMessage.append(
         ". Begin your journey below."
     );
+
 
     studentOutput.appendChild(
         destinationMessage
     );
 
 
-    /*
-        Create the destination link.
-    */
+    /* =====================================================
+       DESTINATION LINK
+       ===================================================== */
 
     const linkParagraph =
-        document.createElement("p");
+        document.createElement(
+            "p"
+        );
+
 
     const exploreLink =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
+
 
     exploreLink.href =
         interestLink;
 
+
     exploreLink.className =
         "explore-link";
+
 
     exploreLink.textContent =
         `Explore the ${visitorInterest}`;
 
+
     linkParagraph.appendChild(
         exploreLink
     );
+
 
     studentOutput.appendChild(
         linkParagraph
     );
 
 
-    /*
-        Helper function for creator information.
+    /* =====================================================
+       CREATOR INFORMATION HELPER
+       =====================================================
 
-        This keeps each information row consistent.
+       This helper creates each creator-information row
+       using safe DOM methods.
     */
 
-    function addCreatorInfo(label, value) {
+    function addCreatorInfo(
+        label,
+        value
+    ) {
 
         const infoParagraph =
-            document.createElement("p");
+            document.createElement(
+                "p"
+            );
+
 
         const infoLabel =
-            document.createElement("strong");
+            document.createElement(
+                "strong"
+            );
+
 
         infoLabel.textContent =
-            label + ": ";
+            label +
+            ": ";
+
 
         infoParagraph.appendChild(
             infoLabel
         );
 
+
         infoParagraph.append(
             value
         );
 
+
         studentOutput.appendChild(
             infoParagraph
         );
+
     }
 
+
+    /* =====================================================
+       DISPLAY CREATOR INFORMATION
+       ===================================================== */
 
     addCreatorInfo(
         "Website Creator",
         studentInfo.name
     );
 
+
     addCreatorInfo(
         "Education Level",
         studentInfo.educationLevel
     );
+
 
     addCreatorInfo(
         "Major",
         studentInfo.major
     );
 
+
     addCreatorInfo(
         "Class Designation",
         studentInfo.classDesignation
     );
 
+
     addCreatorInfo(
         "Anticipated Occupation",
         studentInfo.anticipatedOccupation
     );
+
 }
 
 
-/*
-    Begin Your Journey form submit event.
+/* =========================================================
+   BEGIN YOUR JOURNEY FORM VALIDATION
+   =========================================================
 
-    Purpose:
-    Validates every required form control before displaying
-    the visitor's personalized destination.
+   Purpose:
+   Validates every required control before displaying
+   the personalized destination.
 
-    Trigger:
-    The visitor selects the Begin Journey button or
-    submits the form with the keyboard.
-
-    Expected outcome:
-    Invalid fields receive inline feedback. If every field
-    is valid, a personalized destination link is displayed.
-
-    Accessibility:
-    Errors are connected to their controls through
-    aria-describedby in the HTML. aria-invalid is updated
-    so assistive technology can identify invalid fields.
-    The first invalid field receives focus.
+   Accessibility:
+   - aria-describedby connects errors to inputs
+   - aria-invalid identifies invalid controls
+   - Focus moves to the first invalid control
 */
 
-studentForm.addEventListener(
-    "submit",
-    function(event) {
+if (
+    studentForm !== null
+) {
 
-        /*
-            Stop the browser's normal form submission so
-            JavaScript can validate the form first.
-        */
-
-        event.preventDefault();
-
-
-        /*
-            Select every required form control.
-
-            The loop ends after every required control has
-            been checked once.
-        */
-
-        const requiredFields =
-            studentForm.querySelectorAll(
-                "[required]"
-            );
-
-
-        let formIsValid =
-            true;
-
-        let firstInvalidField =
-            null;
-
-
-        /*
-            Validation loop:
-
-            Each required field is checked once.
-            Empty fields are marked invalid while valid fields
-            have previous error messages removed.
-        */
-
-        for (
-            let i = 0;
-            i < requiredFields.length;
-            i++
+    studentForm.addEventListener(
+        "submit",
+        function(
+            event
         ) {
 
-            let field =
-                requiredFields[i];
+
+            /*
+                Stop normal browser form submission.
+            */
+
+            event.preventDefault();
 
 
             /*
-                trim() allows fields containing only spaces
-                to be treated as empty.
+                Select all required form controls.
             */
 
-            let fieldValue =
-                field.value.trim();
-
-
-            let errorElement =
-                document.getElementById(
-                    field.getAttribute(
-                        "aria-describedby"
-                    )
+            const requiredFields =
+                studentForm.querySelectorAll(
+                    "[required]"
                 );
 
 
-            /*
-                Empty fields receive an error state
-                and an inline message.
-            */
-
-            if (fieldValue === "") {
-
-                formIsValid =
-                    false;
-
-                field.classList.add(
-                    "input-error"
-                );
-
-                field.setAttribute(
-                    "aria-invalid",
-                    "true"
-                );
+            let formIsValid =
+                true;
 
 
-                if (
-                    field.id ===
-                    "visitor-name"
-                ) {
+            let firstInvalidField =
+                null;
 
-                    errorElement.textContent =
-                        "Please enter your name.";
 
-                } else if (
-                    field.id ===
-                    "visitor-interest"
-                ) {
+            /* =================================================
+               VALIDATION LOOP
+               ================================================= */
 
-                    errorElement.textContent =
-                        "Please select an area of Avelis to explore.";
-                }
+            for (
+                let i = 0;
+                i < requiredFields.length;
+                i++
+            ) {
+
+                const field =
+                    requiredFields[i];
 
 
                 /*
-                    Store only the first invalid field
-                    for focus management.
+                    trim() means spaces alone do not count
+                    as valid input.
+                */
+
+                const fieldValue =
+                    field.value.trim();
+
+
+                const errorElement =
+                    document.getElementById(
+                        field.getAttribute(
+                            "aria-describedby"
+                        )
+                    );
+
+
+                /*
+                    Required field is empty.
                 */
 
                 if (
-                    firstInvalidField ===
-                    null
+                    fieldValue === ""
                 ) {
 
-                    firstInvalidField =
-                        field;
+                    formIsValid =
+                        false;
+
+
+                    field.classList.add(
+                        "input-error"
+                    );
+
+
+                    field.setAttribute(
+                        "aria-invalid",
+                        "true"
+                    );
+
+
+                    /*
+                        Specific feedback for each field.
+                    */
+
+                    if (
+                        errorElement !== null
+                    ) {
+
+                        if (
+                            field.id ===
+                            "visitor-name"
+                        ) {
+
+                            errorElement.textContent =
+                                "Please enter your name.";
+
+                        } else if (
+                            field.id ===
+                            "visitor-interest"
+                        ) {
+
+                            errorElement.textContent =
+                                "Please select an area of Avelis to explore.";
+
+                        }
+
+                    }
+
+
+                    /*
+                        Save the first invalid field
+                        for focus management.
+                    */
+
+                    if (
+                        firstInvalidField ===
+                        null
+                    ) {
+
+                        firstInvalidField =
+                            field;
+
+                    }
+
+
+                } else {
+
+
+                    /*
+                        Clear previous error state.
+                    */
+
+                    field.classList.remove(
+                        "input-error"
+                    );
+
+
+                    field.setAttribute(
+                        "aria-invalid",
+                        "false"
+                    );
+
+
+                    if (
+                        errorElement !== null
+                    ) {
+
+                        errorElement.textContent =
+                            "";
+
+                    }
+
                 }
+
+            }
+
+
+            /* =================================================
+               SUCCESS
+               ================================================= */
+
+            if (
+                formIsValid
+            ) {
+
+                studentOutput.textContent =
+                    "";
+
+
+                showStudentInfo();
+
+
+            /* =================================================
+               ERROR
+               ================================================= */
 
             } else {
 
+                studentOutput.textContent =
+                    "Please correct the form fields above.";
+
+
                 /*
-                    Clear previous error states
-                    from valid fields.
+                    Move keyboard focus to the first
+                    invalid field.
                 */
 
-                field.classList.remove(
-                    "input-error"
-                );
+                if (
+                    firstInvalidField !==
+                    null
+                ) {
 
-                field.setAttribute(
-                    "aria-invalid",
-                    "false"
-                );
+                    firstInvalidField.focus();
 
-                errorElement.textContent =
-                    "";
+                }
+
             }
+
         }
+    );
+
+}
 
 
-        /*
-            Only display the personalized result
-            when every required field is valid.
-        */
+/* =========================================================
+   ACTIVITY 6 JQUERY CREATOR NOTE
+   =========================================================
 
-        if (formIsValid) {
+   Purpose:
+   Uses jQuery to show and hide information about
+   the website creator.
 
-            studentOutput.textContent =
-                "";
-
-            showStudentInfo();
-
-        } else {
-
-            /*
-                Clear previous successful output.
-            */
-
-            studentOutput.textContent =
-                "Please correct the form fields above.";
-
-
-            /*
-                Move focus to the first invalid field.
-            */
-
-            if (
-                firstInvalidField !==
-                null
-            ) {
-
-                firstInvalidField.focus();
-            }
-        }
-    }
-);
-
-
-/*
-    Activity 6 jQuery Example 2:
-    Creator Note interaction.
-
-    Purpose:
-    Shows and hides additional information about
-    the creator of the website.
-
-    Trigger:
-    The visitor selects the Show Creator Note button.
-
-    Expected outcome:
-    The note appears or disappears and the button text
-    changes to reflect the current state.
-
-    Accessibility:
-    aria-expanded and aria-hidden are updated so assistive
-    technology can determine whether the note is open.
+   Accessibility:
+   - aria-expanded tracks button state
+   - aria-hidden tracks note visibility
+   - Focus moves to revealed content
+   - Focus returns to button when closed
 */
-
 
 $("#creator-note-button").on(
     "click",
     function() {
 
-        let creatorNote =
+
+        const creatorNote =
             $("#creator-note");
 
-        let creatorButton =
+
+        const creatorButton =
             $("#creator-note-button");
 
 
         /*
-            Read the current accessibility state.
+            Read current accessibility state.
         */
 
-        let isExpanded =
+        const isExpanded =
             creatorButton.attr(
                 "aria-expanded"
             ) === "true";
 
 
-        /*
-            If the note is currently closed,
-            display it using jQuery fadeIn().
-        */
+        /* =====================================================
+           OPEN CREATOR NOTE
+           ===================================================== */
 
-        if (isExpanded === false) {
+        if (
+            isExpanded === false
+        ) {
+
+
+            /*
+                Remove the hidden property before
+                beginning the fade animation.
+            */
 
             creatorNote.prop(
                 "hidden",
@@ -534,8 +695,17 @@ $("#creator-note-button").on(
             );
 
 
+            /*
+                Show the note with jQuery.
+            */
+
             creatorNote.fadeIn();
 
+
+            /*
+                Update button accessibility state
+                and visible text.
+            */
 
             creatorButton
                 .attr(
@@ -547,6 +717,11 @@ $("#creator-note-button").on(
                 );
 
 
+            /*
+                Tell assistive technology that
+                the note is now visible.
+            */
+
             creatorNote.attr(
                 "aria-hidden",
                 "false"
@@ -554,14 +729,20 @@ $("#creator-note-button").on(
 
 
             /*
-                Move focus to the newly revealed note.
+                Move focus to the revealed content.
             */
 
             creatorNote.trigger(
                 "focus"
             );
 
+
+        /* =====================================================
+           CLOSE CREATOR NOTE
+           ===================================================== */
+
         } else {
+
 
             /*
                 Fade the note out.
@@ -569,6 +750,12 @@ $("#creator-note-button").on(
 
             creatorNote.fadeOut(
                 function() {
+
+
+                    /*
+                        Apply hidden only after
+                        the animation completes.
+                    */
 
                     creatorNote
                         .prop(
@@ -579,9 +766,14 @@ $("#creator-note-button").on(
                             "aria-hidden",
                             "true"
                         );
+
                 }
             );
 
+
+            /*
+                Restore original button state.
+            */
 
             creatorButton
                 .attr(
@@ -600,6 +792,8 @@ $("#creator-note-button").on(
             creatorButton.trigger(
                 "focus"
             );
+
         }
+
     }
 );

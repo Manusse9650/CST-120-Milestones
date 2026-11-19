@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 
 <!--
-    CST-120 Milestone 5 - Characters Page
+    CST-120 Milestone 6 - Characters Page
+
     This page introduces important characters from the world of Avelis.
+
     Shared site styling is stored in styles.css, while character-specific
-    layout and interaction remain on this page.
-    JavaScript behavior is stored externally in js/characters.js.
+    styling and layout are included within this page.
+
+    Interactive character behavior, including card flipping and
+    character information, is stored externally in js/characters.js.
+
+    The page also includes accessible navigation, pronunciation audio,
+    responsive design, and reduced-motion support.
 -->
 
 <html lang="en">
@@ -361,17 +368,70 @@
 
     <div class="page-layout">
 
-        <!-- Main site navigation -->
+    <!-- =================================================
+     MAIN SITE NAVIGATION
+     ================================================= -->
 
         <nav aria-label="Main navigation">
 
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="characters.html">Characters</a></li>
-                <li><a href="map.html">World Map</a></li>
-                <li><a href="#">Calendar</a></li>
-                <li><a href="lore.html">Lore Archive</a></li>
-                <li><a href="#">Books and Stories</a></li>
+
+                <li>
+
+                    <a href="index.html">
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="characters.html"
+                        aria-current="page"
+                    >
+                        Characters
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="map.html">
+                        World Map
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="calendar.html">
+                        Calendar
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="lore.html">
+                        Lore Archive
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="books&amp;stories.html">
+                        Books and Stories
+                    </a>
+
+                </li>
+
             </ul>
 
         </nav>
@@ -591,9 +651,10 @@
 
 
     <!--
-        Milestone 5 uses external JavaScript.
-        The script is placed after the page content so the HTML elements
-        exist before characters.js attaches its event listeners.
+        Milestone 6 uses external JavaScript.
+
+        The script is placed after the page content so the HTML
+        elements exist before characters.js attaches its event listeners.
     -->
 
     <script src="js/characters.js"></script>

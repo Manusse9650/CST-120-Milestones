@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Bootstrap Examples - Avelis World Companion</title>
+
+    <!--
+        Bootstrap CSS
+        This allows the page to use Bootstrap components,
+        layout classes, spacing utilities, and responsive behavior.
+    -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!--
+        Custom page styling used to keep the Bootstrap examples
+        visually consistent with the Avelis World Companion.
+    -->
+    <style>
+
+        body {
+            background-color: #f4ecd8;
+            color: #3e2d20;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+
+        /*
+            Bootstrap Navbar Customization
+        */
+
+        .avelis-navbar {
+            background-color: #4a3828;
+        }
+
+
+        .avelis-navbar .navbar-brand,
+        .avelis-navbar .nav-link {
+            color: #f5e8c8;
+        }
+
+
+        .avelis-navbar .nav-link:hover,
+        .avelis-navbar .nav-link:focus {
+            color: #ffffff;
+        }
+
+
+        .avelis-navbar .navbar-toggler {
+            border-color: #f5e8c8;
+        }
+
+
+        /*
+            Page Heading
+        */
+
+        .page-heading {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+
+        .page-heading h1 {
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+        }
+
+
+        .page-heading p {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+
+        /*
+            Example Sections
+        */
+
+        .example-section {
+            margin-bottom: 60px;
+        }
+
+
+        .example-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+
+        /*
+            Bootstrap Card Customization
+        */
+
+        .avelis-card {
+            max-width: 320px;
+            margin: 0 auto;
+            border: 1px solid #8d785c;
+            background-color: #fffaf0;
+        }
+
+
+        .avelis-card img {
+            width: 100%;
+            height: auto;
+        }
+
+
+        .avelis-card .card-title {
+            color: #3e2d20;
+        }
+
+
+        /*
+            Custom button styling
+        */
+
+        .avelis-button {
+            background-color: #6b5139;
+            border-color: #6b5139;
+        }
+
+
+        .avelis-button:hover,
+        .avelis-button:focus {
+            background-color: #503c2c;
+            border-color: #503c2c;
+        }
+
+
+        /*
+            Accordion Customization
+        */
+
+        .accordion-button {
+            background-color: #e8d7b8;
+            color: #3e2d20;
+        }
+
+
+        .accordion-button:not(.collapsed) {
+            background-color: #d9c19b;
+            color: #3e2d20;
+        }
+
+
+        .accordion-body {
+            background-color: #fffaf0;
+        }
+
+
+        /*
+            Advanced Bootstrap example area
+        */
+
+        .advanced-example-box {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 25px;
+            text-align: center;
+            background-color: #fffaf0;
+            border: 1px solid #8d785c;
+            border-radius: 8px;
+        }
+
+
+        /*
+            Footer
+        */
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            margin-top: 50px;
+            background-color: #4a3828;
+            color: #f5e8c8;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         BOOTSTRAP EXAMPLE 1
+         RESPONSIVE NAVBAR
+         ========================================================= -->
+
+    <nav
+        class="navbar navbar-expand-lg avelis-navbar"
+        data-bs-theme="dark"
+    >
+
+        <div class="container">
+
+            <a
+                class="navbar-brand"
+                href="#"
+            >
+                Avelis World Companion
+            </a>
+
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#avelisNavbar"
+                aria-controls="avelisNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div
+                class="collapse navbar-collapse"
+                id="avelisNavbar"
+            >
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="#"
+                        >
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="#"
+                        >
+                            Characters
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="#"
+                        >
+                            Maps
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="#"
+                        >
+                            Lore
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="#"
+                        >
+                            Calendar
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="#"
+                        >
+                            Books &amp; Stories
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="container">
+
+
+        <!-- =====================================================
+             PAGE INTRODUCTION
+             ===================================================== -->
+
+        <section class="page-heading">
+
+            <h1>
+                Bootstrap Examples
+            </h1>
+
+            <p>
+                This page demonstrates Bootstrap components,
+                responsive layouts, tables, and advanced interactive
+                tools that can also be incorporated into the Avelis
+                World Companion milestone project.
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BOOTSTRAP EXAMPLE 2
+             CARD
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Example 2: Bootstrap Card
+                </h2>
+
+                <p>
+                    The Bootstrap card organizes book and story
+                    information into a clear visual component.
+                </p>
+
+            </div>
+
+
+            <div class="card avelis-card">
+
+                <img
+                    src="images/Book-Cover.PNG"
+                    class="card-img-top"
+                    alt="Book cover artwork for the Avelis story"
+                >
+
+
+                <div class="card-body">
+
+                    <h3 class="card-title h5">
+                        Explore the Stories of Avelis
+                    </h3>
+
+
+                    <p class="card-text">
+                        Discover stories, characters, and events
+                        that expand the history and world of Avelis.
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="btn btn-primary avelis-button"
+                    >
+                        View Stories
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BOOTSTRAP EXAMPLE 3
+             ACCORDION
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Example 3: Bootstrap Accordion
+                </h2>
+
+                <p>
+                    The accordion keeps information organized
+                    while allowing visitors to expand only the
+                    sections they want to read.
+                </p>
+
+            </div>
+
+
+            <div
+                class="accordion"
+                id="avelisAccordion"
+            >
+
+
+                <!-- ACCORDION ITEM 1 -->
+
+                <div class="accordion-item">
+
+                    <h3
+                        class="accordion-header"
+                        id="headingOne"
+                    >
+
+                        <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="true"
+                            aria-controls="collapseOne"
+                        >
+                            Geography and Environment
+                        </button>
+
+                    </h3>
+
+
+                    <div
+                        id="collapseOne"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#avelisAccordion"
+                    >
+
+                        <div class="accordion-body">
+
+                            The geography of Avelis includes
+                            different kingdoms, landscapes, cities,
+                            and natural environments that influence
+                            travel, culture, and settlement.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ACCORDION ITEM 2 -->
+
+                <div class="accordion-item">
+
+                    <h3
+                        class="accordion-header"
+                        id="headingTwo"
+                    >
+
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="collapseTwo"
+                        >
+                            Religion and Tradition
+                        </button>
+
+                    </h3>
+
+
+                    <div
+                        id="collapseTwo"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingTwo"
+                        data-bs-parent="#avelisAccordion"
+                    >
+
+                        <div class="accordion-body">
+
+                            Religious beliefs and traditions help
+                            shape ceremonies, cultural expectations,
+                            historical events, and relationships
+                            between communities throughout Avelis.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ACCORDION ITEM 3 -->
+
+                <div class="accordion-item">
+
+                    <h3
+                        class="accordion-header"
+                        id="headingThree"
+                    >
+
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree"
+                            aria-expanded="false"
+                            aria-controls="collapseThree"
+                        >
+                            Magic
+                        </button>
+
+                    </h3>
+
+
+                    <div
+                        id="collapseThree"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingThree"
+                        data-bs-parent="#avelisAccordion"
+                    >
+
+                        <div class="accordion-body">
+
+                            Magic is part of the larger worldbuilding
+                            system of Avelis and connects with its
+                            people, history, traditions, and conflicts.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BOOTSTRAP LAYOUT/TABLE EXAMPLE 1
+             RESPONSIVE GRID
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Layout Example 1: Responsive Grid
+                </h2>
+
+                <p>
+                    Bootstrap's grid system organizes related content
+                    into columns that adjust automatically on smaller screens.
+                </p>
+
+            </div>
+
+
+            <div class="container">
+
+                <div class="row g-4">
+
+
+                    <div class="col-12 col-md-4">
+
+                        <div class="p-4 border rounded bg-light h-100">
+
+                            <h3 class="h5">
+                                Characters
+                            </h3>
+
+                            <p>
+                                Explore the people of Avelis and learn more
+                                about their roles, relationships, and histories.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12 col-md-4">
+
+                        <div class="p-4 border rounded bg-light h-100">
+
+                            <h3 class="h5">
+                                Lore
+                            </h3>
+
+                            <p>
+                                Browse information about the cultures,
+                                systems, traditions, and history of Avelis.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12 col-md-4">
+
+                        <div class="p-4 border rounded bg-light h-100">
+
+                            <h3 class="h5">
+                                Maps
+                            </h3>
+
+                            <p>
+                                View geographic and political maps to better
+                                understand locations throughout the world.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BOOTSTRAP LAYOUT/TABLE EXAMPLE 2
+             RESPONSIVE TABLE
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Layout Example 2: Responsive Table
+                </h2>
+
+                <p>
+                    Bootstrap table classes improve readability while the
+                    responsive wrapper allows the table to work on smaller screens.
+                </p>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-bordered table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th scope="col">
+                                Category
+                            </th>
+
+                            <th scope="col">
+                                Example
+                            </th>
+
+                            <th scope="col">
+                                Purpose
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Geography
+                            </td>
+
+                            <td>
+                                Kingdom Maps
+                            </td>
+
+                            <td>
+                                Shows major locations and geographic boundaries.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Characters
+                            </td>
+
+                            <td>
+                                Character Archive
+                            </td>
+
+                            <td>
+                                Provides information about important people in Avelis.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Lore
+                            </td>
+
+                            <td>
+                                Lore Archive
+                            </td>
+
+                            <td>
+                                Organizes worldbuilding information by topic and category.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Stories
+                            </td>
+
+                            <td>
+                                Books and Stories
+                            </td>
+
+                            <td>
+                                Connects visitors with stories set within the world.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BOOTSTRAP LAYOUT/TABLE EXAMPLE 3
+             TWO-COLUMN RESPONSIVE LAYOUT
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Layout Example 3: Two-Column Layout
+                </h2>
+
+                <p>
+                    Bootstrap columns can give primary information more space
+                    while keeping supporting information visible beside it.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- MAIN CONTENT COLUMN -->
+
+                <div class="col-12 col-lg-8">
+
+                    <div class="p-4 border rounded bg-light h-100">
+
+                        <h3>
+                            Exploring Avelis
+                        </h3>
+
+                        <p>
+                            The Avelis World Companion brings information from
+                            different parts of the fictional world into one
+                            organized website. Visitors can explore characters,
+                            maps, lore, stories, and other resources without
+                            needing to search through separate documents.
+                        </p>
+
+                        <p>
+                            Giving this section more space helps make longer
+                            information easier to read while preserving a clear
+                            visual hierarchy.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SIDEBAR COLUMN -->
+
+                <div class="col-12 col-lg-4">
+
+                    <aside class="p-4 border rounded bg-light h-100">
+
+                        <h3 class="h5">
+                            Quick Links
+                        </h3>
+
+                        <ul class="list-group">
+
+                            <li class="list-group-item">
+                                Characters
+                            </li>
+
+                            <li class="list-group-item">
+                                Maps
+                            </li>
+
+                            <li class="list-group-item">
+                                Lore Archive
+                            </li>
+
+                            <li class="list-group-item">
+                                Books and Stories
+                            </li>
+
+                        </ul>
+
+                    </aside>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ADVANCED BOOTSTRAP EXAMPLE 1
+             MODAL
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Advanced Example 1: Modal
+                </h2>
+
+                <p>
+                    A modal displays additional information without
+                    requiring the visitor to leave the current page.
+                </p>
+
+            </div>
+
+
+            <div class="advanced-example-box">
+
+                <button
+                    type="button"
+                    class="btn btn-primary avelis-button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#storyModal"
+                >
+                    Read Story Details
+                </button>
+
+            </div>
+
+
+            <!-- MODAL WINDOW -->
+
+            <div
+                class="modal fade"
+                id="storyModal"
+                tabindex="-1"
+                aria-labelledby="storyModalLabel"
+                aria-hidden="true"
+            >
+
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h3
+                                class="modal-title fs-5"
+                                id="storyModalLabel"
+                            >
+                                Stories of Avelis
+                            </h3>
+
+
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+
+                        </div>
+
+
+                        <div class="modal-body">
+
+                            Books and stories provide another way to explore
+                            the characters, history, cultures, and conflicts
+                            found throughout the world of Avelis.
+
+                        </div>
+
+
+                        <div class="modal-footer">
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ADVANCED BOOTSTRAP EXAMPLE 2
+             TOOLTIP
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Advanced Example 2: Tooltip
+                </h2>
+
+                <p>
+                    A tooltip provides additional information when a
+                    visitor hovers over or focuses on an element.
+                </p>
+
+            </div>
+
+
+            <div class="advanced-example-box">
+
+                <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-title="The Lore Archive contains searchable information about the world of Avelis."
+                >
+                    What is the Lore Archive?
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ADVANCED BOOTSTRAP EXAMPLE 3
+             TOAST
+             ===================================================== -->
+
+        <section class="example-section">
+
+            <div class="example-title">
+
+                <h2>
+                    Advanced Example 3: Toast
+                </h2>
+
+                <p>
+                    A toast provides a short notification without
+                    interrupting the visitor's interaction with the page.
+                </p>
+
+            </div>
+
+
+            <div class="advanced-example-box">
+
+                <button
+                    type="button"
+                    class="btn btn-primary avelis-button"
+                    id="show-toast-button"
+                >
+                    Save Archive Entry
+                </button>
+
+            </div>
+
+
+            <!-- TOAST NOTIFICATION -->
+
+            <div
+                class="toast-container position-fixed bottom-0 end-0 p-3"
+            >
+
+                <div
+                    id="avelisToast"
+                    class="toast"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+
+                    <div class="toast-header">
+
+                        <strong class="me-auto">
+                            Avelis Archive
+                        </strong>
+
+
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"
+                        ></button>
+
+                    </div>
+
+
+                    <div class="toast-body">
+
+                        The archive entry has been saved successfully.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer>
+
+        <p>
+            Created by Samantha Manuszak for CST-120:
+            Introduction to Web Development
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================================================
+         BOOTSTRAP JAVASCRIPT
+         ========================================================= -->
+
+    <!--
+        Bootstrap JavaScript Bundle
+
+        This is required for interactive Bootstrap components
+        such as the navbar, accordion, modal, tooltip, and toast.
+    -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <script>
+
+        /*
+            ADVANCED BOOTSTRAP EXAMPLE 2
+            TOOLTIP INITIALIZATION
+
+            Bootstrap tooltips must be initialized with JavaScript.
+        */
+
+        const tooltipTriggerList =
+            document.querySelectorAll(
+                '[data-bs-toggle="tooltip"]'
+            );
+
+
+        const tooltipList =
+            [...tooltipTriggerList].map(
+                function(tooltipTriggerElement) {
+
+                    return new bootstrap.Tooltip(
+                        tooltipTriggerElement
+                    );
+                }
+            );
+
+
+
+        /*
+            ADVANCED BOOTSTRAP EXAMPLE 3
+            TOAST EVENT
+        */
+
+        const toastButton =
+            document.getElementById(
+                "show-toast-button"
+            );
+
+
+        const toastElement =
+            document.getElementById(
+                "avelisToast"
+            );
+
+
+        toastButton.addEventListener(
+            "click",
+            function() {
+
+                /*
+                    Create or retrieve the Bootstrap Toast
+                    connected to the toast element.
+                */
+
+                const toast =
+                    bootstrap.Toast.getOrCreateInstance(
+                        toastElement
+                    );
+
+
+                /*
+                    Display the notification.
+                */
+
+                toast.show();
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

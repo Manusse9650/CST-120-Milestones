@@ -1,375 +1,954 @@
 /*
-    CST-120 Milestone 5 - Characters Page JavaScript
+    CST-120 Milestone 6
+    Avelis Characters Page JavaScript
 
-    This file controls interactive behavior on characters.html.
-
-    It demonstrates:
-    - External JavaScript
-    - Character objects
-    - Template literals
-    - String methods
-    - Selection statements
-    - Loops
-    - Delegated event listeners
-    - Click and keyboard interaction
-    - ARIA attribute updates
-    - Focus management
+    Features:
+    - Character card flipping
+    - Mouse and keyboard interaction
+    - ARIA accessibility updates
+    - Character information toggle
+    - Character count
+    - Automatically applies completed character card backs
+    - Uses delegated event listeners so future cards can
+      use the same interaction without additional listeners
 */
 
 
 /*
-    Character object.
-
-    This object stores information about Myrrin that is used
-    when the visitor opens the Character Information section.
+    =========================================================
+    CHARACTER DATA
+    =========================================================
 */
 
-const myrrin = {
-    name: "Myrrin Sylvamer",
-    world: "Avelis",
-    role: "Main Character",
-    hasPronunciation: true
+const characters = {
+
+    myrrin: {
+
+        name:
+            "Myrrin Sylvamer",
+
+        world:
+            "Avelis",
+
+        role:
+            "Main Character",
+
+        hasPronunciation:
+            true
+
+    },
+
+
+    sorren: {
+
+        name:
+            "Sorren",
+
+        world:
+            "Avelis",
+
+        role:
+            "Character",
+
+        hasPronunciation:
+            false
+
+    }
+
 };
 
 
 /*
-    Cache page elements that are used more than once.
+    =========================================================
+    COMPLETED CARD BACKS
+    =========================================================
+
+    Only characters with completed card-back artwork
+    need to be listed here.
+
+    Other cards keep the existing back image already
+    provided in characters.html.
 */
 
-const characterList =
-    document.querySelector(".character-list");
+const characterCardBacks = {
 
-const myrrinInfoButton =
-    document.getElementById("myrrin-info-button");
+    "Myrrin Sylvamer":
+        "images/Myrrin-Card-Back.png",
 
-const myrrinInfoBox =
-    document.getElementById("myrrin-info");
+    "Solarius Aldeatus":
+        "images/Sorren-Card-Back.png"
+
+    };
+
 
 
 /*
-    showMyrrinInfo()
+    =========================================================
+    APPLY CARD BACK IMAGES
+    =========================================================
 
-    Purpose:
-    Opens or closes Myrrin's additional character information.
+    This function checks the name shown in each character
+    card and replaces the reverse-side image when completed
+    artwork exists for that character.
+*/
 
-    Trigger:
-    The visitor activates the Character Information button.
+function applyCardBackImages() {
 
-    Expected outcome:
-    Character details appear when closed and disappear when open.
+    const characterCards =
+        document.querySelectorAll(
+            ".character-card"
+        );
 
-    Accessibility:
-    aria-expanded and aria-hidden are updated to communicate
-    the current state to assistive technology. Focus moves to
-    the information when it opens and returns to the button
-    when it closes.
+
+    for (
+        let i = 0;
+        i < characterCards.length;
+        i++
+    ) {
+
+        const card =
+            characterCards[i];
+
+
+        const nameElement =
+            card.querySelector(
+                ".character-name"
+            );
+
+
+        const backImage =
+            card.querySelector(
+                ".flip-card-back img"
+            );
+
+
+        /*
+            Skip cards that do not contain the expected
+            name or reverse-side image.
+        */
+
+        if (
+            nameElement === null ||
+            backImage === null
+        ) {
+
+            continue;
+
+        }
+
+
+        const characterName =
+            nameElement.textContent.trim();
+
+
+        /*
+            Check whether completed artwork exists.
+        */
+
+        if (
+            characterCardBacks[
+                characterName
+            ]
+        ) {
+
+            backImage.src =
+                characterCardBacks[
+                    characterName
+                ];
+
+
+            backImage.alt =
+                "Back of " +
+                characterName +
+                "'s character card";
+
+        }
+
+    }
+
+}
+
+
+/*
+    =========================================================
+    FLIP CARD
+    =========================================================
+
+    Cards can be activated with:
+    - Mouse click
+    - Enter
+    - Space
+
+    aria-pressed communicates the front/back state
+    to assistive technology.
+*/
+
+function flipCard(
+    card
+) {
+
+    if (
+        card === null
+    ) {
+
+        return;
+
+    }
+
+
+    card.classList.toggle(
+        "flipped"
+    );
+
+
+    const isFlipped =
+        card.classList.contains(
+            "flipped"
+        );
+
+
+    /*
+        Accessibility state.
+    */
+
+    card.setAttribute(
+        "aria-pressed",
+        isFlipped.toString()
+    );
+
+
+    /*
+        Find the character name for a more useful
+        accessible label.
+    */
+
+    const characterArticle =
+        card.closest(
+            ".character-card"
+        );
+
+
+    let characterName =
+        "character";
+
+
+    if (
+        characterArticle !== null
+    ) {
+
+        const nameElement =
+            characterArticle.querySelector(
+                ".character-name"
+            );
+
+
+        if (
+            nameElement !== null
+        ) {
+
+            characterName =
+                nameElement.textContent.trim();
+
+        }
+
+    }
+
+
+    /*
+        Update the accessible description depending
+        on which side is currently visible.
+    */
+
+    if (
+        isFlipped
+    ) {
+
+        card.setAttribute(
+            "aria-label",
+            characterName +
+            " card. Reverse side shown. Press Enter or Space to show the front."
+        );
+
+    } else {
+
+        card.setAttribute(
+            "aria-label",
+            characterName +
+            " card. Front side shown. Press Enter or Space to show the reverse."
+        );
+
+    }
+
+}
+
+
+/*
+    =========================================================
+    PREPARE FLIP CARDS
+    =========================================================
+
+    Makes the custom card controls keyboard accessible.
+*/
+
+function prepareFlipCards() {
+
+    const flipCards =
+        document.querySelectorAll(
+            ".flip-card"
+        );
+
+
+    for (
+        let i = 0;
+        i < flipCards.length;
+        i++
+    ) {
+
+        const card =
+            flipCards[i];
+
+
+        /*
+            A div is not normally keyboard accessible.
+
+            tabindex allows keyboard focus and role="button"
+            communicates that it behaves like a control.
+        */
+
+        card.setAttribute(
+            "tabindex",
+            "0"
+        );
+
+
+        card.setAttribute(
+            "role",
+            "button"
+        );
+
+
+        card.setAttribute(
+            "aria-pressed",
+            "false"
+        );
+
+
+        /*
+            Find the character name.
+        */
+
+        const characterArticle =
+            card.closest(
+                ".character-card"
+            );
+
+
+        let characterName =
+            "Character";
+
+
+        if (
+            characterArticle !== null
+        ) {
+
+            const nameElement =
+                characterArticle.querySelector(
+                    ".character-name"
+                );
+
+
+            if (
+                nameElement !== null
+            ) {
+
+                characterName =
+                    nameElement.textContent.trim();
+
+            }
+
+        }
+
+
+        card.setAttribute(
+            "aria-label",
+            characterName +
+            " card. Front side shown. Press Enter or Space to show the reverse."
+        );
+
+    }
+
+}
+
+
+/*
+    =========================================================
+    MYRRIN INFORMATION
+    =========================================================
+
+    The information panel is retained from the earlier
+    milestone but now uses DOM methods instead of placing
+    character data directly into innerHTML.
+
+    ARIA states are updated when the panel opens/closes.
 */
 
 function showMyrrinInfo() {
 
-    /*
-        Selection statement:
+    const infoBox =
+        document.getElementById(
+            "myrrin-info"
+        );
 
-        aria-expanded tells the script whether the
-        information is currently open or closed.
+
+    const infoButton =
+        document.getElementById(
+            "myrrin-info-button"
+        );
+
+
+    /*
+        If the page does not currently contain these
+        elements, safely stop the function.
     */
 
-    let isExpanded =
-        myrrinInfoButton.getAttribute("aria-expanded") === "true";
+    if (
+        infoBox === null ||
+        infoButton === null
+    ) {
+
+        return;
+
+    }
 
 
-    if (isExpanded === false) {
-
-        /*
-            String Example:
-            A template literal combines object values
-            into a complete readable sentence.
-        */
-
-        let characterSummary =
-            `<p><strong>${myrrin.name}</strong> is the ${myrrin.role} in the world of ${myrrin.world}.</p>`;
+    const isExpanded =
+        infoButton.getAttribute(
+            "aria-expanded"
+        ) === "true";
 
 
-        /*
-            String Method Example:
-            toUpperCase() makes the role label stand out
-            clearly in the information panel.
-        */
+    /*
+        =====================================================
+        OPEN INFORMATION
+        =====================================================
+    */
 
-        let formattedRole =
-            myrrin.role.toUpperCase();
-
-
-        /*
-            Multiline template literal:
-            Several pieces of character information are
-            organized into readable HTML.
-        */
-
-        let characterDetails = `
-            <p><strong>Name:</strong> ${myrrin.name}</p>
-            <p><strong>World:</strong> ${myrrin.world}</p>
-            <p><strong>Role:</strong> ${formattedRole}</p>
-            <p>This character includes an audio pronunciation guide.</p>
-        `;
-
-
-        myrrinInfoBox.innerHTML =
-            characterSummary + characterDetails;
-
+    if (
+        isExpanded === false
+    ) {
 
         /*
-            Make the information visible.
+            Clear any older content.
         */
 
-        myrrinInfoBox.hidden =
-            false;
-
-
-        /*
-            Update ARIA states so assistive technology
-            knows the information is now visible.
-        */
-
-        myrrinInfoButton.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        myrrinInfoBox.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-
-        myrrinInfoButton.textContent =
-            "Hide Character Information";
-
-
-        /*
-            Move keyboard focus to the newly displayed
-            information so users can locate it immediately.
-        */
-
-        myrrinInfoBox.focus();
-
-    } else {
-
-        /*
-            Hide the information and clear its contents.
-        */
-
-        myrrinInfoBox.hidden =
-            true;
-
-        myrrinInfoBox.innerHTML =
+        infoBox.textContent =
             "";
 
 
         /*
-            Restore the closed ARIA states.
+            Character summary.
         */
 
-        myrrinInfoButton.setAttribute(
+        const summary =
+            document.createElement(
+                "p"
+            );
+
+
+        const summaryName =
+            document.createElement(
+                "strong"
+            );
+
+
+        summaryName.textContent =
+            characters.myrrin.name;
+
+
+        summary.appendChild(
+            summaryName
+        );
+
+
+        summary.appendChild(
+            document.createTextNode(
+                " is a " +
+                characters.myrrin.role +
+                " in the world of " +
+                characters.myrrin.world +
+                "."
+            )
+        );
+
+
+        /*
+            Name information.
+        */
+
+        const nameParagraph =
+            document.createElement(
+                "p"
+            );
+
+
+        const nameLabel =
+            document.createElement(
+                "strong"
+            );
+
+
+        nameLabel.textContent =
+            "Name: ";
+
+
+        nameParagraph.appendChild(
+            nameLabel
+        );
+
+
+        nameParagraph.appendChild(
+            document.createTextNode(
+                characters.myrrin.name
+            )
+        );
+
+
+        /*
+            World information.
+        */
+
+        const worldParagraph =
+            document.createElement(
+                "p"
+            );
+
+
+        const worldLabel =
+            document.createElement(
+                "strong"
+            );
+
+
+        worldLabel.textContent =
+            "World: ";
+
+
+        worldParagraph.appendChild(
+            worldLabel
+        );
+
+
+        worldParagraph.appendChild(
+            document.createTextNode(
+                characters.myrrin.world
+            )
+        );
+
+
+        /*
+            Role information.
+        */
+
+        const roleParagraph =
+            document.createElement(
+                "p"
+            );
+
+
+        const roleLabel =
+            document.createElement(
+                "strong"
+            );
+
+
+        roleLabel.textContent =
+            "Role: ";
+
+
+        roleParagraph.appendChild(
+            roleLabel
+        );
+
+
+        roleParagraph.appendChild(
+            document.createTextNode(
+                characters.myrrin.role
+            )
+        );
+
+
+        /*
+            Pronunciation information.
+        */
+
+        const pronunciationParagraph =
+            document.createElement(
+                "p"
+            );
+
+
+        pronunciationParagraph.textContent =
+            "This character includes an audio pronunciation guide.";
+
+
+        /*
+            Add all information to the panel.
+        */
+
+        infoBox.appendChild(
+            summary
+        );
+
+
+        infoBox.appendChild(
+            nameParagraph
+        );
+
+
+        infoBox.appendChild(
+            worldParagraph
+        );
+
+
+        infoBox.appendChild(
+            roleParagraph
+        );
+
+
+        infoBox.appendChild(
+            pronunciationParagraph
+        );
+
+
+        /*
+            Show the information panel.
+        */
+
+        infoBox.hidden =
+            false;
+
+
+        /*
+            Accessibility updates.
+        */
+
+        infoButton.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+
+        infoBox.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        infoButton.textContent =
+            "Hide Character Information";
+
+
+    /*
+        =====================================================
+        CLOSE INFORMATION
+        =====================================================
+    */
+
+    } else {
+
+        infoBox.textContent =
+            "";
+
+
+        infoBox.hidden =
+            true;
+
+
+        infoButton.setAttribute(
             "aria-expanded",
             "false"
         );
 
-        myrrinInfoBox.setAttribute(
+
+        infoBox.setAttribute(
             "aria-hidden",
             "true"
         );
 
 
-        myrrinInfoButton.textContent =
+        infoButton.textContent =
             "Character Information";
 
-
-        /*
-            Return focus to the button after the information
-            closes so keyboard users remain oriented.
-        */
-
-        myrrinInfoButton.focus();
     }
+
 }
 
 
 /*
-    flipCard()
+    =========================================================
+    CHARACTER COUNT
+    =========================================================
 
-    Purpose:
-    Changes a character card between its front and back sides.
-
-    Expected outcome:
-    The flipped class is added or removed and aria-pressed
-    reflects the card's current visual state.
-*/
-
-function flipCard(card) {
-
-    card.classList.toggle("flipped");
-
-
-    /*
-        Selection statement:
-
-        Check whether the flipped class is currently present
-        and update aria-pressed to match the visual state.
-    */
-
-    if (card.classList.contains("flipped")) {
-
-        card.setAttribute(
-            "aria-pressed",
-            "true"
-        );
-
-    } else {
-
-        card.setAttribute(
-            "aria-pressed",
-            "false"
-        );
-    }
-}
-
-
-/*
-    showCharacterCount()
-
-    Purpose:
-    Counts the character cards currently displayed on the page.
-
-    Loop behavior:
-    The loop begins with the first character card and ends
-    after each card in the NodeList has been counted once.
-
-    Edge case:
-    If no character cards exist, the loop performs zero
-    iterations and the displayed total remains zero.
+    Uses the NodeList length directly instead of counting
+    manually through a loop.
 */
 
 function showCharacterCount() {
 
-    let characterCards =
-        document.querySelectorAll(".character-card");
+    const characterCards =
+        document.querySelectorAll(
+            ".character-card"
+        );
 
 
-    let totalCharacters =
-        0;
+    const characterCount =
+        document.getElementById(
+            "character-count"
+        );
 
 
-    for (let i = 0; i < characterCards.length; i++) {
+    if (
+        characterCount === null
+    ) {
 
-        totalCharacters++;
+        return;
+
     }
 
 
-    document.getElementById("character-count").textContent =
-        totalCharacters + " characters are currently featured.";
+    const totalCharacters =
+        characterCards.length;
+
+
+    if (
+        totalCharacters === 1
+    ) {
+
+        characterCount.textContent =
+            "1 character is currently featured.";
+
+    } else {
+
+        characterCount.textContent =
+            totalCharacters +
+            " characters are currently featured.";
+
+    }
+
 }
 
 
 /*
-    Delegated character card click event.
+    =========================================================
+    CHARACTER LIST EVENTS
+    =========================================================
 
-    Purpose:
-    Allows one listener on the character-list container to
-    control every current or future .flip-card inside it.
-
-    Trigger:
-    A visitor clicks a character card.
-
-    Expected outcome:
-    Only the selected card flips.
-
-    Accessibility:
-    Keyboard behavior is handled separately below so the
-    same feature is available without a mouse.
+    One delegated event listener handles all character
+    cards. This keeps the code reusable if additional
+    characters are added later.
 */
 
-characterList.addEventListener("click", function(event) {
+function addCharacterEvents() {
 
-    let selectedCard =
-        event.target.closest(".flip-card");
-
-
-    /*
-        Selection statement:
-
-        Only call flipCard() when the click occurred
-        inside an actual character card.
-    */
-
-    if (selectedCard) {
-
-        flipCard(selectedCard);
-    }
-});
-
-
-/*
-    Delegated character card keyboard event.
-
-    Purpose:
-    Provides keyboard access to the same card-flipping behavior.
-
-    Trigger:
-    A focused character card receives Enter or Space.
-
-    Expected outcome:
-    The selected card flips without requiring a mouse.
-
-    Accessibility:
-    preventDefault() stops the Space key from scrolling the
-    page while it is being used to activate the card.
-*/
-
-characterList.addEventListener("keydown", function(event) {
-
-    let selectedCard =
-        event.target.closest(".flip-card");
+    const characterList =
+        document.querySelector(
+            ".character-list"
+        );
 
 
     if (
-        selectedCard &&
-        (
-            event.key === "Enter" ||
-            event.key === " "
-        )
+        characterList === null
     ) {
 
-        event.preventDefault();
+        return;
 
-        flipCard(selectedCard);
     }
-});
+
+
+    /*
+        MOUSE / POINTER EVENT
+    */
+
+    characterList.addEventListener(
+        "click",
+        function(
+            event
+        ) {
+
+            /*
+                Do not flip a card when the visitor is
+                interacting with an audio player or another
+                button inside the character entry.
+            */
+
+            if (
+                event.target.closest(
+                    "audio, button, a"
+                ) !== null
+            ) {
+
+                return;
+
+            }
+
+
+            const selectedCard =
+                event.target.closest(
+                    ".flip-card"
+                );
+
+
+            if (
+                selectedCard !== null
+            ) {
+
+                flipCard(
+                    selectedCard
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+        KEYBOARD EVENT
+
+        Enter and Space activate the same card interaction
+        available to mouse users.
+    */
+
+    characterList.addEventListener(
+        "keydown",
+        function(
+            event
+        ) {
+
+            const selectedCard =
+                event.target.closest(
+                    ".flip-card"
+                );
+
+
+            if (
+                selectedCard === null
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                /*
+                    Prevent Space from scrolling the page.
+                */
+
+                event.preventDefault();
+
+
+                flipCard(
+                    selectedCard
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 /*
-    Myrrin information button event.
-
-    Purpose:
-    Opens and closes the accessible character information panel.
-
-    Trigger:
-    The visitor activates the Character Information button.
-
-    Expected outcome:
-    Myrrin's information is shown or hidden while ARIA
-    attributes and keyboard focus are updated.
+    =========================================================
+    MYRRIN INFORMATION BUTTON EVENT
+    =========================================================
 */
 
-myrrinInfoButton.addEventListener("click", function() {
+function prepareMyrrinInfo() {
 
-    showMyrrinInfo();
-});
+    const infoButton =
+        document.getElementById(
+            "myrrin-info-button"
+        );
+
+
+    const infoBox =
+        document.getElementById(
+            "myrrin-info"
+        );
+
+
+    if (
+        infoButton === null ||
+        infoBox === null
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+        Initial accessibility state.
+    */
+
+    infoButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+
+    infoButton.setAttribute(
+        "aria-controls",
+        "myrrin-info"
+    );
+
+
+    infoBox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    infoBox.hidden =
+        true;
+
+
+    /*
+        Avoid inline onclick attributes.
+        Milestone 6 asks for unobtrusive JavaScript.
+    */
+
+    infoButton.addEventListener(
+        "click",
+        function() {
+
+            showMyrrinInfo();
+
+        }
+    );
+
+}
 
 
 /*
-    Display the current number of character cards
-    when the script loads.
+    =========================================================
+    INITIALIZE CHARACTERS PAGE
+    =========================================================
 */
+
+prepareFlipCards();
+
+applyCardBackImages();
+
+prepareMyrrinInfo();
+
+addCharacterEvents();
 
 showCharacterCount();

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<!--
+    CST-120 Milestone 6 - Calendar Page
+
+    This page presents the custom Avelis timekeeping system and
+    provides an interactive visual calendar.
+
+    Milestone 6 features demonstrated on this page include:
+
+    - Bootstrap 5 responsive layout
+    - Bootstrap grid system
+    - Bootstrap cards
+    - Bootstrap buttons
+    - Bootstrap form controls
+    - Animate On Scroll (AOS) animation library
+    - Responsive design for multiple screen sizes
+    - External JavaScript for dynamic calendar generation
+    - Interactive Moon navigation
+    - Dynamic holiday and character birth-date display
+    - Interactive Cycle converter
+    - Accessible labels and live result announcements
+
+    Shared site styling is stored in styles.css.
+
+    Calendar calculations, important dates, Moon navigation,
+    and dynamic table generation are stored externally in:
+    js/calendar.js
+
+    Bootstrap components are customized through the existing
+    Avelis stylesheet so the page remains visually consistent
+    with the rest of the website.
+
+    Animate On Scroll (AOS) is used as the additional
+    JavaScript library for Milestone 6. Selected sections
+    receive subtle movement as they enter the visitor's screen.
+-->
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+
+    <title>
+        Avelis | Calendar
+    </title>
+
+
+    <!-- =====================================================
+         MILESTONE 6 - BOOTSTRAP 5
+         =====================================================
+
+         Bootstrap is an external CSS and JavaScript library
+         incorporated into the Milestone 6 website.
+
+         This page uses Bootstrap for:
+
+         - Responsive grid organization
+         - Timekeeping cards
+         - Navigation buttons
+         - Form controls
+         - Responsive column sizing
+         - Spacing utilities
+
+         Custom styles in styles.css modify Bootstrap components
+         so they match the established Avelis design.
+    -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+
+    <!-- =====================================================
+         MILESTONE 6 - AOS STYLESHEET
+         =====================================================
+
+         Animate On Scroll (AOS) is the additional JavaScript
+         library used for Milestone 6.
+
+         The stylesheet provides the animation styles used by
+         elements containing data-aos attributes.
+    -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+    >
+
+
+
+    <!-- =====================================================
+         AVELIS SHARED STYLESHEET
+         =====================================================
+
+         Shared styling for the six-page Avelis World Companion
+         is stored externally in styles.css.
+
+         This stylesheet loads after Bootstrap and AOS so the
+         site's custom design can override library defaults
+         when necessary.
+    -->
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SITE HEADER
+         ===================================================== -->
+
+    <header>
+
+        <h1>
+            Avelis
+        </h1>
+
+    </header>
+
+
+
+    <div class="page-layout">
+
+
+        <!-- =================================================
+             MAIN SITE NAVIGATION
+             =================================================
+
+             Milestone 6 navigation connects all six completed
+             pages of the Avelis World Companion.
+
+             aria-current identifies the Calendar as the current
+             page for visitors using assistive technology.
+        -->
+
+        <nav
+            aria-label="Main navigation"
+        >
+
+            <ul>
+
+
+                <li>
+
+                    <a
+                        href="index.html"
+                    >
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="characters.html"
+                    >
+                        Characters
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="map.html"
+                    >
+                        World Map
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="calendar.html"
+                        aria-current="page"
+                    >
+                        Calendar
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="lore.html"
+                    >
+                        Lore Archive
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="books&amp;stories.html"
+                    >
+                        Books and Stories
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </nav>
+
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main>
+
+
+            <!-- =================================================
+                 CALENDAR INTRODUCTION
+                 =================================================
+
+                 AOS adds a subtle fade-up effect when this section
+                 first enters the visitor's screen.
+            -->
+
+            <section
+                class="calendar-intro"
+                data-aos="fade-up"
+            >
+
+                <h2>
+                    Calendar
+                </h2>
+
+
+                <p>
+
+                    Time in Avelis is measured through cycles,
+                    spans, moons, and solturns. The calendar below
+                    shows how the forty cycles of a single moon are
+                    divided into four spans.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 INTERACTIVE VISUAL CALENDAR
+                 =================================================
+
+                 Milestone 6 JavaScript builds the calendar body
+                 dynamically.
+
+                 Visitors can:
+                 - Move backward or forward between Moons
+                 - Select a Moon from the dropdown
+                 - View important holidays
+                 - View character birth dates
+
+                 JavaScript calculates which Cycle belongs in each
+                 Moon and Span instead of storing the complete
+                 calendar directly in the HTML.
+
+                 AOS adds a fade-up animation when the visual
+                 calendar enters the screen.
+            -->
+
+            <section
+                class="calendar-chart-section"
+                aria-labelledby="calendar-chart-heading"
+                data-aos="fade-up"
+            >
+
+
+                <div class="calendar-chart-header">
+
+
+                    <!--
+                        Bootstrap button styling is used for
+                        Moon navigation.
+                    -->
+
+                    <button
+                        type="button"
+                        id="previous-moon"
+                        class="btn btn-secondary"
+                        aria-label="View previous Moon"
+                    >
+                        Previous
+                    </button>
+
+
+
+                    <div class="calendar-heading-group">
+
+
+                        <h2
+                            id="calendar-chart-heading"
+                        >
+                            Avelis Calendar
+                        </h2>
+
+
+                        <!--
+                            JavaScript updates this heading when
+                            the selected Moon changes.
+                        -->
+
+                        <h3
+                            id="moon-title"
+                        >
+                            Moon 1
+                        </h3>
+
+
+                        <!--
+                            aria-live allows the updated Cycle range
+                            to be announced by assistive technology.
+                        -->
+
+                        <p
+                            id="moon-range"
+                            aria-live="polite"
+                        >
+                            Cycles 1–40 of the Solturn
+                        </p>
+
+
+                    </div>
+
+
+
+                    <button
+                        type="button"
+                        id="next-moon"
+                        class="btn btn-secondary"
+                        aria-label="View next Moon"
+                    >
+                        Next
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     MILESTONE 6 - BOOTSTRAP FORM CONTROL
+                     =================================================
+
+                     The Bootstrap form-select class styles the Moon
+                     selector while JavaScript creates its options.
+                -->
+
+                <div class="moon-selector">
+
+
+                    <label
+                        for="moon-select"
+                        class="form-label"
+                    >
+                        Select a Moon
+                    </label>
+
+
+                    <select
+                        id="moon-select"
+                        class="form-select"
+                    >
+                    </select>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DYNAMIC CALENDAR TABLE
+                     =================================================
+
+                     Columns represent the ten Cycle positions
+                     within each Span.
+
+                     Rows represent the four Spans within a Moon.
+
+                     js/calendar.js creates the 40 date cells,
+                     date numbers, holiday information, and
+                     character birth information.
+                -->
+
+                <div class="calendar-chart-wrapper">
+
+
+                    <table
+                        class="avelis-calendar-chart"
+                    >
+
+
+                        <thead>
+
+                            <tr>
+
+
+                                <th scope="col">
+                                    Span
+                                </th>
+
+
+                                <th scope="col">
+                                    1
+                                </th>
+
+
+                                <th scope="col">
+                                    2
+                                </th>
+
+
+                                <th scope="col">
+                                    3
+                                </th>
+
+
+                                <th scope="col">
+                                    4
+                                </th>
+
+
+                                <th scope="col">
+                                    5
+                                </th>
+
+
+                                <th scope="col">
+                                    6
+                                </th>
+
+
+                                <th scope="col">
+                                    7
+                                </th>
+
+
+                                <th scope="col">
+                                    8
+                                </th>
+
+
+                                <th scope="col">
+                                    9
+                                </th>
+
+
+                                <th scope="col">
+                                    10
+                                </th>
+
+
+                            </tr>
+
+                        </thead>
+
+
+                        <!--
+                            Calendar rows are inserted dynamically
+                            through js/calendar.js.
+                        -->
+
+                        <tbody
+                            id="calendar-body"
+                        >
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MILESTONE 6 - BOOTSTRAP TIMEKEEPING CARDS
+                 =================================================
+
+                 Bootstrap's responsive grid organizes four cards.
+
+                 col-12:
+                 One card per row on very small screens.
+
+                 col-sm-6:
+                 Two cards per row on small screens.
+
+                 col-lg-3:
+                 Four cards per row on larger screens.
+
+                 The h-100 utility keeps cards in each row
+                 visually consistent in height.
+
+                 AOS adds a fade-up effect when this guide
+                 enters the visitor's screen.
+            -->
+
+            <section
+                class="timekeeping-guide"
+                aria-labelledby="timekeeping-heading"
+                data-aos="fade-up"
+            >
+
+
+                <h2
+                    id="timekeeping-heading"
+                >
+                    Timekeeping Guide
+                </h2>
+
+
+
+                <div class="row g-4">
+
+
+                    <!-- Cycle -->
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+
+
+                        <article class="card h-100">
+
+
+                            <div class="card-body">
+
+
+                                <h3 class="h4">
+                                    Cycle
+                                </h3>
+
+
+                                <p>
+                                    1 Cycle = 1 day
+                                </p>
+
+
+                            </div>
+
+
+                        </article>
+
+
+                    </div>
+
+
+
+                    <!-- Span -->
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+
+
+                        <article class="card h-100">
+
+
+                            <div class="card-body">
+
+
+                                <h3 class="h4">
+                                    Span
+                                </h3>
+
+
+                                <p>
+                                    1 Span = 10 Cycles
+                                </p>
+
+
+                            </div>
+
+
+                        </article>
+
+
+                    </div>
+
+
+
+                    <!-- Moon -->
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+
+
+                        <article class="card h-100">
+
+
+                            <div class="card-body">
+
+
+                                <h3 class="h4">
+                                    Moon
+                                </h3>
+
+
+                                <p>
+                                    1 Moon = 4 Spans
+                                    = 40 Cycles
+                                </p>
+
+
+                            </div>
+
+
+                        </article>
+
+
+                    </div>
+
+
+
+                    <!-- Solturn -->
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+
+
+                        <article class="card h-100">
+
+
+                            <div class="card-body">
+
+
+                                <h3 class="h4">
+                                    Solturn
+                                </h3>
+
+
+                                <p>
+                                    1 Solturn = 10 Moons
+                                    = 40 Spans
+                                    = 400 Cycles
+                                </p>
+
+
+                            </div>
+
+
+                        </article>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MILESTONE 6 - INTERACTIVE CYCLE CONVERTER
+                 =================================================
+
+                 This section combines Bootstrap form components
+                 with custom JavaScript.
+
+                 The visitor enters a Cycle number from 1 through
+                 400. js/calendar.js calculates its Moon, Span,
+                 and position within the calendar.
+
+                 The matching Moon is then automatically displayed.
+
+                 aria-live allows the calculated result to be
+                 announced without reloading the page.
+
+                 AOS adds a fade-up effect when the converter
+                 enters the visitor's screen.
+            -->
+
+            <section
+                class="cycle-converter"
+                aria-labelledby="converter-heading"
+                data-aos="fade-up"
+            >
+
+
+                <h2
+                    id="converter-heading"
+                >
+                    Find a Cycle
+                </h2>
+
+
+                <p>
+
+                    Enter a numbered cycle to locate it within
+                    the Avelis calendar system.
+
+                </p>
+
+
+
+                <!--
+                    Bootstrap responsive grid centers the form
+                    and allows it to expand on smaller screens.
+                -->
+
+                <div class="row justify-content-center">
+
+
+                    <div class="col-12 col-md-7">
+
+
+                        <label
+                            for="cycle-number"
+                            class="form-label"
+                        >
+                            Cycle Number
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="cycle-number"
+                            class="form-control"
+                            min="1"
+                            max="400"
+                            value="1"
+                        >
+
+
+                        <!--
+                            Bootstrap btn and spacing utilities
+                            style the converter button.
+                        -->
+
+                        <button
+                            type="button"
+                            id="calculate-cycle"
+                            class="btn btn-primary mt-3"
+                        >
+                            Find Calendar Date
+                        </button>
+
+
+
+                        <p
+                            id="cycle-result"
+                            class="cycle-result"
+                            aria-live="polite"
+                        >
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SITE FOOTER
+         ===================================================== -->
+
+    <footer>
+
+        <p>
+            Avelis World Companion
+        </p>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         MILESTONE 6 - BOOTSTRAP JAVASCRIPT
+         =====================================================
+
+         The Bootstrap JavaScript bundle is loaded after the
+         page content.
+
+         This allows Bootstrap interactive components to be
+         available while keeping the primary page content
+         loaded before external scripts execute.
+    -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+
+    <!-- =====================================================
+         MILESTONE 6 - AOS JAVASCRIPT LIBRARY
+         =====================================================
+
+         Animate On Scroll (AOS) is the additional JavaScript
+         library used for Milestone 6.
+
+         AOS reads the data-aos attributes placed on selected
+         sections and applies scroll-based animation.
+
+         The library loads before calendar.js so the Calendar
+         JavaScript can initialize AOS after building the
+         dynamic calendar.
+    -->
+
+    <script
+        src="https://unpkg.com/aos@2.3.4/dist/aos.js"
+    ></script>
+
+
+
+    <!-- =====================================================
+         AVELIS CALENDAR JAVASCRIPT
+         =====================================================
+
+         External JavaScript is responsible for:
+
+         - Building the Moon selector
+         - Creating all 40 calendar dates
+         - Organizing dates into four Spans
+         - Displaying holidays
+         - Displaying character birth dates
+         - Changing the selected Moon
+         - Calculating Cycle locations
+         - Updating accessible result information
+         - Responding to button, select, and keyboard events
+         - Initializing the AOS animation library
+
+         Keeping the calculations in an external JavaScript
+         file separates page structure from functionality.
+    -->
+
+    <script
+        src="js/calendar.js"
+    ></script>
+
+
+</body>
+
+</html>

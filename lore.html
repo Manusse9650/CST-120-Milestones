@@ -8,12 +8,18 @@
     Archive entries are stored separately in:
     data/Lore-Archive.csv
 
-    JavaScript in js/lore.js loads the CSV data, builds the archive
-    table, manages search and category filtering, and controls the
-    jQuery Archive Guide.
+    JavaScript in js/lore.js:
+    - Loads the CSV data
+    - Builds the archive table
+    - Searches archive entries
+    - Filters archive categories
+    - Handles pagination
+    - Updates accessible result information
+    - Controls the jQuery Archive Guide
 
-    Separating the archive data from the HTML allows the archive
-    to grow without making this page unnecessarily long.
+    Keeping the archive data separate from the HTML allows
+    the archive to continue growing without making this page
+    unnecessarily large.
 -->
 
 <html lang="en">
@@ -27,10 +33,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Avelis | Lore Archive</title>
+    <title>
+        Avelis | Lore Archive
+    </title>
 
 
-    <!-- Shared site stylesheet -->
+    <!-- =====================================================
+         SHARED AVELIS STYLESHEET
+         ===================================================== -->
 
     <link
         rel="stylesheet"
@@ -40,374 +50,628 @@
 
     <style>
 
-        /*
-            Lore page layout
-        */
+        /* =====================================================
+           LORE PAGE LAYOUT
+           ===================================================== */
 
         .lore-content {
-            text-align: center;
+
+            text-align:
+                center;
+
         }
 
 
         .lore-title {
-            letter-spacing: 1px;
+
+            letter-spacing:
+                1px;
+
         }
 
 
         .lore-intro {
-            max-width: 800px;
-            margin: 0 auto 30px auto;
+
+            max-width:
+                800px;
+
+            margin:
+                0 auto 30px auto;
+
         }
 
 
-        /*
-            Search area
+        /* =====================================================
+           SEARCH AREA
+           ===================================================== */
 
-            Grid keeps the label and search field aligned
-            while allowing the input to expand when space permits.
+        /*
+            Grid keeps the search label and field aligned
+            while allowing the input to expand.
         */
 
         .search-area {
-            max-width: 750px;
-            margin: 0 auto 25px auto;
 
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 10px;
+            max-width:
+                750px;
 
-            align-items: center;
+            margin:
+                0 auto 25px auto;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                auto 1fr;
+
+            gap:
+                10px;
+
+            align-items:
+                center;
+
         }
 
 
         .search-area label {
-            font-weight: bold;
+
+            font-weight:
+                bold;
+
         }
 
 
         .search-area input {
-            width: 100%;
-            padding: 10px;
 
-            font-family: "Times New Roman", serif;
-            font-size: 16px;
+            width:
+                100%;
 
-            color: #3e2d20;
-            background-color: #ffffff;
+            padding:
+                10px;
 
-            border: 1px solid #8f8064;
-            border-radius: 4px;
+            font-family:
+                "Times New Roman",
+                serif;
+
+            font-size:
+                16px;
+
+            color:
+                #3e2d20;
+
+            background-color:
+                #ffffff;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
         }
 
 
         .search-area input:focus {
-            outline: 2px solid #8b633d;
-            outline-offset: 2px;
+
+            outline:
+                2px solid
+                #8b633d;
+
+            outline-offset:
+                2px;
+
         }
 
 
-        /*
-            Archive category area
+        /* =====================================================
+           CATEGORY AREA
+           ===================================================== */
 
-            Flexbox allows the complete list of archive
-            categories to wrap naturally across screen sizes.
+        /*
+            Flexbox allows archive category buttons
+            to wrap naturally on smaller screens.
         */
 
         .category-section {
-            max-width: 1000px;
-            margin: 0 auto 30px auto;
+
+            max-width:
+                1100px;
+
+            margin:
+                0 auto 30px auto;
+
         }
 
 
         .category-section h3 {
-            margin-bottom: 15px;
+
+            margin-bottom:
+                15px;
+
         }
 
 
         .categories {
-            display: flex;
-            flex-wrap: wrap;
 
-            justify-content: center;
+            display:
+                flex;
 
-            gap: 10px;
+            flex-wrap:
+                wrap;
 
-            margin-bottom: 15px;
+            justify-content:
+                center;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                15px;
+
         }
 
 
-        /*
-            Category buttons are prepared for JavaScript filtering.
-
-            They will allow visitors to display one category
-            without searching through the complete archive.
-        */
-
         .category-button {
-            padding: 8px 12px;
 
-            font-family: "Times New Roman", serif;
-            font-size: 15px;
+            padding:
+                8px 12px;
 
-            color: #3e2d20;
-            background-color: #e2c99d;
+            font-family:
+                "Times New Roman",
+                serif;
 
-            border: 1px solid #8f8064;
-            border-radius: 4px;
+            font-size:
+                15px;
 
-            cursor: pointer;
+            color:
+                #3e2d20;
+
+            background-color:
+                #e2c99d;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
+            cursor:
+                pointer;
+
         }
 
 
         .category-button:hover,
         .category-button:focus {
-            background-color: #d3b47b;
+
+            background-color:
+                #d3b47b;
+
         }
 
 
         .category-button.active-category {
-            background-color: #8b633d;
-            color: #ffffff;
+
+            color:
+                #ffffff;
+
+            background-color:
+                #8b633d;
+
         }
 
 
+        /* =====================================================
+           ARCHIVE STATUS
+           ===================================================== */
+
         /*
-            Category and search information is announced
-            without interrupting the visitor.
+            Search and filter information is announced
+            through aria-live without interrupting the user.
         */
 
         .archive-status {
-            min-height: 24px;
 
-            margin: 10px auto 20px auto;
+            min-height:
+                24px;
 
-            font-style: italic;
+            margin:
+                10px auto 20px auto;
+
+            font-style:
+                italic;
+
         }
 
 
-        /*
-            Table container
+        /* =====================================================
+           TABLE WRAPPER
+           ===================================================== */
 
-            The wrapper allows horizontal scrolling on smaller
-            screens instead of forcing the table off the page.
+        /*
+            Allows horizontal scrolling when the full archive
+            table is wider than the visitor's screen.
         */
 
         .table-wrapper {
-            width: 95%;
-            max-width: 1200px;
 
-            margin: 0 auto;
+            width:
+                100%;
 
-            overflow-x: auto;
+            max-width:
+                1400px;
+
+            margin:
+                0 auto;
+
+            overflow-x:
+                auto;
+
         }
 
 
-        /*
-            Lore reference table
-        */
+        /* =====================================================
+           LORE TABLE
+           ===================================================== */
 
         .lore-table {
-            width: 100%;
 
-            border-collapse: collapse;
+            width:
+                100%;
 
-            background-color: #f5ead4;
+            min-width:
+                1050px;
+
+            border-collapse:
+                collapse;
+
+            table-layout:
+                fixed;
+
+            background-color:
+                #f5ead4;
+
         }
 
 
         .lore-table caption {
-            margin-bottom: 12px;
 
-            font-family: Castellar, Georgia, serif;
-            font-size: 20px;
-            font-weight: bold;
+            margin-bottom:
+                12px;
 
-            color: #3e2d20;
+            font-family:
+                Castellar,
+                Georgia,
+                serif;
+
+            font-size:
+                20px;
+
+            font-weight:
+                bold;
+
+            color:
+                #3e2d20;
+
         }
 
 
         .lore-table th,
         .lore-table td {
-            padding: 12px;
 
-            border: 2px solid #8b633d;
+            padding:
+                12px;
 
-            text-align: left;
-            vertical-align: top;
+            border:
+                2px solid
+                #8b633d;
+
+            text-align:
+                left;
+
+            vertical-align:
+                top;
+
+            line-height:
+                1.5;
+
         }
 
 
         .lore-table th {
-            background-color: #c8ad7f;
-            text-align: center;
+
+            color:
+                #3e2d20;
+
+            background-color:
+                #c8ad7f;
+
+            text-align:
+                center;
+
         }
 
 
         /*
-            Category column
+            Category column.
         */
 
-        .lore-table th:first-child,
-        .lore-table td:first-child {
-            width: 22%;
+        .lore-table th:nth-child(1),
+        .lore-table td:nth-child(1) {
+
+            width:
+                15%;
+
         }
 
 
         /*
-            Entry/System column
+            Entry / System column.
         */
 
         .lore-table th:nth-child(2),
         .lore-table td:nth-child(2) {
-            width: 23%;
+
+            width:
+                18%;
+
         }
 
 
         /*
-            Details column receives the most space.
+            Details column.
         */
 
         .lore-table th:nth-child(3),
         .lore-table td:nth-child(3) {
-            width: 55%;
+
+            width:
+                30%;
+
         }
 
 
         /*
-            Pronunciation recordings may be added to selected
-            archive entries by JavaScript.
+            Cultural Notes receives the largest portion
+            of the table so longer worldbuilding notes
+            remain readable.
+        */
+
+        .lore-table th:nth-child(4),
+        .lore-table td:nth-child(4) {
+
+            width:
+                37%;
+
+        }
+
+
+        /* =====================================================
+           ARCHIVE AUDIO
+           ===================================================== */
+
+        /*
+            Pronunciation recordings may appear with
+            selected archive entries.
         */
 
         .lore-table audio {
-            display: block;
 
-            max-width: 100%;
+            display:
+                block;
 
-            margin-top: 8px;
+            max-width:
+                100%;
+
+            margin-top:
+                8px;
+
         }
 
 
         .audio-transcript {
-            margin: 5px 0 0 0;
 
-            font-size: 14px;
+            margin:
+                5px 0 0 0;
+
+            font-size:
+                14px;
+
         }
 
 
-        /*
-            Loading and empty-result rows
-        */
+        /* =====================================================
+           LOADING AND EMPTY RESULTS
+           ===================================================== */
 
         .archive-message-row td {
-            padding: 25px;
 
-            text-align: center;
-            font-style: italic;
+            padding:
+                25px;
+
+            text-align:
+                center;
+
+            font-style:
+                italic;
+
         }
 
 
-        /*
-            Archive Guide
+        /* =====================================================
+           ARCHIVE GUIDE
+           ===================================================== */
 
-            This interaction remains part of the Milestone 5
-            jQuery demonstration and continues into Milestone 6.
+        /*
+            Milestone 6 jQuery interaction.
+
+            The Archive Guide uses jQuery to show and hide
+            additional instructions.
         */
 
         .archive-aside {
-            max-width: 750px;
 
-            margin: 40px auto 20px auto;
-            padding: 20px;
+            max-width:
+                750px;
 
-            text-align: center;
+            margin:
+                40px auto 20px auto;
+
+            padding:
+                20px;
+
+            text-align:
+                center;
+
         }
 
 
         .archive-aside h3 {
-            margin-top: 0;
+
+            margin-top:
+                0;
+
         }
 
 
         .archive-guide-button {
-            padding: 9px 16px;
-            margin-top: 10px;
 
-            font-family: "Times New Roman", serif;
-            font-size: 16px;
+            padding:
+                9px 16px;
 
-            color: #3e2d20;
-            background-color: #e2c99d;
+            margin-top:
+                10px;
 
-            border: 1px solid #8f8064;
-            border-radius: 4px;
+            font-family:
+                "Times New Roman",
+                serif;
 
-            cursor: pointer;
+            font-size:
+                16px;
+
+            color:
+                #3e2d20;
+
+            background-color:
+                #e2c99d;
+
+            border:
+                1px solid
+                #8f8064;
+
+            border-radius:
+                4px;
+
+            cursor:
+                pointer;
+
         }
 
 
         .archive-guide-button:hover,
         .archive-guide-button:focus {
-            background-color: #d3b47b;
+
+            background-color:
+                #d3b47b;
+
         }
 
 
         .archive-guide {
-            max-width: 650px;
 
-            margin: 20px auto 0 auto;
-            padding: 15px;
+            max-width:
+                650px;
 
-            border: 1px solid #8f8064;
+            margin:
+                20px auto 0 auto;
 
-            background-color: #f5ead4;
+            padding:
+                15px;
 
-            text-align: left;
+            border:
+                1px solid
+                #8f8064;
+
+            background-color:
+                #f5ead4;
+
+            text-align:
+                left;
+
         }
 
 
         .archive-guide.active-guide {
-            border: 2px solid #6f5137;
+
+            border:
+                2px solid
+                #6f5137;
+
         }
 
 
-        /*
-            Responsive design
-        */
+        /* =====================================================
+           RESPONSIVE DESIGN
+           ===================================================== */
 
         @media (max-width: 800px) {
 
             .search-area {
-                grid-template-columns: 1fr;
 
-                text-align: left;
+                grid-template-columns:
+                    1fr;
+
+                text-align:
+                    left;
+
             }
 
 
             .categories {
-                justify-content: flex-start;
+
+                justify-content:
+                    flex-start;
+
             }
 
 
             .category-button {
-                flex: 1 1 180px;
+
+                flex:
+                    1 1 180px;
+
             }
 
 
             .table-wrapper {
-                width: 100%;
+
+                width:
+                    100%;
+
             }
 
 
             .lore-table {
-                min-width: 700px;
 
-                font-size: 15px;
+                min-width:
+                    950px;
+
+                font-size:
+                    15px;
+
             }
 
 
             .lore-table th,
             .lore-table td {
-                padding: 8px;
+
+                padding:
+                    8px;
+
             }
+
         }
 
     </style>
@@ -418,7 +682,9 @@
 <body>
 
 
-    <!-- Shared site header -->
+    <!-- =====================================================
+         SHARED SITE HEADER
+         ===================================================== -->
 
     <header>
 
@@ -429,64 +695,107 @@
     </header>
 
 
+
     <div class="page-layout">
 
 
-        <!-- Main site navigation -->
+        <!-- =================================================
+             MAIN SITE NAVIGATION
+             ================================================= -->
 
-        <nav aria-label="Main navigation">
+        <nav
+            aria-label="Main navigation"
+        >
 
             <ul>
 
+
                 <li>
-                    <a href="index.html">
+
+                    <a
+                        href="index.html"
+                    >
                         Home
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="characters.html">
+
+                    <a
+                        href="characters.html"
+                    >
                         Characters
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="map.html">
+
+                    <a
+                        href="map.html"
+                    >
                         World Map
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="#">
+
+                    <a
+                        href="calendar.html"
+                    >
                         Calendar
                     </a>
+
                 </li>
 
+
                 <li>
+
                     <a
                         href="lore.html"
                         aria-current="page"
                     >
                         Lore Archive
                     </a>
+
                 </li>
 
+
                 <li>
-                    <a href="#">
-                        Books and Stories
-                    </a>
-                </li>
+
+                <a
+                    href="books&amp;stories.html"
+                >
+                    Books and Stories
+                </a>
+
+            </li>
+
 
             </ul>
 
         </nav>
 
 
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
         <main>
 
 
             <section class="lore-content">
 
+
+                <!-- =================================================
+                     PAGE INTRODUCTION
+                     ================================================= -->
 
                 <h2 class="lore-title">
                     Lore Archive
@@ -497,24 +806,29 @@
 
                     The Lore Archive provides definitions and information
                     about the geography, societies, traditions, systems,
-                    magic, and everyday life found throughout Avelis.
-
-                    Use the search field or select a category to explore
-                    the archive.
+                    magic, government, and everyday life found throughout
+                    Avelis. Use the search field or select a category to
+                    explore the archive.
 
                 </p>
 
 
-                <!--
-                    Live search.
 
-                    JavaScript will search the entries loaded from
-                    data/Lore-Archive.csv as the visitor types.
+                <!-- =================================================
+                     ARCHIVE SEARCH
+                     ================================================= -->
+
+                <!--
+                    JavaScript searches the entries loaded from
+                    data/Lore-Archive.csv while the visitor types.
                 -->
 
                 <div class="search-area">
 
-                    <label for="lore-search">
+
+                    <label
+                        for="lore-search"
+                    >
                         Search the Archive:
                     </label>
 
@@ -523,20 +837,19 @@
                         type="search"
                         id="lore-search"
                         name="lore-search"
-                        placeholder="Search names, categories, or details"
+                        placeholder="Search names, categories, details, or cultural notes"
                         autocomplete="off"
                         aria-describedby="archive-status"
                     >
 
+
                 </div>
 
 
-                <!--
-                    Archive categories
 
-                    The category names match the categories used
-                    in the Lore-Archive CSV file.
-                -->
+                <!-- =================================================
+                     ARCHIVE CATEGORIES
+                     ================================================= -->
 
                 <section
                     class="category-section"
@@ -544,9 +857,12 @@
                 >
 
 
-                    <h3 id="category-heading">
+                    <h3
+                        id="category-heading"
+                    >
                         Browse by Category
                     </h3>
+
 
 
                     <div
@@ -555,7 +871,7 @@
                     >
 
 
-                        <!-- Show all archive entries -->
+                        <!-- All categories -->
 
                         <button
                             type="button"
@@ -565,6 +881,7 @@
                         >
                             All Categories
                         </button>
+
 
 
                         <!-- Geography & Environment -->
@@ -579,6 +896,7 @@
                         </button>
 
 
+
                         <!-- Community & Society -->
 
                         <button
@@ -589,6 +907,7 @@
                         >
                             Community &amp; Society
                         </button>
+
 
 
                         <!-- Economy & Trade -->
@@ -603,6 +922,7 @@
                         </button>
 
 
+
                         <!-- Household -->
 
                         <button
@@ -613,6 +933,7 @@
                         >
                             Household
                         </button>
+
 
 
                         <!-- Law & Justice -->
@@ -627,6 +948,20 @@
                         </button>
 
 
+
+                        <!-- Government -->
+
+                        <button
+                            type="button"
+                            class="category-button"
+                            data-category="Government"
+                            aria-pressed="false"
+                        >
+                            Government
+                        </button>
+
+
+
                         <!-- Medicine & Health -->
 
                         <button
@@ -637,6 +972,7 @@
                         >
                             Medicine &amp; Health
                         </button>
+
 
 
                         <!-- Religion & Tradition -->
@@ -651,6 +987,7 @@
                         </button>
 
 
+
                         <!-- Transportation -->
 
                         <button
@@ -661,6 +998,7 @@
                         >
                             Transportation
                         </button>
+
 
 
                         <!-- Military & Emergency -->
@@ -675,6 +1013,7 @@
                         </button>
 
 
+
                         <!-- Infrastructure -->
 
                         <button
@@ -685,6 +1024,7 @@
                         >
                             Infrastructure
                         </button>
+
 
 
                         <!-- Magic -->
@@ -699,6 +1039,7 @@
                         </button>
 
 
+
                         <!-- Housing & Architecture -->
 
                         <button
@@ -709,6 +1050,7 @@
                         >
                             Housing &amp; Architecture
                         </button>
+
 
 
                         <!-- Education & Work -->
@@ -723,6 +1065,7 @@
                         </button>
 
 
+
                         <!-- Food & Agriculture -->
 
                         <button
@@ -733,6 +1076,7 @@
                         >
                             Food &amp; Agriculture
                         </button>
+
 
 
                         <!-- Family -->
@@ -753,9 +1097,14 @@
                 </section>
 
 
+
+                <!-- =================================================
+                     ARCHIVE STATUS
+                     ================================================= -->
+
                 <!--
-                    JavaScript updates this text with the number
-                    of matching archive entries.
+                    JavaScript updates this area with the number
+                    of matching archive entries and pagination status.
                 -->
 
                 <p
@@ -767,17 +1116,24 @@
                 </p>
 
 
-                <!--
-                    Lore reference table
 
-                    The tbody intentionally contains no permanent
-                    lore entries.
+                <!-- =================================================
+                     LORE REFERENCE TABLE
+                     =================================================
 
-                    js/lore.js will read data/Lore-Archive.csv
-                    and create the rows automatically.
+                     The table contains four columns:
+
+                     1. Category
+                     2. Entry
+                     3. Details
+                     4. Cultural Notes
+
+                     JavaScript creates the archive rows from
+                     data/Lore-Archive.csv.
                 -->
 
                 <div class="table-wrapper">
+
 
                     <table class="lore-table">
 
@@ -787,40 +1143,53 @@
                         </caption>
 
 
+
                         <thead>
 
                             <tr>
+
 
                                 <th scope="col">
                                     Category
                                 </th>
 
+
                                 <th scope="col">
                                     Entry
                                 </th>
 
+
                                 <th scope="col">
                                     Details
                                 </th>
+
+
+                                <th scope="col">
+                                    Cultural Notes
+                                </th>
+
 
                             </tr>
 
                         </thead>
 
 
-                        <tbody id="lore-table-body">
+
+                        <tbody
+                            id="lore-table-body"
+                        >
 
 
                             <!--
                                 Temporary loading row.
 
-                                JavaScript removes this row after
-                                the CSV data is successfully loaded.
+                                lore.js removes this row when
+                                the CSV finishes loading.
                             -->
 
                             <tr class="archive-message-row">
 
-                                <td colspan="3">
+                                <td colspan="4">
                                     Loading archive entries...
                                 </td>
 
@@ -832,17 +1201,39 @@
 
                     </table>
 
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ARCHIVE PAGINATION
+                     =================================================
+
+                     lore.js can populate and control this area
+                     when the archive contains multiple pages.
+                -->
+
+                <div
+                    id="archive-pagination"
+                    class="archive-pagination"
+                    aria-label="Lore Archive pages"
+                >
                 </div>
 
 
             </section>
 
 
-            <!--
-                Supporting archive information
 
-                The Archive Guide remains the jQuery show/hide
-                demonstration used in the milestone project.
+            <!-- =================================================
+                 ARCHIVE GUIDE
+                 =================================================
+
+                 Milestone 6 jQuery interaction.
+
+                 The guide is revealed and hidden without
+                 navigating away from the Lore Archive.
             -->
 
             <aside class="archive-aside">
@@ -862,6 +1253,7 @@
                 </p>
 
 
+
                 <button
                     type="button"
                     id="archive-guide-button"
@@ -871,6 +1263,7 @@
                 >
                     Show Archive Guide
                 </button>
+
 
 
                 <div
@@ -890,25 +1283,35 @@
                     <p>
 
                         Use the search field to look for a specific
-                        word, place, custom, system, or other topic.
+                        word, place, custom, system, character term,
+                        or other topic.
 
                     </p>
 
 
                     <p>
 
-                        Category buttons can narrow the archive to
-                        one area of Avelis worldbuilding. Select
-                        All Categories to return to the complete archive.
+                        Category buttons narrow the archive to one area
+                        of Avelis worldbuilding. Select All Categories
+                        to return to the complete archive.
 
                     </p>
 
 
                     <p>
 
-                        The archive information is stored separately
-                        from this webpage so new entries can be added
-                        without expanding the HTML document.
+                        The Details and Cultural Notes columns provide
+                        additional context for how each entry functions
+                        within the world of Avelis.
+
+                    </p>
+
+
+                    <p>
+
+                        Archive information is stored separately from
+                        this webpage in a CSV file so new entries can be
+                        added without expanding the HTML document.
 
                     </p>
 
@@ -921,11 +1324,13 @@
 
         </main>
 
-
     </div>
 
 
-    <!-- Shared site footer -->
+
+    <!-- =====================================================
+         SHARED SITE FOOTER
+         ===================================================== -->
 
     <footer>
 
@@ -936,11 +1341,13 @@
     </footer>
 
 
-    <!--
-        jQuery 3.7.1
 
-        jQuery must load before lore.js so the Archive Guide
-        interaction can use jQuery methods.
+    <!-- =====================================================
+         JQUERY
+         =====================================================
+
+         jQuery loads before lore.js so the Archive Guide
+         interaction can use jQuery methods.
     -->
 
     <script
@@ -948,19 +1355,14 @@
     ></script>
 
 
-    <!--
-        Lore Archive JavaScript
 
-        This file will:
-        - Load data/Lore-Archive.csv
-        - Build archive table rows
-        - Search archive entries
-        - Filter categories
-        - Update result counts
-        - Control the jQuery Archive Guide
-    -->
+    <!-- =====================================================
+         LORE ARCHIVE JAVASCRIPT
+         ===================================================== -->
 
-    <script src="js/lore.js"></script>
+    <script
+        src="js/lore.js"
+    ></script>
 
 
 </body>
